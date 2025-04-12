@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ public class UnitSelectionManager : MonoBehaviour
     // Start is called before he first frame update
     public static UnitSelectionManager Instance { get; set; }
 
-    public List<GameObject> allUnitList = new List<GameObject>();
+    public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitSelected = new List<GameObject>();
 
     public GameObject groundMarker;
@@ -93,7 +91,7 @@ public class UnitSelectionManager : MonoBehaviour
         }
     }
 
-    private void DeselectAll()
+    public void DeselectAll()
     {
         foreach (var unit in unitSelected)
         {
@@ -111,10 +109,14 @@ public class UnitSelectionManager : MonoBehaviour
 
         unitSelected.Add(unit);
 
-        TriggerSelectionIndicator(unit, true);
-        EnableUnitMovement(unit, true);
+        SelectUnit(unit, true);
     }
 
+    private void SelectUnit(GameObject unit, bool isSelected)
+    {
+        TriggerSelectionIndicator(unit, isSelected);
+        EnableUnitMovement(unit, isSelected);
+    }
     private void EnableUnitMovement(GameObject unit, bool shouldMove)
     {
         unit.GetComponent<UnitMovement>().enabled = shouldMove;
@@ -125,4 +127,14 @@ public class UnitSelectionManager : MonoBehaviour
         unit.transform.GetChild(0).gameObject.SetActive(isVisivble);
     }
 
+    internal void DragSelect(GameObject unit)
+    {
+        if (unitSelected.Contains(unit) == false)
+        {
+            unitSelected.Add(unit);
+            TriggerSelectionIndicator(unit, true);
+            EnableUnitMovement(unit, true);
+
+        }
+    }
 }

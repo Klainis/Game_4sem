@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -7,11 +5,11 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
-        UnitSelectionManager.Instance.allUnitList.Add(gameObject);
+        UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
     }
 
     private void OnDestroy()
     {
-        UnitSelectionManager.Instance.allUnitList.Remove(gameObject);
+        UnitSelectionManager.Instance.allUnitsList.Remove(gameObject);
     }
 }

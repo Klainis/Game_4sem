@@ -43,9 +43,6 @@ public class RTSCameraController : MonoBehaviour
     public Texture2D cursorArrowLeft;
     public Texture2D cursorArrowRight;
 
-    private Vector3 zoomTargetPoint;  
-    private float currentZoomDistance;
-
 
     CursorArrow currentCursor = CursorArrow.DEFAULT;
     enum CursorArrow
@@ -91,16 +88,19 @@ public class RTSCameraController : MonoBehaviour
 
     void HandleCameraZoom()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll != 0)
-        {
-            currentZoomHeight -= scroll * zoomSpeed;
-            currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
+        float zoomInput = Input.GetAxis("Mouse ScrollWheel");
 
-            // Плавное изменение высоты камеры
-            newPosition.y = currentZoomHeight;
-        }
+        currentZoomHeight -= zoomInput * zoomSensitivity;
+
+        currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
+
+        cameraTransform.position = Vector3.Lerp(cameraTransform.position, 
+            new Vector3(cameraTransform.position.x, currentZoomHeight, cameraTransform.position.z), Time.deltaTime * zoomSpeed);
     }
+
+
+
+
 
     void HandleCameraMovement()
     {

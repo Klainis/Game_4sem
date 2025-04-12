@@ -849,11 +849,11 @@ MonoBehaviour:
   followTransform: {fileID: 0}
   moveWithKeyboad: 1
   moveWithEdgeScrolling: 1
-  moveWithMouseDrag: 1
-  zoomSpeed: 10
-  minZoomHeight: 5
-  maxZoomHeight: 120
-  zoomSensitivity: 10
+  moveWithMouseDrag: 0
+  zoomSpeed: 15
+  minZoomHeight: 30
+  maxZoomHeight: 85
+  zoomSensitivity: 5
   currentZoomHeight: 20
   fastSpeed: 0.05
   normalSpeed: 0.2

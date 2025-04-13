@@ -128,12 +128,6 @@ public class UnitSelectionManager : MonoBehaviour
         {
             outline.enabled = isVisible;
         }
-        //else if (isVisible)
-        //{
-        //    outline = unit.AddComponent<Outline>();
-        //    outline.OutlineColor = Color.yellow;  // Или любой другой цвет
-        //    outline.OutlineWidth = 3f;  // Настроить ширину обводки
-        //}
     }
 
     internal void DragSelect(GameObject unit)

@@ -80,13 +80,11 @@ public class UnitSelectionManager : MonoBehaviour
         if (unitSelected.Contains(unit) == false)
         {
             unitSelected.Add(unit);
-            TriggerSelectionIndicator(unit, true);
-            EnableUnitMovement(unit, true);
+            SelectUnit(unit, true);
         }
         else
         {
-            EnableUnitMovement(unit, false);
-            TriggerSelectionIndicator(unit, false);
+            SelectUnit(unit, false);
             unitSelected.Remove(unit);
         }
     }
@@ -95,8 +93,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         foreach (var unit in unitSelected)
         {
-            EnableUnitMovement(unit, false);
-            TriggerSelectionIndicator(unit, false);
+            SelectUnit(unit, false);
         }
 
         groundMarker.SetActive(false);
@@ -122,9 +119,21 @@ public class UnitSelectionManager : MonoBehaviour
         unit.GetComponent<UnitMovement>().enabled = shouldMove;
     }
 
-    private void TriggerSelectionIndicator(GameObject unit, bool isVisivble)
+    private void TriggerSelectionIndicator(GameObject unit, bool isVisible)
     {
-        unit.transform.GetChild(0).gameObject.SetActive(isVisivble);
+        //unit.transform.GetChild(0).gameObject.SetActive(isVisivble);
+        Outline outline = unit.GetComponent<Outline>();
+
+        if (outline != null)
+        {
+            outline.enabled = isVisible;
+        }
+        //else if (isVisible)
+        //{
+        //    outline = unit.AddComponent<Outline>();
+        //    outline.OutlineColor = Color.yellow;  // Или любой другой цвет
+        //    outline.OutlineWidth = 3f;  // Настроить ширину обводки
+        //}
     }
 
     internal void DragSelect(GameObject unit)
@@ -132,8 +141,7 @@ public class UnitSelectionManager : MonoBehaviour
         if (unitSelected.Contains(unit) == false)
         {
             unitSelected.Add(unit);
-            TriggerSelectionIndicator(unit, true);
-            EnableUnitMovement(unit, true);
+            SelectUnit(unit, true);
 
         }
     }

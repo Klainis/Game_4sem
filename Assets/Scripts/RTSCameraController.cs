@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,7 @@ public class RTSCameraController : MonoBehaviour
 
     [Header("General")]
     [SerializeField] Transform cameraTransform;
+    [SerializeField] Camera camera;
     public Transform followTransform;
     Vector3 newPosition;
     Vector3 dragStartPosition;
@@ -23,11 +25,11 @@ public class RTSCameraController : MonoBehaviour
     [SerializeField] bool moveWithMouseDrag;
 
     [Header("Zoom Settings")]
-    [SerializeField] float zoomSpeed = 10f;
     [SerializeField] float minZoomHeight = 5f;
     [SerializeField] float maxZoomHeight = 50f;
     [SerializeField] float zoomSensitivity = 5f;
     [SerializeField] float currentZoomHeight = 20f;
+    [SerializeField] float damping = 5f;
 
     [Header("Keyboard Movement")]
     [SerializeField] float fastSpeed = 0.05f;
@@ -88,14 +90,18 @@ public class RTSCameraController : MonoBehaviour
 
     void HandleCameraZoom()
     {
-        float zoomInput = Input.GetAxis("Mouse ScrollWheel");
+        //float zoomInput = Input.GetAxis("Mouse ScrollWheel");
 
-        currentZoomHeight -= zoomInput * zoomSensitivity;
+        //currentZoomHeight -= zoomInput * zoomSensitivity;
 
+        //currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
+
+        //cameraTransform.position = Vector3.Lerp(cameraTransform.position, 
+        //    new Vector3(cameraTransform.position.x, currentZoomHeight, cameraTransform.position.z), Time.deltaTime * zoomSpeed);
+        Camera camera = transform.GetChild(0).GetComponent<Camera>();
+        currentZoomHeight -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
         currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
-
-        cameraTransform.position = Vector3.Lerp(cameraTransform.position, 
-            new Vector3(cameraTransform.position.x, currentZoomHeight, cameraTransform.position.z), Time.deltaTime * zoomSpeed);
+        camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, currentZoomHeight, Time.deltaTime * damping);
     }
 
 

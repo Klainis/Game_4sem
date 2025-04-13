@@ -849,15 +849,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 963194228}
+  camera: {fileID: 0}
   followTransform: {fileID: 0}
   moveWithKeyboad: 1
   moveWithEdgeScrolling: 1
-  moveWithMouseDrag: 0
-  zoomSpeed: 15
-  minZoomHeight: 30
-  maxZoomHeight: 85
-  zoomSensitivity: 5
+  moveWithMouseDrag: 1
+  minZoomHeight: 10
+  maxZoomHeight: 50
+  zoomSensitivity: 15
   currentZoomHeight: 20
+  damping: 5
   fastSpeed: 0.05
   normalSpeed: 0.2
   movementSensitivity: 15

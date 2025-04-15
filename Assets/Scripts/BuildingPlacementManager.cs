@@ -43,7 +43,18 @@ public class BuildingPlacementManager : MonoBehaviour
             }
         }
     }
-
+    public void SetBuildingPrefab(GameObject prefab)
+    {
+        buildingPrefab = prefab;
+        Debug.Log("Выбран префаб: " + prefab.name);
+        if (ghostInstance != null)
+        {
+            Destroy(ghostInstance);
+            ghostInstance = Instantiate(buildingPrefab);
+            SetGhostAppearance(ghostInstance);
+            ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
+        }
+    }
     private void UpdateGhostPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

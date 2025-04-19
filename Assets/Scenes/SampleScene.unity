@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 261633046}
   - component: {fileID: 261633050}
   m_Layer: 5
-  m_Name: UnitSelectionUI
+  m_Name: SelectionBoxUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

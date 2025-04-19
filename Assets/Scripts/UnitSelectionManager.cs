@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -12,7 +13,18 @@ public class UnitSelectionManager : MonoBehaviour
     public GameObject groundMarker;
     public LayerMask clickable;
     public LayerMask ground;
+
+    public LayerMask attackable;
+    public bool attackCursorVisible;
+
     private Camera cam;
+    public bool boolTarget;
+
+    //private EnemOutline enemOutline;
+
+    //private GameObject hitEnemy;
+
+
 
     private void Awake()
     {
@@ -29,6 +41,7 @@ public class UnitSelectionManager : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
+        //enemOutline = GameObject.FindObjectOfType<EnemOutline>();
     }
 
     private void Update()
@@ -73,6 +86,52 @@ public class UnitSelectionManager : MonoBehaviour
                 groundMarker.SetActive(true);
             }
         }
+
+        //Attack Target
+        if (unitSelected.Count > 0 && AtleastOneOffensiveUnit(unitSelected))
+        {
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            boolTarget = true;
+
+            //Нажимаем на attackable oбъект
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
+            {
+                attackCursorVisible = true;
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Transform target = hit.transform;
+
+                    foreach (GameObject unit in unitSelected)
+                    {
+                        if(unit.GetComponent<AttackController>())
+                        {
+                            Debug.Log("Enemy attacking");
+                            unit.GetComponent<AttackController>().targetToAttack = target;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                boolTarget = false;
+                attackCursorVisible = false;
+            }
+        }
+    }
+
+    private bool AtleastOneOffensiveUnit(List<GameObject> unitSelected)
+    {
+        foreach (GameObject unit in unitSelected)
+        {
+            if (unit.GetComponent<AttackController>())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void MultiSelect(GameObject unit)

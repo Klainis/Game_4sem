@@ -13,7 +13,7 @@ public class RTSCameraController : MonoBehaviour
 
     [Header("General")]
     [SerializeField] Transform cameraTransform;
-    [SerializeField] Camera camera;
+    [SerializeField]  Camera cam;
     public Transform followTransform;
     Vector3 newPosition;
     Vector3 dragStartPosition;

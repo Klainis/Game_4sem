@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7623153382164753188}
   m_Layer: 11
   m_Name: Barrack
-  m_TagString: Friendly
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

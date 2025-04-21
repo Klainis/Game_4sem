@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8350764782659973443}
   m_Layer: 11
   m_Name: Tower
-  m_TagString: Friendly
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

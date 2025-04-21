@@ -1643,25 +1643,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: de91cf17d48da63408db21e5284a72ea, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!1 &1040400777
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,14 +2188,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb823583781ca6249895bb586322ecfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 4606148455642486991, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
+  blockingTags:
+  - Building
+  - Friendly
+  - Enemy
   ghostMaterial: {fileID: 2100000, guid: 2e35d963c69eb464a9c2b67b06b6034a, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  collisionLayers:
-    serializedVersion: 2
-    m_Bits: 784
+  gridSize: 0.75
+  snapToGrid: 1
+  rotateKey: 114
+  rotationStep: 90
 --- !u!4 &1539937123
 Transform:
   m_ObjectHideFlags: 0
@@ -2868,25 +2853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
 --- !u!154 &2097897623
 TerrainCollider:
   m_ObjectHideFlags: 0

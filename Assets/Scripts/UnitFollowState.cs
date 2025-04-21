@@ -34,7 +34,7 @@ public class UnitFollowState : StateMachineBehaviour
                 agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
 
-                //if (attackController.isUnit == false)
+                //if (attackController.targetToAttack.CompareTag("Enemy"))
                 //{
                     //Следует переходить в состояние Attacking State?
                     //float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);

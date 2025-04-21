@@ -8,14 +8,10 @@ public class BuildingUI : MonoBehaviour
 
     public void SelectBuilding(int index)
     {
-        if (placementManager != null && index >= 0 && index < buildingPrefabs.Length)
+        if (placementManager != null &&
+            index >= 0 && index < buildingPrefabs.Length)
         {
-            placementManager.SetBuildingPrefab(buildingPrefabs[index]);
+            placementManager.BeginPlacement(buildingPrefabs[index]);
         }
     }
-    public void TestClick()
-    {
-        Debug.Log("КНОПКА НАЖАТА!");
-    }
-
 }

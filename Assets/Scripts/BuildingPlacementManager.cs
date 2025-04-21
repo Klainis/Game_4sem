@@ -3,17 +3,27 @@ using UnityEngine.EventSystems;
 
 public class BuildingPlacementManager : MonoBehaviour
 {
+    /*–––– настройки ––––*/
     [Header("Ghost & проверка")]
     [SerializeField] Material ghostMaterial;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask collisionLayers;
 
+    [Header("Сетка")]
+    [SerializeField] float gridSize = 1f;            // шаг сетки
+    [SerializeField] bool snapToGrid = true;         // можно выключить в инспекторе
+
+    [Header("Поворот")]
+    [SerializeField] KeyCode rotateKey = KeyCode.R;  // клавиша поворота
+    [SerializeField] int rotationStep = 90;          // угол одного шага
+
+    /*–––– внутренние данные ––––*/
     GameObject ghostInstance;
     Renderer[] ghostRenderers;
-    GameObject currentPrefab;     // выбранная постройка
+    GameObject currentPrefab;
     bool isPlacing;
 
-    /*–– публичный API ––*/
+    /*–––– публичный API ––––*/
     public void BeginPlacement(GameObject prefab)
     {
         CancelPlacement();
@@ -35,33 +45,53 @@ public class BuildingPlacementManager : MonoBehaviour
     {
         if (!isPlacing) return;
 
+        /*–– 1. Поворот ––*/
+        if (Input.GetKeyDown(rotateKey))
+        {
+            ghostInstance.transform.Rotate(Vector3.up, rotationStep, Space.World);
+        }
+
+
+        /*–– 2. Обновление позиции ––*/
         UpdateGhostPosition();
 
         bool valid = IsPlacementValid(ghostInstance.transform.position);
         SetGhostColor(valid);
 
+        /*–– 3. Установка здания, если курсор не над UI ––*/
         bool pointerOverUI = EventSystem.current.IsPointerOverGameObject();
 
         if (Input.GetMouseButtonDown(0) && valid && !pointerOverUI)
         {
             Instantiate(currentPrefab,
                         ghostInstance.transform.position,
-                        ghostInstance.transform.rotation);
+                        ghostInstance.transform.rotation);      // ← сохранит угол
+            // остаёмся в режиме размещения
         }
 
+        /*–– 4. Выход из режима ––*/
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
         {
             CancelPlacement();
         }
     }
 
+    /*–––– вспомогательные методы ––––*/
+
     private void UpdateGhostPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
         {
-            ghostInstance.transform.position = hit.point;
+            Vector3 pos = hit.point;
+
+            if (snapToGrid)
+            {
+                pos.x = Mathf.Round(pos.x / gridSize) * gridSize;
+                pos.z = Mathf.Round(pos.z / gridSize) * gridSize;
+            }
+
+            ghostInstance.transform.position = pos;
         }
     }
 

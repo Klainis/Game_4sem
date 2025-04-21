@@ -4,10 +4,12 @@ using UnityEngine.EventSystems;
 public class BuildingPlacementManager : MonoBehaviour
 {
     /*–––– настройки ––––*/
+    [Header("Коллизии по тегам")]
+    [SerializeField] string[] blockingTags = { "Building" };
+
     [Header("Ghost & проверка")]
     [SerializeField] Material ghostMaterial;
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask collisionLayers;
 
     [Header("Сетка")]
     [SerializeField] float gridSize = 1f;            // шаг сетки
@@ -135,20 +137,23 @@ public class BuildingPlacementManager : MonoBehaviour
 
     private bool IsPlacementValid(Vector3 position)
     {
-        Vector3 size = GetGhostColliderSize();
+        Vector3 size   = GetGhostColliderSize();
         Vector3 center = position + Vector3.up * (size.y / 2);
-        Quaternion rotation = ghostInstance.transform.rotation;
+        Quaternion rot = ghostInstance.transform.rotation;
 
-        Collider[] hits = Physics.OverlapBox(center, size / 2f, rotation, collisionLayers);
+        // Проверяем всё, без LayerMask
+        Collider[] hits = Physics.OverlapBox(center, size / 2f, rot);
 
         foreach (var hit in hits)
         {
-            if (ghostInstance != null && hit.gameObject == ghostInstance) continue;
-            return false;
-        }
+            if (hit.gameObject == ghostInstance) continue;          // пропускаем призрак
 
-        return true;
+            foreach (var tag in blockingTags)                       // если тег блокирует — нельзя
+                if (hit.CompareTag(tag)) return false;
+        }
+        return true;                                                // свободно
     }
+
 
     private void OnDrawGizmosSelected()
     {

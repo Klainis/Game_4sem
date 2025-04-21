@@ -1,60 +1,60 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingPlacementManager : MonoBehaviour
 {
-    [Header("Настройки постройки")]
-    public GameObject buildingPrefab;
-    public Material ghostMaterial;
-    public LayerMask groundLayer;
+    [Header("Ghost & проверка")]
+    [SerializeField] Material ghostMaterial;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask collisionLayers;
 
-    [Header("Проверка коллизий")]
-    public LayerMask collisionLayers;
+    GameObject ghostInstance;
+    Renderer[] ghostRenderers;
+    GameObject currentPrefab;     // выбранная постройка
+    bool isPlacing;
 
-    private GameObject ghostInstance;
-    private Renderer[] ghostRenderers;
+    /*–– публичный API ––*/
+    public void BeginPlacement(GameObject prefab)
+    {
+        CancelPlacement();
+        currentPrefab = prefab;
+        ghostInstance = Instantiate(currentPrefab);
+        SetGhostAppearance(ghostInstance);
+        ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
+        isPlacing = true;
+    }
+
+    public void CancelPlacement()
+    {
+        if (ghostInstance) Destroy(ghostInstance);
+        isPlacing = false;
+        currentPrefab = null;
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (!isPlacing) return;
+
+        UpdateGhostPosition();
+
+        bool valid = IsPlacementValid(ghostInstance.transform.position);
+        SetGhostColor(valid);
+
+        bool pointerOverUI = EventSystem.current.IsPointerOverGameObject();
+
+        if (Input.GetMouseButtonDown(0) && valid && !pointerOverUI)
         {
-            if (ghostInstance == null && buildingPrefab != null)
-            {
-                ghostInstance = Instantiate(buildingPrefab);
-                SetGhostAppearance(ghostInstance);
-                ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
-            }
+            Instantiate(currentPrefab,
+                        ghostInstance.transform.position,
+                        ghostInstance.transform.rotation);
         }
 
-        if (ghostInstance != null)
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
         {
-            UpdateGhostPosition();
-            bool valid = IsPlacementValid(ghostInstance.transform.position);
-            SetGhostColor(valid);
-
-            if (Input.GetMouseButtonDown(0) && valid)
-            {
-                Instantiate(buildingPrefab, ghostInstance.transform.position, ghostInstance.transform.rotation);
-                Destroy(ghostInstance);
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                Destroy(ghostInstance);
-            }
+            CancelPlacement();
         }
     }
-    public void SetBuildingPrefab(GameObject prefab)
-    {
-        buildingPrefab = prefab;
-        Debug.Log("Выбран префаб: " + prefab.name);
-        if (ghostInstance != null)
-        {
-            Destroy(ghostInstance);
-            ghostInstance = Instantiate(buildingPrefab);
-            SetGhostAppearance(ghostInstance);
-            ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
-        }
-    }
+
     private void UpdateGhostPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

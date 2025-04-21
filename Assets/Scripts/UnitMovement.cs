@@ -10,8 +10,8 @@ public class UnitMovement : MonoBehaviour
     public bool isCommandedToMove;
     private void Start()
     {
-            cam = Camera.main;
-            agent = GetComponent<NavMeshAgent>();
+        cam = Camera.main;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()

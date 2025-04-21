@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +14,9 @@ public class UnitSelectionManager : MonoBehaviour
     public GameObject groundMarker;
     public LayerMask clickable;
     public LayerMask ground;
-
     public LayerMask attackable;
+    public LayerMask buildClickable;
+
     public bool attackCursorVisible;
 
     private Camera cam;
@@ -22,7 +24,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     //private EnemOutline enemOutline;
 
-    //private GameObject hitEnemy;
+    //private GameObject hitFriendly;
 
 
 
@@ -93,31 +95,41 @@ public class UnitSelectionManager : MonoBehaviour
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-            boolTarget = true;
-
             //Нажимаем на attackable oбъект
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
             {
-                attackCursorVisible = true;
-
-                if (Input.GetMouseButtonDown(1))
-                {
-                    Transform target = hit.transform;
-
-                    foreach (GameObject unit in unitSelected)
-                    {
-                        if(unit.GetComponent<AttackController>())
-                        {
-                            Debug.Log("Enemy attacking");
-                            unit.GetComponent<AttackController>().targetToAttack = target;
-                        }
-                    }
-                }
+                UnitFollowingToTarget(hit, "enemy");
+            }
+            else if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+            {
+                UnitFollowingToTarget(hit, "unit");
+            }
+            else if (Physics.Raycast(ray, out hit, Mathf.Infinity, buildClickable))
+            {
+                UnitFollowingToTarget(hit, "build");
             }
             else
             {
-                boolTarget = false;
                 attackCursorVisible = false;
+            }
+        }
+    }
+
+    private void UnitFollowingToTarget(RaycastHit hit, string followTarget)
+    {
+        attackCursorVisible = true;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("Follow to " + followTarget);
+            Transform target = hit.transform;
+
+            foreach (GameObject unit in unitSelected)
+            {
+                if (unit.GetComponent<AttackController>())
+                {
+                    unit.GetComponent<AttackController>().targetToAttack = target;
+                }
             }
         }
     }

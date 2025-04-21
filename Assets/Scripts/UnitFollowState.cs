@@ -34,14 +34,21 @@ public class UnitFollowState : StateMachineBehaviour
                 agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
 
-                //—ледует переходить в состо€ние Attacking State?
-                //float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
-
-                //if (distanceFromTarget < attackingDistance)
+                //if (attackController.isUnit == false)
                 //{
-                //    agent.SetDestination(animator.transform.position);
-                //    animator.SetBool("isAttackig", true);
+                    //—ледует переходить в состо€ние Attacking State?
+                    //float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+
+                    //if (distanceFromTarget < attackingDistance)
+                    //{
+                    //    agent.SetDestination(animator.transform.position);
+                    //    animator.SetBool("isAttackig", true);
                 //}
+                //}
+            }
+            else if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//≈сли получил команду на перемещение, убираем таргет
+            {
+                attackController.targetToAttack = null;
             }
         }
 

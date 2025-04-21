@@ -19,9 +19,10 @@ GameObject:
   - component: {fileID: 6864974576052672319}
   - component: {fileID: 684872702537802636}
   - component: {fileID: 829227125183304954}
+  - component: {fileID: 5785853448752548512}
   m_Layer: 7
   m_Name: Unit
-  m_TagString: Untagged
+  m_TagString: Friendly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,6 +130,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+  isCommandedToMove: 0
 --- !u!114 &3494857328751060189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToAttack: {fileID: 0}
+  isUnit: 0
 --- !u!95 &684872702537802636
 Animator:
   serializedVersion: 5
@@ -236,3 +239,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5785853448752548512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4106416089721365992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b28e36d00ce844a8e3a7bd63930f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickable:
+    serializedVersion: 2
+    m_Bits: 128
+  buildsClickable:
+    serializedVersion: 2
+    m_Bits: 2048

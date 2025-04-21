@@ -1,7 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.CanvasScaler;
 public class EnemOutline : MonoBehaviour
 {
     private UnitSelectionManager unitSelectionManager;
@@ -38,7 +35,7 @@ public class EnemOutline : MonoBehaviour
         }
         else if (hitEnemy && !isVisible)
         {
-            Debug.Log(isVisible);
+            //Debug.Log(isVisible);
             TriggerEnemyIndicator(hitEnemy, isVisible);
         }
     }

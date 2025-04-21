@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 140343283081518046}
   m_Layer: 10
   m_Name: EnemBuild
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0.87843144, g: 0.09019608, b: 0.18431373, a: 1}
-  outlineWidth: 2
+  outlineWidth: 1.5
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

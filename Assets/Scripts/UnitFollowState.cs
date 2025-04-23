@@ -34,17 +34,18 @@ public class UnitFollowState : StateMachineBehaviour
                 agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
 
-                //if (attackController.targetToAttack.CompareTag("Enemy"))
-                //{
+                if (attackController.targetToAttack.CompareTag("Enemy"))
+                {
                     //—ледует переходить в состо€ние Attacking State?
-                    //float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+                    float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
-                    //if (distanceFromTarget < attackingDistance)
-                    //{
-                    //    agent.SetDestination(animator.transform.position);
-                    //    animator.SetBool("isAttackig", true);
-                //}
-                //}
+                    if (distanceFromTarget < attackingDistance)
+                    {
+                        Debug.Log("is Attacking!");
+                        agent.SetDestination(animator.transform.position);
+                        animator.SetBool("isAttacking", true);
+                    }
+                }
             }
             else if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//≈сли получил команду на перемещение, убираем таргет
             {

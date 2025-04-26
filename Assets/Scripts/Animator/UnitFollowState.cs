@@ -30,7 +30,8 @@ public class UnitFollowState : StateMachineBehaviour
         else
         {
             //Following если нет других комманд 
-            if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
+            if (animator.transform.GetComponent<UnitMovement>() != null &&
+                animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
             {
                 //—ледование за врагом
                 agent.SetDestination(attackController.targetToAttack.position);
@@ -51,7 +52,8 @@ public class UnitFollowState : StateMachineBehaviour
                     }
                 }
             }
-            else if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//≈сли получил команду на перемещение, убираем таргет
+            else if (animator.transform.GetComponent<UnitMovement>() != null && 
+                animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//≈сли получил команду на перемещение, убираем таргет
             {
                 attackController.targetToAttack = null;
             }

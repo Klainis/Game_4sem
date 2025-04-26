@@ -8,6 +8,8 @@ public class AttackController : MonoBehaviour
 {
     public Transform targetToAttack;
 
+    public bool isPlayer;
+
     public int unitDamage;
     //public bool isUnit;
     //UnitAttackState unitAttackState; 
@@ -28,7 +30,7 @@ public class AttackController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy")  && targetToAttack == null)
+        if (isPlayer && other.CompareTag("Enemy")  && targetToAttack == null)
         {
             //Debug.Log("Enemy to target!!");
             targetToAttack = other.transform;

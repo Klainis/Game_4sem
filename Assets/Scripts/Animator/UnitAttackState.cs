@@ -8,24 +8,28 @@ public class UnitAttackState : StateMachineBehaviour
 {
     NavMeshAgent agent;
     AttackController attackController;
+    //UnitFollowState unitFollowState;
 
-    public float stopAttackingDistance = 1.2f;
+    public float stopAttackingDistance = 5.2f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
         attackController = animator.GetComponent<AttackController>();
+        //unitFollowState = animator.GetBehaviour<UnitFollowState>();
 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (attackController.targetToAttack != null && 
-            animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false) 
+        if (attackController.targetToAttack != null &&
+            animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
         {
             //LookAtPlayer();
+            //agent.stoppingDistance = attackController.targetToAttack.GetComponent<Collider>().bounds.extents.magnitude + 5.2f;
+            //stopAttackingDistance = agent.stoppingDistance;
 
             agent.SetDestination(attackController.targetToAttack.position);
 

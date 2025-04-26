@@ -6,9 +6,11 @@ using UnityEngine.AI;
 public class UnitFollowState : StateMachineBehaviour
 {
     AttackController attackController;
-
     NavMeshAgent agent;
-    public float attackingDistance = 1f;
+
+    public float attackingDistance = 5f;
+
+    //private float targetRadius;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -36,6 +38,8 @@ public class UnitFollowState : StateMachineBehaviour
 
                 if (attackController.targetToAttack.CompareTag("Enemy"))
                 {
+                    //targetRadius = attackController.targetToAttack.GetComponent<Collider>().bounds.extents.magnitude;
+                    //attackingDistance += targetRadius;
                     //Следует переходить в состояние Attacking State?
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 public class AttackController : MonoBehaviour
 {
     public Transform targetToAttack;
+
+    public int unitDamage;
     //public bool isUnit;
     //UnitAttackState unitAttackState; 
     //UnitFollowState unitFollowState;

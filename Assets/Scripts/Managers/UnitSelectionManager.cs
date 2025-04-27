@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 public class UnitSelectionManager : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class UnitSelectionManager : MonoBehaviour
     public LayerMask ground;
     public LayerMask attackable;
     public LayerMask buildClickable;
+
+    private Color colorOFCursor = Color.green;
 
     public bool attackCursorVisible;
 
@@ -82,10 +86,16 @@ public class UnitSelectionManager : MonoBehaviour
             //Нажимаем на clickable oбъект
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
             {
-                groundMarker.transform.position = hit.point;
+                //groundMarker.transform.position = hit.point;
 
-                groundMarker.SetActive(false);
-                groundMarker.SetActive(true);
+                var positionMarker = hit.point;
+
+                GameObject movementCursor = GameObject.Find("ArrowMesh");
+                MovementCursor mover = movementCursor.GetComponent<MovementCursor>();
+
+                mover.AnimateOnPos(positionMarker, colorOFCursor);
+                //groundMarker.SetActive(false);
+                //groundMarker.SetActive(true);
             }
         }
 

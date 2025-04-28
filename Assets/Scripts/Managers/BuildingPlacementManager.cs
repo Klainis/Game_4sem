@@ -24,12 +24,14 @@ public class BuildingPlacementManager : MonoBehaviour
     Renderer[] ghostRenderers;
     GameObject currentPrefab;
     bool isPlacing;
+    int currentCost;
 
     /*–––– публичный API ––––*/
-    public void BeginPlacement(GameObject prefab)
+    public void BeginPlacement(GameObject prefab, int cost)
     {
         CancelPlacement();
         currentPrefab = prefab;
+        currentCost = cost;
         ghostInstance = Instantiate(currentPrefab);
         SetGhostAppearance(ghostInstance);
         ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
@@ -65,10 +67,16 @@ public class BuildingPlacementManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && valid && !pointerOverUI)
         {
-            Instantiate(currentPrefab,
-                        ghostInstance.transform.position,
-                        ghostInstance.transform.rotation);      // ← сохранит угол
-            // остаёмся в режиме размещения
+            if (ResourceManager.Instance.SpendGold(currentCost))
+            {
+                Instantiate(currentPrefab,
+                            ghostInstance.transform.position,
+                            ghostInstance.transform.rotation);
+            }
+            else
+            {
+                Debug.Log("Недостаточно золота для постройки!");
+            }
         }
 
         /*–– 4. Выход из режима ––*/

@@ -13,7 +13,6 @@ public class UnitSelectionManager : MonoBehaviour
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitSelected = new List<GameObject>();
 
-    public GameObject groundMarker;
     public LayerMask clickable;
     public LayerMask ground;
     public LayerMask attackable;
@@ -139,6 +138,13 @@ public class UnitSelectionManager : MonoBehaviour
                 if (unit.GetComponent<AttackController>())
                 {
                     unit.GetComponent<AttackController>().targetToAttack = target;
+
+                    var movement = unit.GetComponent<UnitMovement>();
+                    if (movement != null)
+                    {
+                        movement.isFollowingTarget = true;
+                        //movement.isCommandedToMove = true; // Чтобы анимация движения работала
+                    }
                 }
             }
         }
@@ -177,7 +183,7 @@ public class UnitSelectionManager : MonoBehaviour
             SelectUnit(unit, false);
         }
 
-        groundMarker.SetActive(false);
+        //groundMarker.SetActive(false);
         unitSelected.Clear();
     }
 

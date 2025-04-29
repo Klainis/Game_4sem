@@ -8,6 +8,7 @@ public class UnitMovement : MonoBehaviour
     public LayerMask ground;
 
     public bool isCommandedToMove;
+    public bool isFollowingTarget;
     private void Start()
     {
         cam = Camera.main;
@@ -24,14 +25,16 @@ public class UnitMovement : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
             {
                 isCommandedToMove = true;
+                isFollowingTarget = false;
                 agent.SetDestination(hit.point);
                 //Debug.Log(hit.point);
             }
         }
 
-        if (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance)
+        if (!isFollowingTarget && (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
         {
-            isCommandedToMove= false;
+            //isCommandedToMove = false;
         }
     }
 }
+ 

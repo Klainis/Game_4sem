@@ -30,7 +30,12 @@ public class AttackController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isPlayer && other.CompareTag("Enemy")  && targetToAttack == null)
+        //if (isPlayer && other.CompareTag("Enemy"))
+        //{
+        //    //Debug.Log("Enemy to target!!");
+        //    targetToAttack = other.transform;
+        //}
+        if (other.CompareTag("Enemy"))
         {
             //Debug.Log("Enemy to target!!");
             targetToAttack = other.transform;

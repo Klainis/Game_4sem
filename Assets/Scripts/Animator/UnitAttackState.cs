@@ -8,6 +8,7 @@ public class UnitAttackState : StateMachineBehaviour
 {
     NavMeshAgent agent;
     AttackController attackController;
+    UnitMovement unitMovement;
     //UnitFollowState unitFollowState;
 
     public float stopAttackingDistance = 5.2f;
@@ -21,6 +22,7 @@ public class UnitAttackState : StateMachineBehaviour
     {
         agent = animator.GetComponent<NavMeshAgent>();
         attackController = animator.GetComponent<AttackController>();
+        unitMovement = animator.transform.GetComponent<UnitMovement>();
         //unitFollowState = animator.GetBehaviour<UnitFollowState>();
 
     }
@@ -29,7 +31,7 @@ public class UnitAttackState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (attackController.targetToAttack != null &&
-            animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
+            unitMovement.isCommandedToMove == false || unitMovement.isFollowingTarget)
         {
             LookAtTarget();
             //agent.stoppingDistance = attackController.targetToAttack.GetComponent<Collider>().bounds.extents.magnitude + 5.2f;

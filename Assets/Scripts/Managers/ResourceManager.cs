@@ -1,57 +1,38 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
+/// <summary>
+/// Единственный источник правды о количестве золота.
+/// Не знает ничего про UI, бросает событие при изменении.
+/// </summary>
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance { get; private set; }
 
-    public int gold = 500;
-    public TMP_Text goldText;
+    [SerializeField] int startGold = 500;
+    public  int  Gold { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+    public event Action<int> OnGoldChanged;
 
-    private void Start()
+    void Awake()
     {
-        UpdateGoldUI();
+        if (Instance && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
+        Gold     = startGold;
     }
 
     public bool SpendGold(int amount)
     {
-        if (gold >= amount)
-        {
-            gold -= amount;
-            UpdateGoldUI();
-            return true;
-        }
-        else
-        {
-            Debug.Log("Недостаточно золота!");
-            return false;
-        }
+        if (Gold < amount) { Debug.Log("Недостаточно золота!"); return false; }
+
+        Gold -= amount;
+        OnGoldChanged?.Invoke(Gold);
+        return true;
     }
 
     public void AddGold(int amount)
     {
-        gold += amount;
-        UpdateGoldUI();
-    }
-
-    private void UpdateGoldUI()
-    {
-        if (goldText != null)
-        {
-            goldText.text = $"Gold: {gold}";
-        }
+        Gold += amount;
+        OnGoldChanged?.Invoke(Gold);
     }
 }

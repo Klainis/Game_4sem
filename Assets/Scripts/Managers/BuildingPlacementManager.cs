@@ -92,9 +92,11 @@ public class BuildingPlacementManager : MonoBehaviour
 
         if (ResourceManager.Instance.SpendGold(currentCost))
         {
-            Instantiate(currentPrefab,
+            var go = Instantiate(currentPrefab,
                         ghostInstance.transform.position,
                         ghostInstance.transform.rotation);
+
+            go.GetComponent<ProductionBuilding>()?.EnableInteraction();
         }
         else
         {

@@ -1,17 +1,46 @@
 using UnityEngine;
 
+/// <summary>
+/// Открывает/закрывает панель построек по клику на главное здание.
+/// Автоматически закрывается, если открылась панель найма.
+/// </summary>
 public class BuildingOpener : MonoBehaviour
 {
     [Header("UI Панель строительства")]
-    public GameObject buildingUIPanel; // сюда закидываем сам UI-панель с кнопками
-    private bool isPanelOpen = false; // флаг, открыта ли панель
-    private void OnMouseDown()
-    {
-        if (buildingUIPanel != null)
-        {
-            isPanelOpen = !isPanelOpen; // переключаем состояние панели
+    [SerializeField] GameObject buildingUIPanel;
 
-            buildingUIPanel.SetActive(isPanelOpen); // открываем или закрываем панель
-        }
+    bool isOpen;
+
+    void Awake()
+    {
+        // Подписка: когда открывается Production-панель, эта скрывается
+        UnitProductionPanel.ProductionPanelOpened += ForceClose;
+    }
+
+    void OnDestroy()
+    {
+        UnitProductionPanel.ProductionPanelOpened -= ForceClose;
+    }
+
+    void OnMouseDown() => Toggle();
+
+    /*–––– helpers ––––*/
+    void Toggle()
+    {
+        if (!buildingUIPanel) return;
+
+        isOpen = !isOpen;
+        buildingUIPanel.SetActive(isOpen);
+
+        // Если открываем себя → закрываем панель найма
+        if (isOpen && UnitProductionPanel.Instance != null)
+            UnitProductionPanel.Instance.Hide();
+    }
+
+    void ForceClose()
+    {
+        if (!isOpen || !buildingUIPanel) return;
+        isOpen = false;
+        buildingUIPanel.SetActive(false);
     }
 }

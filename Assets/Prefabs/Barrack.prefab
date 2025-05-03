@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 1350145493899132179}
   - component: {fileID: 4420949844514984901}
   - component: {fileID: 7623153382164753188}
+  - component: {fileID: 5760428457085563883}
   m_Layer: 11
   m_Name: Barrack
   m_TagString: Building
@@ -175,3 +176,20 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &5760428457085563883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4606148455642486991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08937d574fa02942b50e809a0218b86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  units:
+  - name: "\u041F\u0435\u0445\u043E\u0442\u0438\u043D\u0435\u0446"
+    prefab: {fileID: 4106416089721365992, guid: 83b7f7ef39747ac48a456efb3be31a22, type: 3}
+    cost: 25
+  spawnPoint: {fileID: 2935207107381897400}

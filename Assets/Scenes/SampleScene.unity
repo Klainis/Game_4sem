@@ -2157,6 +2157,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8622257760080159824, guid: f4de9cc65c74eea4d8cbdb81e15f52b8, type: 3}
   m_PrefabInstance: {fileID: 1396594401}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1307697629 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2935207107381897400, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
+  m_PrefabInstance: {fileID: 1658298612}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1339044868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8622257760080159824, guid: f4de9cc65c74eea4d8cbdb81e15f52b8, type: 3}
@@ -2888,6 +2893,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrack
       objectReference: {fileID: 0}
+    - target: {fileID: 4660938378187103309, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1307697629}
     - target: {fileID: 7588642472692296854, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.015106201
@@ -2898,7 +2907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7588642472692296854, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 40.9442
+      value: 43.6
       objectReference: {fileID: 0}
     - target: {fileID: 7588642472692296854, guid: e87d33eccec8a6e49b6b8fba91ff362a, type: 3}
       propertyPath: m_LocalRotation.w

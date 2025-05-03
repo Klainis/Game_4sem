@@ -1,94 +1,109 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
+/// <summary>
+/// Отвечает только за визуальный «призрак», проверку валидности
+/// и фактическое создание здания.  Ввод получает через
+/// PlacementInputHandler.
+/// </summary>
 public class BuildingPlacementManager : MonoBehaviour
 {
-    /*–––– настройки ––––*/
-    [Header("Коллизии по тегам")]
-    [SerializeField] string[] blockingTags = { "Building" };
-
-    [Header("Ghost & проверка")]
+    /*–––– ссылки ––––*/
+    [SerializeField] PlacementInputHandler input;        // drag & drop в инспекторе
     [SerializeField] Material ghostMaterial;
     [SerializeField] LayerMask groundLayer;
 
-    [Header("Сетка")]
-    [SerializeField] float gridSize = 1f;            // шаг сетки
-    [SerializeField] bool snapToGrid = true;         // можно выключить в инспекторе
+    /*–––– настройки ––––*/
+    [Header("Grid")]
+    [SerializeField] float gridSize = 1f;
+    [SerializeField] bool  snapToGrid = true;
 
-    [Header("Поворот")]
-    [SerializeField] KeyCode rotateKey = KeyCode.R;  // клавиша поворота
-    [SerializeField] int rotationStep = 90;          // угол одного шага
+    [Header("Rotation")]
+    [SerializeField] int rotationStep = 90;
 
-    /*–––– внутренние данные ––––*/
-    GameObject ghostInstance;
-    Renderer[] ghostRenderers;
-    GameObject currentPrefab;
-    bool isPlacing;
-    int currentCost;
+    [Header("Blocking tags")]
+    [SerializeField] string[] blockingTags = { "Building" };
 
-    /*–––– публичный API ––––*/
-    public void BeginPlacement(GameObject prefab, int cost)
+    /*–––– runtime ––––*/
+    GameObject  ghostInstance;
+    Renderer[]  ghostRenderers;
+    GameObject  currentPrefab;
+    int         currentCost;
+    bool        isPlacing;
+
+    /*–––– life-cycle ––––*/
+    void OnEnable()
     {
-        CancelPlacement();
-        currentPrefab = prefab;
-        currentCost = cost;
-        ghostInstance = Instantiate(currentPrefab);
-        SetGhostAppearance(ghostInstance);
-        ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
-        isPlacing = true;
+        if (!input) input = FindObjectOfType<PlacementInputHandler>();
+
+        input.RotateRequested += OnRotate;
+        input.CancelRequested += CancelPlacement;
+        input.PlaceRequested  += TryPlaceBuilding;
     }
 
-    public void CancelPlacement()
+    void OnDisable()
     {
-        if (ghostInstance) Destroy(ghostInstance);
-        isPlacing = false;
-        currentPrefab = null;
+        input.RotateRequested -= OnRotate;
+        input.CancelRequested -= CancelPlacement;
+        input.PlaceRequested  -= TryPlaceBuilding;
     }
 
     void Update()
     {
         if (!isPlacing) return;
 
-        /*–– 1. Поворот ––*/
-        if (Input.GetKeyDown(rotateKey))
-        {
-            ghostInstance.transform.Rotate(Vector3.up, rotationStep, Space.World);
-        }
-
-
-        /*–– 2. Обновление позиции ––*/
         UpdateGhostPosition();
+        SetGhostColor(IsPlacementValid(ghostInstance.transform.position));
+    }
 
-        bool valid = IsPlacementValid(ghostInstance.transform.position);
-        SetGhostColor(valid);
+    /*–––– public API ––––*/
+    public void BeginPlacement(GameObject prefab, int cost)
+    {
+        CancelPlacement();                     // сбрасываем предыдущую попытку
 
-        /*–– 3. Установка здания, если курсор не над UI ––*/
-        bool pointerOverUI = EventSystem.current.IsPointerOverGameObject();
+        currentPrefab = prefab;
+        currentCost   = cost;
 
-        if (Input.GetMouseButtonDown(0) && valid && !pointerOverUI)
+        ghostInstance = Instantiate(currentPrefab);
+        SetGhostAppearance(ghostInstance);
+        ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
+
+        isPlacing = true;
+    }
+
+    public void CancelPlacement()
+    {
+        if (ghostInstance) Destroy(ghostInstance);
+        isPlacing     = false;
+        currentPrefab = null;
+    }
+
+    /*–––– event-handlers ––––*/
+    void OnRotate()
+    {
+        if (isPlacing && ghostInstance)
+            ghostInstance.transform.Rotate(Vector3.up, rotationStep, Space.World);
+    }
+
+    void TryPlaceBuilding(Vector3 clickPoint)
+    {
+        if (!isPlacing) return;
+
+        if (!IsPlacementValid(ghostInstance.transform.position)) return;
+
+        if (ResourceManager.Instance.SpendGold(currentCost))
         {
-            if (ResourceManager.Instance.SpendGold(currentCost))
-            {
-                Instantiate(currentPrefab,
-                            ghostInstance.transform.position,
-                            ghostInstance.transform.rotation);
-            }
-            else
-            {
-                Debug.Log("Недостаточно золота для постройки!");
-            }
+            Instantiate(currentPrefab,
+                        ghostInstance.transform.position,
+                        ghostInstance.transform.rotation);
         }
-
-        /*–– 4. Выход из режима ––*/
-        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+        else
         {
-            CancelPlacement();
+            Debug.Log("Недостаточно золота для постройки!");
         }
     }
 
-    /*–––– вспомогательные методы ––––*/
-
-    private void UpdateGhostPosition()
+    /*–––– helpers ––––*/
+    void UpdateGhostPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
@@ -100,81 +115,47 @@ public class BuildingPlacementManager : MonoBehaviour
                 pos.x = Mathf.Round(pos.x / gridSize) * gridSize;
                 pos.z = Mathf.Round(pos.z / gridSize) * gridSize;
             }
-
             ghostInstance.transform.position = pos;
         }
     }
 
-    private void SetGhostAppearance(GameObject ghost)
+    void SetGhostAppearance(GameObject ghost)
     {
-        Renderer[] renderers = ghost.GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
+        foreach (var rend in ghost.GetComponentsInChildren<Renderer>())
         {
-            Material ghostMat = new Material(ghostMaterial != null ? ghostMaterial : renderer.material);
-            Color color = ghostMat.color;
-            color.a = 0.5f;
-            ghostMat.color = color;
-            renderer.material = ghostMat;
+            var mat = new Material(ghostMaterial ? ghostMaterial : rend.material);
+            var c   = mat.color;  c.a = .5f;  mat.color = c;
+            rend.material = mat;
         }
     }
 
-    private void SetGhostColor(bool isValid)
+    void SetGhostColor(bool isValid)
     {
         if (ghostRenderers == null) return;
-
-        Color color = isValid ? Color.green : Color.red;
-        color.a = 0.5f;
-
-        foreach (Renderer renderer in ghostRenderers)
-        {
-            renderer.material.color = color;
-        }
+        var c = (isValid ? Color.green : Color.red);  c.a = .5f;
+        foreach (var r in ghostRenderers) r.material.color = c;
     }
 
-    private Vector3 GetGhostColliderSize()
+    Vector3 GetGhostColliderSize()
     {
-        BoxCollider collider = ghostInstance.GetComponent<BoxCollider>();
-        if (collider != null)
-        {
-            Vector3 scaledSize = Vector3.Scale(collider.size, ghostInstance.transform.localScale);
-            return scaledSize;
-        }
+        if (ghostInstance.TryGetComponent(out BoxCollider col))
+            return Vector3.Scale(col.size, ghostInstance.transform.localScale);
 
         return new Vector3(1.1f, 1.5f, 1.1f); // fallback
     }
 
-    private bool IsPlacementValid(Vector3 position)
+    bool IsPlacementValid(Vector3 pos)
     {
-        Vector3 size   = GetGhostColliderSize();
-        Vector3 center = position + Vector3.up * (size.y / 2);
-        Quaternion rot = ghostInstance.transform.rotation;
+        var size   = GetGhostColliderSize();
+        var center = pos + Vector3.up * (size.y / 2);
+        var hits   = Physics.OverlapBox(center, size / 2, ghostInstance.transform.rotation);
 
-        // Проверяем всё, без LayerMask
-        Collider[] hits = Physics.OverlapBox(center, size / 2f, rot);
-
-        foreach (var hit in hits)
+        foreach (var h in hits)
         {
-            if (hit.gameObject == ghostInstance) continue;          // пропускаем призрак
-
-            foreach (var tag in blockingTags)                       // если тег блокирует — нельзя
-                if (hit.CompareTag(tag)) return false;
+            if (h.gameObject == ghostInstance) continue;
+            foreach (var tag in blockingTags)
+                if (h.CompareTag(tag)) return false;
         }
-        return true;                                                // свободно
-    }
-
-
-    private void OnDrawGizmosSelected()
-    {
-        if (ghostInstance != null)
-        {
-            Gizmos.color = Color.red;
-            Vector3 size = GetGhostColliderSize();
-            Vector3 center = ghostInstance.transform.position + Vector3.up * (size.y / 2);
-            Quaternion rotation = ghostInstance.transform.rotation;
-
-            Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, size);
-            Gizmos.matrix = Matrix4x4.identity;
-        }
+        return true;
     }
 }

@@ -79,15 +79,20 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && unitSelected.Count > 0)
         {
-            RaycastHit hit;
+            //RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
+            RaycastHit hitGround, hitAttackable;
+            bool isGroundHit = Physics.Raycast(ray, out hitGround, Mathf.Infinity, ground);
+            bool isAttackableHit = Physics.Raycast(ray, out hitAttackable, Mathf.Infinity, attackable);
+            bool isFriendlyHit = Physics.Raycast(ray, out hitAttackable, Mathf.Infinity, clickable);
+
             //Нажимаем на clickable oбъект
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
+            if (isGroundHit && !isAttackableHit && !isFriendlyHit)
             {
                 //groundMarker.transform.position = hit.point;
 
-                var positionMarker = hit.point;
+                var positionMarker = hitGround.point;
 
                 GameObject movementCursor = GameObject.Find("ArrowMesh");
                 MovementCursor mover = movementCursor.GetComponent<MovementCursor>();
@@ -107,7 +112,7 @@ public class UnitSelectionManager : MonoBehaviour
             //Нажимаем на attackable oбъект
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
             {
-                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 0.1f);
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
                 UnitFollowingToTarget(hit, "enemy");
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
@@ -144,8 +149,9 @@ public class UnitSelectionManager : MonoBehaviour
                     {
                         
                         movement.isFollowingTarget = true;
-                        Debug.Log("Follow to " + followTarget + movement.isFollowingTarget);
+                        
                         movement.isCommandedToMove = false; // Чтобы анимация движения работала
+                        Debug.Log("Follow to " + followTarget + movement.isFollowingTarget + ";  To Move command " + movement.isCommandedToMove);
                     }
                 }
             }

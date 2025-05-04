@@ -112,7 +112,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -131,7 +131,14 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
+  attackable:
+    serializedVersion: 2
+    m_Bits: 1024
+  clickable:
+    serializedVersion: 2
+    m_Bits: 128
   isCommandedToMove: 0
+  isFollowingTarget: 0
 --- !u!114 &3494857328751060189
 MonoBehaviour:
   m_ObjectHideFlags: 0

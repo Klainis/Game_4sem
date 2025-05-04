@@ -2031,10 +2031,6 @@ PrefabInstance:
       propertyPath: facingCamera
       value: 
       objectReference: {fileID: 963194227}
-    - target: {fileID: 8127660943342888808, guid: 55a999d6c4a13b548b90cbbd419b89bb, type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -24,17 +24,21 @@ public class UnitMovement : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
             {
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green, 0.1f);
+                
                 isCommandedToMove = true;
+                Debug.Log("Двигается" + isCommandedToMove);
+                isCommandedToMove = false;
                 isFollowingTarget = false;
                 agent.SetDestination(hit.point);
                 //Debug.Log(hit.point);
             }
         }
 
-        if (!isFollowingTarget && (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
-        {
-            //isCommandedToMove = false;
-        }
+        //if (!isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
+        //{
+        //    //isCommandedToMove = false;
+        //}
     }
 }
  

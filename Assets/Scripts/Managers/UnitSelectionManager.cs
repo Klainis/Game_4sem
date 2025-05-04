@@ -107,6 +107,7 @@ public class UnitSelectionManager : MonoBehaviour
             //Нажимаем на attackable oбъект
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
             {
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 0.1f);
                 UnitFollowingToTarget(hit, "enemy");
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
@@ -130,7 +131,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Follow to " + followTarget);
+            //Debug.Log("Follow to " + followTarget);
             Transform target = hit.transform;
 
             foreach (GameObject unit in unitSelected)
@@ -139,11 +140,12 @@ public class UnitSelectionManager : MonoBehaviour
                 {
                     unit.GetComponent<AttackController>().targetToAttack = target;
 
-                    var movement = unit.GetComponent<UnitMovement>();
-                    if (movement != null)
+                    if (unit.TryGetComponent<UnitMovement>(out var movement) && unit.GetComponent<AttackController>().targetToAttack != null)
                     {
+                        
                         movement.isFollowingTarget = true;
-                        //movement.isCommandedToMove = true; // Чтобы анимация движения работала
+                        Debug.Log("Follow to " + followTarget + movement.isFollowingTarget);
+                        movement.isCommandedToMove = false; // Чтобы анимация движения работала
                     }
                 }
             }

@@ -79,15 +79,20 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && unitSelected.Count > 0)
         {
-            RaycastHit hit;
+            //RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
+            RaycastHit hitGround, hitAttackable;
+            bool isGroundHit = Physics.Raycast(ray, out hitGround, Mathf.Infinity, ground);
+            bool isAttackableHit = Physics.Raycast(ray, out hitAttackable, Mathf.Infinity, attackable);
+            bool isFriendlyHit = Physics.Raycast(ray, out hitAttackable, Mathf.Infinity, clickable);
+
             //Нажимаем на clickable oбъект
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground))
+            if (isGroundHit && !isAttackableHit && !isFriendlyHit)
             {
                 //groundMarker.transform.position = hit.point;
 
-                var positionMarker = hit.point;
+                var positionMarker = hitGround.point;
 
                 GameObject movementCursor = GameObject.Find("ArrowMesh");
                 MovementCursor mover = movementCursor.GetComponent<MovementCursor>();
@@ -107,6 +112,7 @@ public class UnitSelectionManager : MonoBehaviour
             //Нажимаем на attackable oбъект
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
             {
+                Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.red, 1f);
                 UnitFollowingToTarget(hit, "enemy");
             }
             else if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
@@ -130,7 +136,7 @@ public class UnitSelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Follow to " + followTarget);
+            //Debug.Log("Follow to " + followTarget);
             Transform target = hit.transform;
 
             foreach (GameObject unit in unitSelected)
@@ -139,11 +145,21 @@ public class UnitSelectionManager : MonoBehaviour
                 {
                     unit.GetComponent<AttackController>().targetToAttack = target;
 
+<<<<<<< HEAD
                     var movement = unit.GetComponent<UnitMovement>();
                     if (movement != null)
                     {
                         movement.isFollowingTarget = true;
                         //movement.isCommandedToMove = true; // Чтобы анимация движения работала
+=======
+                    if (unit.TryGetComponent<UnitMovement>(out var movement) && unit.GetComponent<AttackController>().targetToAttack != null)
+                    {
+                        
+                        movement.isFollowingTarget = true;
+                        
+                        movement.isCommandedToMove = false; // Чтобы анимация движения работала
+                        Debug.Log("Follow to " + followTarget + movement.isFollowingTarget + ";  To Move command " + movement.isCommandedToMove);
+>>>>>>> TargetNanError
                     }
                 }
             }

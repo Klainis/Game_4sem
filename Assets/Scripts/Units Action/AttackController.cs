@@ -35,42 +35,46 @@ public class AttackController : MonoBehaviour
         //    //Debug.Log("Enemy to target!!");
         //    targetToAttack = other.transform;
         //}
-        if (other.CompareTag("Enemy"))
+        if (isPlayer && other.CompareTag("Enemy") && targetToAttack == null)
         {
-            //Debug.Log("Enemy to target!!");
+            Debug.Log("Enemy to target!!");
+            targetToAttack = other.transform;
+        }
+        else if (!isPlayer && other.CompareTag("Friendly"))
+        {
             targetToAttack = other.transform;
         }
 
-        if (other.CompareTag("Friendly") && targetToAttack == null)
-        {
-            //Debug.Log("Friendly to target!!");
-            targetToAttack = other.transform;
-        }
+        //if (other.CompareTag("Friendly") && targetToAttack == null)
+        //{
+        //    //Debug.Log("Friendly to target!!");
+        //    targetToAttack = other.transform;
+        //}
 
-        if (other.CompareTag("Building") && targetToAttack == null)
-        {
-            //Debug.Log("Building to target!!");
-            targetToAttack = other.transform;
-        }
+        //if (other.CompareTag("Building") && targetToAttack == null)
+        //{
+        //    //Debug.Log("Building to target!!");
+        //    targetToAttack = other.transform;
+        //}
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        //if (other.CompareTag("Enemy") && targetToAttack != null)
-        //{
-        //    targetToAttack = null;
-        //}
+        if (other.CompareTag("Enemy") && targetToAttack != null)
+        {
+            targetToAttack = null;
+        }
 
-        //if (other.CompareTag("Friendly") && targetToAttack != null)
-        //{
-        //    targetToAttack = null;
-        //}
+        if (other.CompareTag("Friendly") && targetToAttack != null)
+        {
+            targetToAttack = null;
+        }
 
-        //if (other.CompareTag("Building") && targetToAttack != null)
-        //{
-        //    targetToAttack = null;
-        //}
+        if (other.CompareTag("Building") && targetToAttack != null)
+        {
+            targetToAttack = null;
+        }
 
     }
 

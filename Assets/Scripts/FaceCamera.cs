@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class FaceCamera : MonoBehaviour
 {
-    private Transform localTrans;
+    private Camera mainCamera;
 
-    public Camera facingCamera;
-
-    private void Start()
+    void Start()
     {
-        localTrans = GetComponent<Transform>();
+        mainCamera = Camera.main; // Получаем главную камеру
     }
 
-    private void Update()
+    void LateUpdate()
     {
-        if (facingCamera)
-        {
-            localTrans.LookAt(2 * localTrans.position - facingCamera.transform.position);
-        }
+        // Поворачиваем объект к камере (но только по оси Y, если нужно)
+        transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,
+                         mainCamera.transform.rotation * Vector3.up);
     }
 }

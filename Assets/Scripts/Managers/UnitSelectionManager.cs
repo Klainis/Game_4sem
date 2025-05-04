@@ -145,21 +145,13 @@ public class UnitSelectionManager : MonoBehaviour
                 {
                     unit.GetComponent<AttackController>().targetToAttack = target;
 
-<<<<<<< HEAD
-                    var movement = unit.GetComponent<UnitMovement>();
-                    if (movement != null)
-                    {
-                        movement.isFollowingTarget = true;
-                        //movement.isCommandedToMove = true; // Чтобы анимация движения работала
-=======
                     if (unit.TryGetComponent<UnitMovement>(out var movement) && unit.GetComponent<AttackController>().targetToAttack != null)
                     {
                         
-                        movement.isFollowingTarget = true;
-                        
+                        movement.isFollowingTarget = true;                      
                         movement.isCommandedToMove = false; // Чтобы анимация движения работала
+
                         Debug.Log("Follow to " + followTarget + movement.isFollowingTarget + ";  To Move command " + movement.isCommandedToMove);
->>>>>>> TargetNanError
                     }
                 }
             }

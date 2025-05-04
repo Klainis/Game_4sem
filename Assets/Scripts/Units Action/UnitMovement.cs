@@ -35,29 +35,17 @@ public class UnitMovement : MonoBehaviour
                 Debug.DrawRay(ray.origin, ray.direction, Color.green, 1f);
                 
                 isCommandedToMove = true;
-<<<<<<< HEAD
-                isFollowingTarget = false;
-                agent.SetDestination(hit.point);
-=======
+
                 Debug.Log("Двигается" + isCommandedToMove);
                 isFollowingTarget = false;
                 agent.SetDestination(hitGround.point);
->>>>>>> TargetNanError
-                //Debug.Log(hit.point);
             }
         }
 
-<<<<<<< HEAD
-        if (!isFollowingTarget && (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
-        {
-            //isCommandedToMove = false;
-        }
-=======
-        //if (!isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
+        //if (!isFollowingTarget && (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
         //{
         //    //isCommandedToMove = false;
         //}
->>>>>>> TargetNanError
     }
 }
  

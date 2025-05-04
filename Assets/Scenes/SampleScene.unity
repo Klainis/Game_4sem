@@ -854,10 +854,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allUnitsList: []
   unitSelected: []
-<<<<<<< HEAD
-  groundMarker: {fileID: 0}
-=======
->>>>>>> TargetNanError
   clickable:
     serializedVersion: 2
     m_Bits: 128

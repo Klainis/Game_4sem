@@ -1,68 +1,78 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Здание-добытчик: ищет ближайший ResourceNode и
-/// каждые N секунд извлекает золото.
+/// Шахта: каждые N секунд берёт goldPerTick из КАЖДОЙ жилы в радиусе.
 /// </summary>
 public class GoldMine : MonoBehaviour
 {
-    [Header("Search")]
-    [SerializeField] float searchRadius = 3f;
+    [Header("References")]
+    [SerializeField] RangeVisualizer range;          // кольцо для игрока
 
     [Header("Mining")]
-    [SerializeField] float tickSeconds = 2f;
-    [SerializeField] int   goldPerTick = 10;
+    [SerializeField] float tickSeconds = 2f;         // период добычи
+    [SerializeField] int   goldPerTick = 10;         // из каждой жилы
 
-    ResourceNode node;
-    Coroutine    routine;
+    readonly List<ResourceNode> nodes = new();       // все жилы в радиусе
+    Coroutine routine;
 
-    void Start()
+    void Awake()
     {
-        node = FindClosestNode();
-        if (node != null)
-        {
+        if (!range)
+            range = GetComponentInChildren<RangeVisualizer>(true);
+
+        range?.Hide();                               // шахта стартует без видимого кольца
+
+        float radius = range ? range.RadiusWorld : 3f;
+        FindNodes(radius);
+
+        if (nodes.Count > 0)
             routine = StartCoroutine(MineLoop());
-            node.OnDepleted += HandleNodeDepleted;
-        }
         else
-        {
-            Debug.LogWarning($"{name}: рядом нет Gold Deposit — шахта бездействует");
-        }
+            Debug.Log($"{name}: рядом нет Gold Deposit");
     }
 
-    ResourceNode FindClosestNode()
+    void FindNodes(float radius)
     {
-        var colliders = Physics.OverlapSphere(transform.position, searchRadius);
-        float bestDist = float.MaxValue;
-        ResourceNode bestNode = null;
-
-        foreach (var col in colliders)
-        {
-            if (col.TryGetComponent(out ResourceNode rn) && !rn.IsDepleted)
+        var cols = Physics.OverlapSphere(transform.position, radius);
+        foreach (var c in cols)
+            if (c.TryGetComponent(out ResourceNode rn) && !rn.IsDepleted)
             {
-                float d = (col.transform.position - transform.position).sqrMagnitude;
-                if (d < bestDist) { bestDist = d; bestNode = rn; }
+                nodes.Add(rn);
+                rn.OnDepleted += HandleNodeDepleted;
             }
-        }
-        return bestNode;
     }
 
     IEnumerator MineLoop()
     {
-        while (node != null && !node.IsDepleted)
+        while (nodes.Count > 0)
         {
             yield return new WaitForSeconds(tickSeconds);
 
-            int taken = node.Extract(goldPerTick);
-            if (taken > 0)
-                ResourceManager.Instance.AddGold(taken);   // :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+            int totalTaken = 0;
+            // идём по копии, потому что в цикле список может измениться
+            foreach (var node in new List<ResourceNode>(nodes))
+            {
+                int taken = node.Extract(goldPerTick);
+                totalTaken += taken;
+                if (taken == 0 && node.IsDepleted)
+                    HandleNodeDepleted(node);
+            }
+
+            if (totalTaken > 0)
+                ResourceManager.Instance.AddGold(totalTaken);
         }
+
+        Debug.Log($"{name}: все жилы исчерпаны, добыча остановлена");
     }
 
-    void HandleNodeDepleted(ResourceNode _)
+    void HandleNodeDepleted(ResourceNode node)
     {
-        if (routine != null) StopCoroutine(routine);
-        Debug.Log($"{name}: ресурс исчерпан, шахта остановилась");
+        node.OnDepleted -= HandleNodeDepleted;
+        nodes.Remove(node);
     }
+
+    /* UI: показать / скрыть радиус */
+    void OnMouseDown() { if (range) range.Toggle(); }
 }

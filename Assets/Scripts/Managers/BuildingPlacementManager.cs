@@ -64,6 +64,11 @@ public class BuildingPlacementManager : MonoBehaviour
         currentCost   = cost;
 
         ghostInstance = Instantiate(currentPrefab);
+
+        var allRV = ghostInstance.GetComponentsInChildren<RangeVisualizer>(true);
+        foreach (var rv in allRV)
+            rv.Show();
+
         SetGhostAppearance(ghostInstance);
         ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
 
@@ -97,6 +102,8 @@ public class BuildingPlacementManager : MonoBehaviour
                         ghostInstance.transform.rotation);
 
             go.GetComponent<ProductionBuilding>()?.EnableInteraction();
+
+            BeginPlacement(currentPrefab, currentCost);
         }
         else
         {

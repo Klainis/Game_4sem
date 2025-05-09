@@ -17,6 +17,7 @@ public class UnitFollowState : StateMachineBehaviour
     {
         attackController = animator.transform.GetComponent<AttackController>();
         agent = animator.transform.GetComponent<NavMeshAgent>();
+
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -37,20 +38,29 @@ public class UnitFollowState : StateMachineBehaviour
                 agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
 
-                if (attackController.targetToAttack.CompareTag("Enemy"))
+                if (attackController.targetToAttack.CompareTag("Enemy") && attackController.isPlayer)
                 {
-                    //targetRadius = attackController.targetToAttack.GetComponent<Collider>().bounds.extents.magnitude;
-                    //attackingDistance += targetRadius;
-                    //—ледует переходить в состо€ние Attacking State?
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
                     if (distanceFromTarget < attackingDistance)
                     {
-                        Debug.Log("is Attacking!");
+                        Debug.Log("Unit is Attacking!");
                         agent.SetDestination(animator.transform.position);
                         animator.SetBool("isAttacking", true);
                     }
                 }
+                else if (attackController.targetToAttack.CompareTag("Friendly") && !attackController.isPlayer)
+                {
+                    float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+
+                    if (distanceFromTarget < attackingDistance)
+                    {
+                        Debug.Log("Enemy is Attacking!");
+                        agent.SetDestination(animator.transform.position);
+                        animator.SetBool("isAttacking", true);
+                    }
+                }
+
             }
             else if (animator.transform.GetComponent<UnitMovement>() != null && 
                 animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//≈сли получил команду на перемещение, убираем таргет

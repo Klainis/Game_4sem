@@ -9,12 +9,12 @@ public class UnitAttackState : StateMachineBehaviour
     NavMeshAgent agent;
     AttackController attackController;
     UnitMovement unitMovement;
+    Unit unit;
+    UnitFollowState unitFollowState;
     //UnitFollowState unitFollowState;
 
-    public float stopAttackingDistance = 5.2f;
+    public float stopAttackingDistance;
 
-
-    private float attackRate = 2f;
     private float attackTimer = 1f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -23,7 +23,11 @@ public class UnitAttackState : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         attackController = animator.GetComponent<AttackController>();
         unitMovement = animator.transform.GetComponent<UnitMovement>();
-        //unitFollowState = animator.GetBehaviour<UnitFollowState>();
+        unit = animator.transform.GetComponent<Unit>();
+        unitFollowState = animator.GetBehaviour<UnitFollowState>();
+
+        stopAttackingDistance = unitFollowState.attackingDistance + 0.2f;
+        //Debug.Log(stopAttackingDistance);
 
     }
 
@@ -42,7 +46,7 @@ public class UnitAttackState : StateMachineBehaviour
             if (attackTimer <= 0)
             {
                 Attack();
-                attackTimer = 1f / attackRate;
+                attackTimer = 1f / unit.attackRate;
             
             }  
             else
@@ -67,7 +71,7 @@ public class UnitAttackState : StateMachineBehaviour
 
     private void Attack()
     {
-        var damageAttack = attackController.unitDamage;
+        var damageAttack = unit.unitDamage;
         
         attackController.targetToAttack.GetComponent<Unit>().TakeDamage(damageAttack);
     }

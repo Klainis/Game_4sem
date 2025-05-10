@@ -42,10 +42,10 @@ public class UnitMovement : MonoBehaviour
             }
         }
 
-        //if (!isFollowingTarget && (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
-        //{
-        //    //isCommandedToMove = false;
-        //}
+        if (isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
+        {
+            isCommandedToMove = false;
+        }
     }
 }
  

@@ -7,8 +7,9 @@ public class UnitFollowState : StateMachineBehaviour
 {
     AttackController attackController;
     NavMeshAgent agent;
+    Unit unit;
 
-    public float attackingDistance = 5f;
+    public float attackingDistance;
 
     //private float targetRadius;
 
@@ -17,6 +18,10 @@ public class UnitFollowState : StateMachineBehaviour
     {
         attackController = animator.transform.GetComponent<AttackController>();
         agent = animator.transform.GetComponent<NavMeshAgent>();
+        unit = animator.transform.GetComponent<Unit>();
+
+        attackingDistance = unit.attackRange;
+        Debug.Log(attackingDistance);
 
     }
 
@@ -42,7 +47,7 @@ public class UnitFollowState : StateMachineBehaviour
                 {
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
-                    if (distanceFromTarget < attackingDistance)
+                    if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Unit is Attacking!");
                         agent.SetDestination(animator.transform.position);
@@ -53,7 +58,7 @@ public class UnitFollowState : StateMachineBehaviour
                 {
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
-                    if (distanceFromTarget < attackingDistance)
+                    if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Enemy is Attacking!");
                         agent.SetDestination(animator.transform.position);

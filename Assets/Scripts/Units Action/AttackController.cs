@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class AttackController : MonoBehaviour
 {
+    Animator animator;
+    UnitFollowState unitFollowState;
+    UnitAttackState unitAttackState;
+    Unit unit;
+
     public Transform targetToAttack;
 
     public bool isPlayer;
 
-    public int unitDamage;
     //public bool isUnit;
     //UnitAttackState unitAttackState; 
     //UnitFollowState unitFollowState;
@@ -30,12 +34,16 @@ public class AttackController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        animator = GetComponentInParent<Animator>();
+        unit = GetComponentInParent<Unit>();
+        unitAttackState = animator.GetBehaviour<UnitAttackState>();
+        //unitFollowState = animator.GetBehaviour<UnitFollowState>();
         //if (isPlayer && other.CompareTag("Enemy"))
         //{
         //    //Debug.Log("Enemy to target!!");
         //    targetToAttack = other.transform;
         //}
-        if (isPlayer && other.CompareTag("Enemy") && targetToAttack == null)
+        if (isPlayer && other.CompareTag("Enemy"))
         {
             Debug.Log("Enemy to target!!");
             targetToAttack = other.transform;
@@ -94,10 +102,10 @@ public class AttackController : MonoBehaviour
 
         // Attack Distance
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 5f); // Следует из UnitFollowState
+        Gizmos.DrawWireSphere(transform.position, unit.attackRange); // Следует из UnitFollowState
 
         // Stop Distance
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 5.2f); // Следует из UnitAttackstate
+        Gizmos.DrawWireSphere(transform.position, unitAttackState.stopAttackingDistance); // Следует из UnitAttackstate, Unit
     }
 }

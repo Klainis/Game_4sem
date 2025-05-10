@@ -4,7 +4,13 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     private float unitHealth;
+
     public float unitMaxHealth;
+    public int unitDamage;
+    public float attackRange; //5
+    public float attackRate; //2
+    public int armor;
+    public float moveSpeed = 3.5f;
 
     public HealthTracker healthTracker;
 

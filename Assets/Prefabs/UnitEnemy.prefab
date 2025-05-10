@@ -153,6 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitMaxHealth: 100
+  unitDamage: 25
+  attackRange: 5
+  attackRate: 2
+  armor: 0
+  moveSpeed: 3.5
   healthTracker: {fileID: 8655251093916263505}
 --- !u!195 &8800123385990703698
 NavMeshAgent:
@@ -208,7 +213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetToAttack: {fileID: 0}
   isPlayer: 0
-  unitDamage: 10
 --- !u!95 &2773821708727638483
 Animator:
   serializedVersion: 5
@@ -217,7 +221,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6641917663597290371}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 8d09ffc73e870d843856264d1f1ee480, type: 2}
   m_CullingMode: 0

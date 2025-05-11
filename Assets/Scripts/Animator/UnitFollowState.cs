@@ -51,6 +51,7 @@ public class UnitFollowState : StateMachineBehaviour
                     {
                         Debug.Log("Unit is Attacking!");
                         agent.SetDestination(animator.transform.position);
+                        //agent.isStopped = true;
                         animator.SetBool("isAttacking", true);
                     }
                 }

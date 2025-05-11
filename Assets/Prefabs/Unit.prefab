@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitMaxHealth: 100
   unitDamage: 25
-  attackRange: 5
+  attackRange: 8
   attackRate: 2
   armor: 0
   moveSpeed: 3.5

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AttackController : MonoBehaviour
 {
     Animator animator;
-    UnitFollowState unitFollowState;
+    //UnitFollowState unitFollowState;
     UnitAttackState unitAttackState;
     Unit unit;
 
@@ -102,10 +102,16 @@ public class AttackController : MonoBehaviour
 
         // Attack Distance
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, unit.attackRange); // Следует из UnitFollowState
+        if (unit != null)
+        {
+            Gizmos.DrawWireSphere(transform.position, unit.attackRange);
+        }// Следует из UnitFollowState
 
         // Stop Distance
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, unitAttackState.stopAttackingDistance); // Следует из UnitAttackstate, Unit
+        if (unitAttackState != null)
+        { 
+            Gizmos.DrawWireSphere(transform.position, unitAttackState.stopAttackingDistance); // Следует из UnitAttackstate, Unit
+        }
     }
 }

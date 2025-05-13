@@ -6,6 +6,8 @@ public class UnitMovement : MonoBehaviour
 {
     Camera cam;
     NavMeshAgent agent;
+    Unit unit;
+
     public LayerMask ground;
     public LayerMask attackable;
     public LayerMask clickable;
@@ -16,6 +18,9 @@ public class UnitMovement : MonoBehaviour
     {
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
+        unit = GetComponent<Unit>();
+
+        agent.speed = unit.moveSpeed;
     }
 
     private void Update()

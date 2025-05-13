@@ -41,7 +41,9 @@ public class Unit : MonoBehaviour
 
     internal void TakeDamage(int damageAttack)
     {
-        unitHealth -= damageAttack;
+        var damageAttackAfterArmor = damageAttack * (armor / 100);
+        Debug.Log(damageAttackAfterArmor);
+        unitHealth -= damageAttackAfterArmor;
         UpdateHealthUI();
     }
 }

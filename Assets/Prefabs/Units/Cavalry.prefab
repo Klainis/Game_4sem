@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 5785853448752548512}
   - component: {fileID: 9075811633946474912}
   m_Layer: 7
-  m_Name: Unit
+  m_Name: Cavalry
   m_TagString: Friendly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8cb28c647aebffc4dbe92b70027a05b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -154,10 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitMaxHealth: 100
   unitDamage: 25
-  attackRange: 8
+  attackRange: 5
   attackRate: 2
-  armor: 0
-  moveSpeed: 3.5
+  armor: 25
+  moveSpeed: 10
   healthTracker: {fileID: 2001549360271453216}
 --- !u!195 &3846881889116899991
 NavMeshAgent:

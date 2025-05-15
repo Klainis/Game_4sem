@@ -18,7 +18,9 @@ public class UnitIdleState : StateMachineBehaviour
         //Проверка таргета
         if (attackController.targetToAttack != null)
         {
+
             //Переход в состояние следования
+            Debug.Log("Enemy is following");
             animator.SetBool("isFollowing", true);
         }
 

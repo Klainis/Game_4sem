@@ -1171,6 +1171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3494857328751060189, guid: bffc43d459386854aa49df92bd4ff65d, type: 3}
+      propertyPath: unitDamage
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4106416089721365992, guid: bffc43d459386854aa49df92bd4ff65d, type: 3}
       propertyPath: m_Name
       value: Monk Doctor
@@ -2490,6 +2494,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1040400778}
     m_Modifications:
+    - target: {fileID: 453140086331521159, guid: 55a999d6c4a13b548b90cbbd419b89bb, type: 3}
+      propertyPath: unitDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 536570373898095767, guid: 55a999d6c4a13b548b90cbbd419b89bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.46

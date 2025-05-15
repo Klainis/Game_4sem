@@ -103,7 +103,7 @@ public class UnitSelectionManager : MonoBehaviour
             }
         }
 
-        //Attack Target
+        //Heal Target
         if (unitSelected.Count > 0 && AtleastOneOffensiveUnit(unitSelected))
         {
             RaycastHit hit;

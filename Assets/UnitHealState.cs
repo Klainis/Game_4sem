@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class UnitAttackState : StateMachineBehaviour
+public class UnitHealState : StateMachineBehaviour
 {
     NavMeshAgent agent;
     AttackController attackController;
@@ -36,14 +36,14 @@ public class UnitAttackState : StateMachineBehaviour
         {
             LookAtTarget();
 
-            agent.SetDestination(animator.transform.position);
+            //agent.SetDestination(animator.transform.position);
 
             if (attackTimer <= 0)
             {
-                Attack();
+                Heal();
                 attackTimer = 1f / unit.attackRate;
-            
-            }  
+
+            }
             else
             {
                 attackTimer -= Time.deltaTime;
@@ -54,23 +54,23 @@ public class UnitAttackState : StateMachineBehaviour
             {
                 float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
-                if (distanceFromTarget > stopAttackingDistance || attackController.targetToAttack == null)
+                if (distanceFromTarget > stopAttackingDistance || attackController.targetToAttack == null || unit.unitHealth == unit.unitMaxHealth)
                 {
                     agent.SetDestination(animator.transform.position);
-                    animator.SetBool("isAttacking", false); // Move to Follow State
+                    animator.SetBool("isHealing", false); // Move to Follow State
                 }
             }
 
         }
     }
 
-    private void Attack()
+    private void Heal()
     {
         if (attackController.targetToAttack != null)
         {
-            var damageAttack = unit.unitDamage;
+            var heal = -unit.unitDamage; // Heal
 
-            attackController.targetToAttack.GetComponent<Unit>().TakeDamage(damageAttack);
+            attackController.targetToAttack.GetComponent<Unit>().TakeDamage(heal);
         }
     }
 

@@ -43,14 +43,17 @@ public class AttackController : MonoBehaviour
         //    //Debug.Log("Enemy to target!!");
         //    targetToAttack = other.transform;
         //}
-        if (isPlayer && other.CompareTag("Enemy"))
+        if (isPlayer && other.CompareTag("Enemy") && !animator.transform.CompareTag("Unit Monk Doctor") && targetToAttack == null)
         {
             Debug.Log("Enemy to target!!");
             targetToAttack = other.transform;
         }
-        else if (!isPlayer && other.CompareTag("Friendly"))
+        if (!isPlayer && (other.CompareTag("Friendly") || other.CompareTag("Unit Monk Doctor")) 
+            && targetToAttack == null)
         {
+            Debug.Log("Unit to target!!");
             targetToAttack = other.transform;
+            Debug.Log(other.transform.tag);
         }
 
         //if (other.CompareTag("Friendly") && targetToAttack == null)
@@ -74,7 +77,7 @@ public class AttackController : MonoBehaviour
             targetToAttack = null;
         }
 
-        if (other.CompareTag("Friendly") && targetToAttack != null)
+        if ((other.CompareTag("Friendly") || other.CompareTag("Unit Monk Doctor")) && targetToAttack != null)
         {
             targetToAttack = null;
         }
@@ -92,7 +95,7 @@ public class AttackController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 10f); // Радиус сферического колладера на юните 
 
-        //// Attack Distance
+        //// Heal Distance
         //Gizmos.color = Color.red;
         //Gizmos.DrawWireSphere(transform.position, unitFollowState.attackingDistance); // Следует из UnitFollowState
 
@@ -100,7 +103,7 @@ public class AttackController : MonoBehaviour
         //Gizmos.color = Color.blue;
         //Gizmos.DrawWireSphere(transform.position, unitAttackState.stopAttackingDistance); // Следует из UnitAttackstate
 
-        // Attack Distance
+        // Heal Distance
         Gizmos.color = Color.red;
         if (unit != null)
         {

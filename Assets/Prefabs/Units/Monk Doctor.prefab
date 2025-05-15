@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 9075811633946474912}
   m_Layer: 7
   m_Name: Monk Doctor
-  m_TagString: Friendly
+  m_TagString: Unit Monk Doctor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitMaxHealth: 100
   unitDamage: 25
-  attackRange: 10
+  attackRange: 9
   attackRate: 25
   armor: 0
   moveSpeed: 5

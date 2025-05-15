@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    private float unitHealth;
+    public float unitHealth { get; private set; }
 
     public float unitMaxHealth;
     public int unitDamage;
@@ -41,7 +41,7 @@ public class Unit : MonoBehaviour
 
     internal void TakeDamage(int damageAttack)
     {
-        var damageAttackAfterArmor = damageAttack * (armor / 100);
+        var damageAttackAfterArmor = damageAttack - damageAttack * (armor / 100);
         Debug.Log(damageAttackAfterArmor);
         unitHealth -= damageAttackAfterArmor;
         UpdateHealthUI();

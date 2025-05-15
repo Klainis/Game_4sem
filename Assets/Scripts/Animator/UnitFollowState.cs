@@ -32,9 +32,11 @@ public class UnitFollowState : StateMachineBehaviour
         if (attackController.targetToAttack == null)
         {
             animator.SetBool("isFollowing", false);
+            Debug.Log(animator.transform.GetComponent<UnitMovement>().isCommandedToMove);
         }
         else
         {
+            Debug.Log(animator.transform.GetComponent<UnitMovement>().isCommandedToMove);
             //Following если нет других комманд 
             if (animator.transform.GetComponent<UnitMovement>() != null &&
                 animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
@@ -42,8 +44,11 @@ public class UnitFollowState : StateMachineBehaviour
                 //Следование за врагом
                 agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
+                Debug.Log("Enemy following");
 
-                if (attackController.targetToAttack.CompareTag("Enemy") && attackController.isPlayer)
+                if (attackController.targetToAttack.CompareTag("Enemy") 
+                    && !animator.transform.CompareTag("Unit Monk Doctor") 
+                    && attackController.isPlayer)
                 {
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
@@ -52,7 +57,7 @@ public class UnitFollowState : StateMachineBehaviour
                         Debug.Log("Unit is Attacking!");
                         agent.SetDestination(animator.transform.position);
                         //agent.isStopped = true;
-                        animator.SetBool("isAttacking", true);
+                            animator.SetBool("isAttacking", true);
                     }
                 }
                 else if (attackController.targetToAttack.CompareTag("Friendly") && !attackController.isPlayer)
@@ -64,6 +69,19 @@ public class UnitFollowState : StateMachineBehaviour
                         Debug.Log("Enemy is Attacking!");
                         agent.SetDestination(animator.transform.position);
                         animator.SetBool("isAttacking", true);
+                    }
+                }
+                else if (attackController.targetToAttack.CompareTag("Friendly") 
+                    && animator.transform.CompareTag("Unit Monk Doctor") 
+                    && attackController.isPlayer)
+                {
+                    float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+
+                    if (distanceFromTarget <= attackingDistance)
+                    {
+                        Debug.Log("Enemy is Attacking!");
+                        agent.SetDestination(animator.transform.position);
+                        animator.SetBool("isHealing", true);
                     }
                 }
 

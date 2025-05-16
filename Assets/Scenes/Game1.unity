@@ -1946,7 +1946,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10, z: 240}
+  m_LocalPosition: {x: -0, y: 10, z: 240}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2565,6 +2565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1220378068}
   - component: {fileID: 1220378069}
+  - component: {fileID: 1220378070}
   m_Layer: 0
   m_Name: CameraController
   m_TagString: Untagged
@@ -2619,6 +2620,20 @@ MonoBehaviour:
   cursorArrowDown: {fileID: 2800000, guid: b7a95e5897c4f944cab0ab0c854129ba, type: 3}
   cursorArrowLeft: {fileID: 2800000, guid: b7a95e5897c4f944cab0ab0c854129ba, type: 3}
   cursorArrowRight: {fileID: 2800000, guid: b7a95e5897c4f944cab0ab0c854129ba, type: 3}
+--- !u!114 &1220378070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220378067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784d5336f3973874a98981485914484f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {fileID: 963194228}
+  moveSpeed: 2
 --- !u!1001 &1279170411
 PrefabInstance:
   m_ObjectHideFlags: 0

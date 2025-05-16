@@ -227,7 +227,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     internal void DragSelect(GameObject unit)
     {
-        if (unitSelected.Contains(unit) == false)
+        if (unitSelected.Contains(unit) == false && !unit.CompareTag("Enemy"))
         {
             unitSelected.Add(unit);
             SelectUnit(unit, true);

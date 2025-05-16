@@ -57,17 +57,17 @@ public class MiniMapController : MonoBehaviour
     private void CreateMarker(Transform unit)
     {
         // Создаем маркер
-        var marker = Instantiate(unitMarkerPrefab, transform);
+        //var marker = Instantiate(unitMarkerPrefab, transform);
         //marker.GetComponent<Image>().color = color;
 
         // Привязываем позицию маркера к позиции юнита
-        Vector3 viewportPos = miniMapCamera.WorldToViewportPoint(unit.position);
-        RectTransform mapRect = miniMapDisplay.rectTransform;
+        //Vector3 viewportPos = miniMapCamera.WorldToViewportPoint(unit.position);
+        //RectTransform mapRect = miniMapDisplay.rectTransform;
 
-        marker.transform.localPosition = new Vector3(
-            (viewportPos.x * mapRect.rect.width) - (mapRect.rect.width / 2),
-            (viewportPos.y * mapRect.rect.height) - (mapRect.rect.height / 2),
-            0
-        );
+        //marker.transform.localPosition = new Vector3(
+        //    (viewportPos.x * mapRect.rect.width) - (mapRect.rect.width / 2),
+        //    (viewportPos.y * mapRect.rect.height) - (mapRect.rect.height / 2),
+        //    0
+        //);
     }
 }

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 1298201648099605855}
   - component: {fileID: 2657542583643562055}
   m_Layer: 10
-  m_Name: UnitEnemy
+  m_Name: MirrorEnem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

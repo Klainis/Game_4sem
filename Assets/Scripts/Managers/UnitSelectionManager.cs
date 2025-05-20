@@ -217,11 +217,15 @@ public class UnitSelectionManager : MonoBehaviour
     private void TriggerSelectionIndicator(GameObject unit, bool isVisible)
     {
         //unit.transform.GetChild(0).gameObject.SetActive(isVisivble);
-        Outline outline = unit.GetComponent<Outline>();
-
-        if (outline != null)
+        Outline outline;
+        if (unit != null)
         {
-            outline.enabled = isVisible;
+            outline = unit.GetComponent<Outline>();
+
+            if (outline != null)
+            {
+                outline.enabled = isVisible;
+            }
         }
     }
 

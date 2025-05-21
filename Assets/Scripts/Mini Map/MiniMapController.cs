@@ -1,233 +1,120 @@
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-
-//public class MiniMapController : MonoBehaviour
-//{
-//    [Header("References")]
-//    public GameObject unitMarkerPrefab;
-//    public GameObject buildingMarkerPrefab;
-//    public GameObject enemyMarkerPrefab;
-
-//    [Header("Real World Parents")]
-//    public Transform realUnitsParent;
-//    public Transform realBuildingsParent;
-//    public Transform realEnemiesParent;
-//    public Transform realEnemyBuildingsParent;
-
-//    [Header("MiniMap Parents")]
-//    public Transform miniMapUnitsParent;
-//    public Transform miniMapBuildingsParent;
-//    public Transform miniMapEnemiesParent;
-
-//    [Header("Pool Settings")]
-//    public int unitsPoolSize = 20;
-//    public int buildingsPoolSize = 10;
-//    public int enemiesPoolSize = 20;
-
-//    [Header("Display Settings")]
-//    public Color playerUnitColor = Color.blue;
-//    public Color buildingColor = Color.gray;
-//    public Color enemyColor = Color.red;
-//    private RectTransform mapWorld;
-//    private Vector2 mapWorldSize;
-//    public float updateInterval = 0.2f;
-
-//    private float nextUpdateTime;
-//    private Queue<GameObject> unitsPool = new Queue<GameObject>();
-//    private Queue<GameObject> buildingsPool = new Queue<GameObject>();
-//    private Queue<GameObject> enemiesPool = new Queue<GameObject>();
-
-//    private void Awake()
-//    {
-//        mapWorld = GetComponent<RectTransform>();
-//        //mapWorldSize = new Vector2((mapWorld.sizeDelta.x * mapWorld.localScale.x),
-//        //    (mapWorld.sizeDelta.y * mapWorld.localScale.y));
-//        mapWorldSize = mapWorld.rect.size;
-
-//        InitializePool(unitsPool, unitMarkerPrefab, miniMapUnitsParent, unitsPoolSize);
-//        InitializePool(buildingsPool, buildingMarkerPrefab, miniMapBuildingsParent, buildingsPoolSize);
-//        InitializePool(enemiesPool, enemyMarkerPrefab, miniMapEnemiesParent, enemiesPoolSize);
-//    }
-
-//    private void InitializePool(Queue<GameObject> pool, GameObject prefab, Transform parent, int size)
-//    {
-//        if (prefab == null || parent == null) return;
-
-//        for (int i = 0; i < size; i++)
-//        {
-//            GameObject obj = Instantiate(prefab, parent);
-//            obj.SetActive(false);
-//            pool.Enqueue(obj);
-//        }
-//    }
-
-//    private void Update()
-//    {
-//        if (Time.time >= nextUpdateTime)
-//        {
-//            //UpdateMiniMapElements();
-//            nextUpdateTime = Time.time + updateInterval;
-//        }
-//    }
-
-//    private void UpdateMiniMapElements()
-//    {
-//        ReturnAllToPool(unitsPool, miniMapUnitsParent);
-//        ReturnAllToPool(buildingsPool, miniMapBuildingsParent);
-//        ReturnAllToPool(enemiesPool, miniMapEnemiesParent);
-
-//        UpdateUnits();
-//        UpdateBuildings();
-//        UpdateEnemies();
-//    }
-
-//    private void UpdateUnits()
-//    {
-//        if (realUnitsParent == null) return;
-
-//        foreach (Transform unit in realUnitsParent)
-//        {
-//            if (unit == null) continue;
-
-//            GameObject element = GetPooledObject(unitsPool, unitMarkerPrefab, miniMapUnitsParent);
-//            element.transform.localPosition = WorldToMiniMapPosition(unit.position);
-//            element.GetComponent<Image>().color = playerUnitColor;
-//        }
-//    }
-
-//    private void UpdateBuildings()
-//    {
-//        if (realBuildingsParent == null) return;
-
-//        foreach (Transform building in realBuildingsParent)
-//        {
-//            if (building == null) continue;
-
-//            GameObject element = GetPooledObject(buildingsPool, buildingMarkerPrefab, miniMapBuildingsParent);
-//            element.transform.localPosition = WorldToMiniMapPosition(building.position);
-//            element.GetComponent<Image>().color = buildingColor;
-//        }
-//    }
-
-//    private void UpdateEnemies()
-//    {
-//        if (realEnemiesParent == null) return;
-
-//        foreach (Transform enemy in realEnemiesParent)
-//        {
-//            if (enemy == null) continue;
-
-//            GameObject element = GetPooledObject(enemiesPool, enemyMarkerPrefab, miniMapEnemiesParent);
-//            element.transform.localPosition = WorldToMiniMapPosition(enemy.position);
-//            element.GetComponent<Image>().color = enemyColor;
-//        }
-
-//        if (realEnemyBuildingsParent == null) return;
-
-//        foreach (Transform enemyBuilding in realEnemyBuildingsParent)
-//        {
-//            if (enemyBuilding == null) continue;
-
-//            GameObject element = GetPooledObject(enemiesPool, enemyMarkerPrefab, miniMapEnemiesParent);
-//            element.transform.localPosition = WorldToMiniMapPosition(enemyBuilding.position);
-//            element.GetComponent<Image>().color = enemyColor;
-//        }
-//    }
-
-//    private GameObject GetPooledObject(Queue<GameObject> pool, GameObject prefab, Transform parent)
-//    {
-//        if (pool.Count > 0)
-//        {
-//            GameObject obj = pool.Dequeue();
-//            obj.SetActive(true);
-//            return obj;
-//        }
-
-//        if (parent.childCount < 100)
-//        {
-//            return Instantiate(prefab, parent);
-//        }
-//        return null;
-//    }
-
-//    private Vector3 WorldToMiniMapPosition(Vector3 worldPos)
-//    {
-//        float x = (worldPos.x / mapWorldSize.x) * 100f; // Умножаем на 100 для получения процентов
-//        float z = (worldPos.z / mapWorldSize.y) * 100f;
-//        return new Vector3(x, z, 0);
-//    }
-
-//    private void ReturnAllToPool(Queue<GameObject> pool, Transform parent)
-//    {
-//        int childCount = parent.childCount;
-//        for (int i = childCount - 1; i >= 0; i--)
-//        {
-//            Transform child = parent.GetChild(i);
-//            if (child.gameObject.activeSelf)
-//            {
-//                child.gameObject.SetActive(false);
-//                pool.Enqueue(child.gameObject);
-//            }
-//        }
-//    }
-//}
-
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MiniMapController : MonoBehaviour
+public class MinimapController : MonoBehaviour
 {
-    public RectTransform mapRect;
-    public Transform playerUnitsRoot;
-    public Transform enemyUnitsRoot;
-    public Transform buildingsRoot;
 
-    public Transform unitMapMarker;
-    public Transform enemyMapMarker;
-    public Transform buildingsMapMarker;
+    [SerializeField] private RawImage minimapRawImage;
+    [SerializeField] private Camera minimapCamera;
+    [SerializeField] private Transform playerUnitsParent;
+    [SerializeField] private Transform enemyUnitsParent;
+    [SerializeField] private Transform enemyBuildingParent;
+    [SerializeField] private Transform unitBuildingParent;
 
-    public GameObject unitMarkerPrefab;
-    public GameObject enemyMarkerPrefab;
-    public GameObject buildingMarkerPrefab;
+    [Header("Visual Settings")]
+    [SerializeField] private Color playerUnitColor = Color.green;
+    [SerializeField] private Color enemyUnitColor = Color.red;
+    [SerializeField] private Color enemyBuildingColor = Color.red;
+    [SerializeField] private Color unitBuildingColor = Color.yellow;
+    [SerializeField] private Vector2 unitIconSize = new Vector2(4, 4);
+    [SerializeField] private Vector2 unitBuildingSize = new Vector2(8, 8);
+    [SerializeField] private Vector2 enemyBuildingSize = new Vector2(8, 8);
 
-    private Vector2 mapSize;
-    private RectTransform map;
-    private RectTransform markersParent;
+    private Texture2D playerUnitTexture;
+    private Texture2D enemyUnitTexture;
+    private Texture2D enemyBuildingTexture;
+    private Texture2D unitBuildingTexture;
 
-    void Start()
+    private void Awake()
     {
-        map = GetComponent<RectTransform>();
-        mapSize = map.rect.size;
-        markersParent = mapRect;
-        CreateMarkers(playerUnitsRoot, unitMarkerPrefab, unitMapMarker);
-        CreateMarkers(enemyUnitsRoot, enemyMarkerPrefab, enemyMapMarker);
-        CreateMarkers(buildingsRoot, buildingMarkerPrefab, buildingsMapMarker);
+        CreateTextures();
     }
 
-    void LateUpdate()
+    private Rect GetMinimapScreenRect()
     {
-        UpdateMarkers(playerUnitsRoot, unitMapMarker);
-        UpdateMarkers(enemyUnitsRoot, enemyMapMarker);
-        UpdateMarkers(buildingsRoot, buildingsMapMarker);
+        RectTransform rt = minimapRawImage.rectTransform;
+        Vector2 min = rt.TransformPoint(rt.rect.min); // Левый нижний угол в экранных координатах
+        Vector2 max = rt.TransformPoint(rt.rect.max); // Правый верхний угол
+        return new Rect(min.x, Screen.height - max.y, max.x - min.x, max.y - min.y);
     }
 
-    void CreateMarkers(Transform parent, GameObject prefab, Transform mapMarker)
+    private void CreateTextures()
     {
-        foreach (Transform t in parent)
-            Instantiate(prefab, mapMarker).name = t.name;
+        playerUnitTexture = CreateColoredTexture(playerUnitColor);
+        enemyUnitTexture = CreateColoredTexture(enemyUnitColor);
+        enemyBuildingTexture = CreateColoredTexture(enemyBuildingColor);
+        unitBuildingTexture = CreateColoredTexture(unitBuildingColor);
     }
 
-    void UpdateMarkers(Transform worldGroup, Transform mapMarker)
+    private Texture2D CreateColoredTexture(Color color)
     {
-        for (int i = 0; i < worldGroup.childCount; i++)
+        Texture2D texture = new Texture2D(1, 1);
+        texture.SetPixel(0, 0, color);
+        texture.Apply();
+        return texture;
+    }
+
+    private void OnGUI()
+    {
+        if (Event.current.type != EventType.Repaint) return;
+
+        DrawUnits(playerUnitsParent, playerUnitTexture);
+        DrawUnits(enemyUnitsParent, enemyUnitTexture);
+        DrawBuildings(unitBuildingSize, unitBuildingParent, unitBuildingTexture);
+        DrawBuildings(enemyBuildingSize, enemyBuildingParent, enemyBuildingTexture);
+    }
+
+    private void DrawUnits(Transform parent, Texture2D texture)
+    {
+        Rect minimapRect = GetMinimapScreenRect();
+        float minimapWidth = minimapRect.width;
+        float minimapHeight = minimapRect.height;
+
+        foreach (Transform unit in parent)
         {
-            var worldPos = worldGroup.GetChild(i).position;
-            var normalizedPos = new Vector2(worldPos.x / mapSize.x, worldPos.z / mapSize.y);
-            var marker = mapMarker.GetComponent<RectTransform>();
-            marker.anchoredPosition = new Vector2(
-                normalizedPos.x * mapRect.rect.width,
-                normalizedPos.y * mapRect.rect.height
+            Vector3 worldPos = unit.position;
+            Vector2 viewportPos = minimapCamera.WorldToViewportPoint(worldPos);
+
+            // Проверяем, виден ли объект на мини-карте
+            if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1)
+                continue;
+
+            // Пересчет в экранные координаты относительно мини-карты
+            Rect iconRect = new Rect(
+                minimapRect.x + viewportPos.x * minimapWidth - unitIconSize.x / 2,
+                minimapRect.y + (1 - viewportPos.y) * minimapHeight - unitIconSize.y / 2,
+                unitIconSize.x,
+                unitIconSize.y
             );
+
+            GUI.DrawTexture(iconRect, texture);
+        }
+    }
+
+    private void DrawBuildings(Vector2 buildingSize, Transform buildingsParent, Texture2D texture)
+    {
+        Rect minimapRect = GetMinimapScreenRect();
+        float minimapWidth = minimapRect.width;
+        float minimapHeight = minimapRect.height;
+
+        foreach (Transform build in buildingsParent)
+        {
+            Vector3 worldPos = build.position;
+            Vector2 viewportPos = minimapCamera.WorldToViewportPoint(worldPos);
+
+            // Проверяем, виден ли объект на мини-карте
+            if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1)
+                continue;
+
+            // Пересчет в экранные координаты относительно мини-карты
+            Rect iconRect = new Rect(
+                minimapRect.x + viewportPos.x * minimapWidth - buildingSize.x / 2,
+                minimapRect.y + (1 - viewportPos.y) * minimapHeight - buildingSize.y / 2,
+                buildingSize.x,
+                buildingSize.y
+            );
+
+            GUI.DrawTexture(iconRect, texture);
         }
     }
 }

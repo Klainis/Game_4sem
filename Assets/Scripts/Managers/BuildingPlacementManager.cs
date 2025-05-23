@@ -30,6 +30,9 @@ public class BuildingPlacementManager : MonoBehaviour
     int         currentCost;
     bool        isPlacing;
 
+    // Публичное свойство для проверки текущего призрака
+    public GameObject CurrentGhost => ghostInstance;
+
     /*–––– life-cycle ––––*/
     void OnEnable()
     {
@@ -97,12 +100,18 @@ public class BuildingPlacementManager : MonoBehaviour
 
         if (ResourceManager.Instance.SpendGold(currentCost))
         {
+            // Создаем здание
             var go = Instantiate(currentPrefab,
                         ghostInstance.transform.position,
                         ghostInstance.transform.rotation);
 
+            // Активируем интерактивность для производственных зданий
             go.GetComponent<ProductionBuilding>()?.EnableInteraction();
 
+            // Вызываем OnPlaced для пушек и других зданий
+            go.GetComponent<Cannon>()?.OnPlaced();
+
+            // Начинаем размещение следующего здания
             BeginPlacement(currentPrefab, currentCost);
         }
         else

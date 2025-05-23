@@ -5,18 +5,20 @@ using UnityEngine;
 /// <summary>
 /// Шахта: каждые N секунд берёт goldPerTick из КАЖДОЙ жилы в радиусе.
 /// </summary>
-public class GoldMine : MonoBehaviour
+public class GoldMine : BuildingBase
 {
     [Header("References")]
     [SerializeField] RangeVisualizer range;          // кольцо для игрока
 
     [Header("Mining")]
     [SerializeField] float tickSeconds = 2f;         // период добычи
-    [SerializeField] int   goldPerTick = 10;         // из каждой жилы
+    [SerializeField] int goldPerTick = 10;         // из каждой жилы
 
     readonly List<ResourceNode> nodes = new();       // все жилы в радиусе
     Coroutine routine;
 
+    private void Reset() { maxHealth = 100; } // базовое здоровье шахты
+    
     void Awake()
     {
         if (!range)

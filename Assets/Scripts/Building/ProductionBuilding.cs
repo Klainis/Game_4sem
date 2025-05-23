@@ -3,14 +3,14 @@ using UnityEngine;
 /// <summary>
 /// Базовый класс для зданий, производящих юнитов.
 /// </summary>
-public abstract class ProductionBuilding : MonoBehaviour
+public abstract class ProductionBuilding : BuildingBase
 {
     [System.Serializable]
     public struct UnitOption
     {
-        public string     name;
+        public string name;
         public GameObject prefab;
-        public int        cost;
+        public int cost;
     }
 
     [Header("Список юнитов")]
@@ -43,4 +43,6 @@ public abstract class ProductionBuilding : MonoBehaviour
         if (!interactive) return;                                  // ← блокируем «только что построенное»
         UnitProductionPanel.Instance.Toggle(this);                 // ← переключатель
     }
+    
+    private void Reset() { maxHealth = 120; } // базовое здоровье бараков
 }

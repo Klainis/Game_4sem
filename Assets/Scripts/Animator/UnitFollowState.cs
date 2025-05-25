@@ -8,6 +8,7 @@ public class UnitFollowState : StateMachineBehaviour
     AttackController attackController;
     NavMeshAgent agent;
     Unit unit;
+    UnitMovement unitMovement;
 
     public float attackingDistance;
 
@@ -19,6 +20,7 @@ public class UnitFollowState : StateMachineBehaviour
         attackController = animator.transform.GetComponent<AttackController>();
         agent = animator.transform.GetComponent<NavMeshAgent>();
         unit = animator.transform.GetComponent<Unit>();
+        unitMovement = animator.transform.GetComponent<UnitMovement>();
 
         attackingDistance = unit.attackRange;
         Debug.Log(attackingDistance);
@@ -28,40 +30,60 @@ public class UnitFollowState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //Debug.Log($"State: {animator.GetCurrentAnimatorStateInfo(0).fullPathHash} | " +
+        //      $"Moving: {animator.GetBool("isMoving")} | " +
+        //      $"Velocity: {agent.velocity.magnitude}");
+
         //Следует переходить в состояние Idle State?
         if (attackController.targetToAttack == null)
         {
             animator.SetBool("isFollowing", false);
-            Debug.Log(animator.transform.GetComponent<UnitMovement>().isCommandedToMove);
+            Debug.Log(unitMovement.isCommandedToMove);
         }
         else
         {
-            Debug.Log(animator.transform.GetComponent<UnitMovement>().isCommandedToMove);
             //Following если нет других комманд 
-            if (animator.transform.GetComponent<UnitMovement>() != null &&
-                animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
+            if (unitMovement != null &&
+                unitMovement.isCommandedToMove == false)
             {
-                //Следование за врагом
+                unitMovement.isFollowingTarget = true;
+
+                //if (NavMesh.SamplePosition(animator.transform.position, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+                //{
+                //    //animator.enabled = false;
+                //    //animator.applyRootMotion = false;
+                //    //animator.SetBool("isMoving", true);
+                //    agent.SetDestination(hit.position);
+                //    Debug.Log("ДВИГАЕТСЯ КО ВРАГУ");
+                //    //agent.SetDestination(new Vector3(5, 0, 5));
+                //}
+                //else
+                //{
+                //    Debug.LogError("Точка не на NavMesh или слишком далеко!");
+                //}
+                //animator.SetBool("isMoving", true);
                 agent.SetDestination(attackController.targetToAttack.position);
+                Debug.Log(agent);
                 animator.transform.LookAt(attackController.targetToAttack);
-                Debug.Log("Enemy following");
+                Debug.Log("Following");
 
                 if (attackController.targetToAttack.CompareTag("Enemy") 
                     && !animator.transform.CompareTag("Unit Monk Doctor") 
-                    && attackController.isPlayer)
+                    && attackController.isPlayer) // Следование и атака для обычных юнитов
                 {
+
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
                     if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Unit is Attacking!");
                         agent.SetDestination(animator.transform.position);
-                        //agent.isStopped = true;
-                            animator.SetBool("isAttacking", true);
+                        animator.SetBool("isAttacking", true);
                     }
                 }
-                else if (attackController.targetToAttack.CompareTag("Friendly") && !attackController.isPlayer)
+                else if (attackController.targetToAttack.CompareTag("Friendly") && !attackController.isPlayer) //Следование и атака для врагов
                 {
+
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
                     if (distanceFromTarget <= attackingDistance)
@@ -71,10 +93,11 @@ public class UnitFollowState : StateMachineBehaviour
                         animator.SetBool("isAttacking", true);
                     }
                 }
-                else if (attackController.targetToAttack.CompareTag("Friendly") 
+                else if (attackController.targetToAttack.CompareTag("Friendly") // Следование и хил для доктора
                     && animator.transform.CompareTag("Unit Monk Doctor") 
                     && attackController.isPlayer)
                 {
+
                     float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
 
                     if (distanceFromTarget <= attackingDistance)
@@ -86,15 +109,13 @@ public class UnitFollowState : StateMachineBehaviour
                 }
 
             }
-            else if (animator.transform.GetComponent<UnitMovement>() != null && 
-                animator.transform.GetComponent<UnitMovement>().isCommandedToMove == true)//Если получил команду на перемещение, убираем таргет
+            else if (unitMovement != null && 
+                unitMovement.isCommandedToMove == true)//Если получил команду на перемещение, убираем таргет
             {
                 attackController.targetToAttack = null;
+                animator.SetBool("isAttacking", false);
             }
         }
 
     }
-
-    //// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-
 }

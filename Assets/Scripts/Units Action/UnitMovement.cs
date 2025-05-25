@@ -8,6 +8,8 @@ public class UnitMovement : MonoBehaviour
     NavMeshAgent agent;
     Unit unit;
 
+    Animator animator;
+
     public LayerMask ground;
     public LayerMask attackable;
     public LayerMask clickable;
@@ -19,6 +21,7 @@ public class UnitMovement : MonoBehaviour
         cam = Camera.main;
         agent = GetComponent<NavMeshAgent>();
         unit = GetComponent<Unit>();
+        animator = GetComponent<Animator>();
 
         agent.speed = unit.moveSpeed;
     }
@@ -40,16 +43,26 @@ public class UnitMovement : MonoBehaviour
                 Debug.DrawRay(ray.origin, ray.direction, Color.green, 1f);
                 
                 isCommandedToMove = true;
+                isFollowingTarget = false;
+
+                animator.SetBool("isMoving", true);
 
                 Debug.Log("Двигается" + isCommandedToMove);
-                isFollowingTarget = false;
+
+                agent.transform.LookAt(hitGround.point);
                 agent.SetDestination(hitGround.point);
             }
         }
 
-        if (isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
+        //if (isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
+        if (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance)
         {
             isCommandedToMove = false;
+            animator.SetBool("isMoving", false);
+        }
+        else
+        {
+            animator.SetBool("isMoving", true);
         }
     }
 }

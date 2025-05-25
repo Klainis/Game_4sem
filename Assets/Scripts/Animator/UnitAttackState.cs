@@ -36,7 +36,7 @@ public class UnitAttackState : StateMachineBehaviour
         {
             LookAtTarget();
 
-            agent.SetDestination(animator.transform.position);
+            //agent.SetDestination(animator.transform.position);
 
             if (attackTimer <= 0)
             {

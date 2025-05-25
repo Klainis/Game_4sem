@@ -17,7 +17,7 @@ public class Cannon : BuildingBase
     [SerializeField] GameObject projectilePrefab;
 
     float timer;
-    Transform target;
+    public Transform target;
     SphereCollider detection;
     bool isActive;
     bool isGhost;
@@ -45,7 +45,7 @@ public class Cannon : BuildingBase
         isActive = false;
         isGhost = true;
 
-        Debug.Log($"[Cannon] Awake: radius={attackRange}, damage={damage}");
+        //Debug.Log($"[Cannon] Awake: radius={attackRange}, damage={damage}");
     }
 
     void Start()
@@ -54,7 +54,7 @@ public class Cannon : BuildingBase
         var placementManager = FindObjectOfType<BuildingPlacementManager>();
         if (placementManager && placementManager.CurrentGhost == gameObject)
         {
-            Debug.Log("[Cannon] Start: This is a ghost");
+            //Debug.Log("[Cannon] Start: This is a ghost");
             return;
         }
 
@@ -62,7 +62,7 @@ public class Cannon : BuildingBase
         isGhost = false;
         detection.enabled = true;
         Invoke(nameof(Activate), 0.5f);
-        Debug.Log("[Cannon] Start: Real cannon initialized");
+        //Debug.Log("[Cannon] Start: Real cannon initialized");
     }
 
     void Activate()
@@ -86,6 +86,7 @@ public class Cannon : BuildingBase
             {
                 target = col.transform;
                 Debug.Log($"[Cannon] Found enemy: {col.name}");
+                Debug.Log($"ВРАГ: {col}");
                 break;
             }
         }
@@ -130,7 +131,7 @@ public class Cannon : BuildingBase
         if (!isGhost && isActive && IsEnemy(other) && target == null)
         {
             target = other.transform;
-            Debug.Log($"[Cannon] Enemy entered range: {other.name}");
+            //Debug.Log($"[Cannon] Enemy entered range: {other.name}");
         }
     }
 

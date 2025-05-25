@@ -20,7 +20,7 @@ public class UnitIdleState : StateMachineBehaviour
         {
 
             //Переход в состояние следования
-            Debug.Log("Enemy is following");
+            //Debug.Log("IdleState -> Following");
             animator.SetBool("isFollowing", true);
         }
 

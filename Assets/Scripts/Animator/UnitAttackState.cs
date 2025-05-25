@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class UnitAttackState : StateMachineBehaviour
 {
@@ -9,6 +10,8 @@ public class UnitAttackState : StateMachineBehaviour
     Unit unit;
     UnitFollowState unitFollowState;
     //UnitFollowState unitFollowState;
+
+    private float distanceFromTarget;
 
     public float stopAttackingDistance;
 
@@ -36,7 +39,10 @@ public class UnitAttackState : StateMachineBehaviour
         {
             LookAtTarget();
 
-            //agent.SetDestination(animator.transform.position);
+            if (agent != null)
+            {
+                agent.SetDestination(animator.transform.position);
+            }
 
             if (attackTimer <= 0)
             {
@@ -52,13 +58,18 @@ public class UnitAttackState : StateMachineBehaviour
 
             if (attackController.targetToAttack != null)
             {
-                float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+                distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+            }
 
-                if (distanceFromTarget > stopAttackingDistance || attackController.targetToAttack == null)
-                {
-                    agent.SetDestination(animator.transform.position);
-                    animator.SetBool("isAttacking", false); // Move to Follow State
-                }
+            if (distanceFromTarget > stopAttackingDistance || attackController.targetToAttack == null)
+            {
+                //if (distanceFromTarget > stopAttackingDistance)
+                //{
+                //    Debug.Log("ﬁÕ»“ »À» œ–Œ“»¬Õ»  ”ÿ≈À");
+                //}
+                Debug.Log("œ–Œ“»¬Õ»  ”¡»“/// ﬁÕ»“ »À» œ–Œ“»¬Õ»  ”ÿ≈À");
+                agent.SetDestination(animator.transform.position);
+                animator.SetBool("isAttacking", false); // Move to Follow State
             }
 
         }
@@ -71,8 +82,23 @@ public class UnitAttackState : StateMachineBehaviour
             var damageAttack = unit.unitDamage;
 
             attackController.targetToAttack.GetComponent<Unit>().TakeDamage(damageAttack);
+            //Debug.Log(attackController.targetToAttack.GetComponent<Unit>().unitHealth);
+
+            if (attackController.targetToAttack.GetComponent<Unit>().unitHealth <= 0)
+            {
+                attackController.targetToAttack = null; // ﬂ‚Ì˚È Ò·ÓÒ ÒÒ˚ÎÍË
+                //attackController.targetToAttack.gameObject = null;
+            }
         }
     }
+
+    //void OnDestroy()
+    //{
+    //    if (attackController != null && attackController.targetToAttack == this.transform)
+    //    {
+    //        attackController.targetToAttack = null; // ﬂ‚Ì˚È Ò·ÓÒ ÒÒ˚ÎÍË
+    //    }
+    //}
 
     private void LookAtTarget()
     {

@@ -53,7 +53,7 @@ public class AttackController : MonoBehaviour
         {
             Debug.Log("Unit to target!!");
             targetToAttack = other.transform;
-            Debug.Log(other.transform.tag);
+            //Debug.Log(other.transform.tag);
         }
 
         //if (other.CompareTag("Friendly") && targetToAttack == null)

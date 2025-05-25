@@ -162,10 +162,14 @@ public class UnitSelectionManager : MonoBehaviour
     {
         foreach (GameObject unit in unitSelected)
         {
-            if (unit.GetComponent<AttackController>())
+            if (unit != null)
             {
-                return true;
+                if (unit.GetComponent<AttackController>())
+                {
+                    return true;
+                }
             }
+            
         }
         return false;
     }
@@ -206,8 +210,13 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void SelectUnit(GameObject unit, bool isSelected)
     {
-        TriggerSelectionIndicator(unit, isSelected);
-        EnableUnitMovement(unit, isSelected);
+        if (unit != null)
+        {
+            TriggerSelectionIndicator(unit, isSelected);
+            EnableUnitMovement(unit, isSelected);
+        }
+        //TriggerSelectionIndicator(unit, isSelected);
+        //EnableUnitMovement(unit, isSelected);
     }
     private void EnableUnitMovement(GameObject unit, bool shouldMove)
     {

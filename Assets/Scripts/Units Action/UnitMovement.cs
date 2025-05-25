@@ -16,6 +16,8 @@ public class UnitMovement : MonoBehaviour
 
     public bool isCommandedToMove;
     public bool isFollowingTarget;
+    private float lastMoveCommandTime;
+
     private void Start()
     {
         cam = Camera.main;
@@ -24,6 +26,8 @@ public class UnitMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
         agent.speed = unit.moveSpeed;
+
+        //animator.enabled = false;
     }
 
     private void Update()
@@ -49,20 +53,23 @@ public class UnitMovement : MonoBehaviour
 
                 Debug.Log("Двигается" + isCommandedToMove);
 
+                lastMoveCommandTime = Time.time;
                 agent.transform.LookAt(hitGround.point);
                 agent.SetDestination(hitGround.point);
             }
         }
 
         //if (isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
-        if (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance &&
+                     (Time.time - lastMoveCommandTime > 0.1f))
         {
             isCommandedToMove = false;
             animator.SetBool("isMoving", false);
+            Debug.Log(animator.GetBool("isMoving"));
         }
         else
         {
-            animator.SetBool("isMoving", true);
+            //animator.SetBool("isMoving", true);
         }
     }
 }

@@ -14,9 +14,13 @@ public class Unit : MonoBehaviour
 
     public HealthTracker healthTracker;
 
+    AttackController attackController;
+
     void Start()
     {
         UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
+
+        attackController = GetComponent<AttackController>();
 
         unitHealth = unitMaxHealth;
         UpdateHealthUI();

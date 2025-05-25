@@ -23,7 +23,7 @@ public class UnitFollowState : StateMachineBehaviour
         unitMovement = animator.transform.GetComponent<UnitMovement>();
 
         attackingDistance = unit.attackRange;
-        Debug.Log(attackingDistance);
+        //Debug.Log(attackingDistance);
 
     }
 
@@ -38,7 +38,7 @@ public class UnitFollowState : StateMachineBehaviour
         if (attackController.targetToAttack == null)
         {
             animator.SetBool("isFollowing", false);
-            Debug.Log(unitMovement.isCommandedToMove);
+            //Debug.Log(unitMovement.isCommandedToMove);
         }
         else
         {
@@ -61,14 +61,18 @@ public class UnitFollowState : StateMachineBehaviour
                 //{
                 //    Debug.LogError("Точка не на NavMesh или слишком далеко!");
                 //}
-                //animator.SetBool("isMoving", true);
-                agent.SetDestination(attackController.targetToAttack.position);
-                Debug.Log(agent);
-                animator.transform.LookAt(attackController.targetToAttack);
-                Debug.Log("Following");
+                animator.SetBool("isMoving", true);
+                if (attackController.targetToAttack != null)
+                {
+                    agent.SetDestination(attackController.targetToAttack.position);
 
-                if (attackController.targetToAttack.CompareTag("Enemy") 
-                    && !animator.transform.CompareTag("Unit Monk Doctor") 
+                }
+
+                animator.transform.LookAt(attackController.targetToAttack);
+                //Debug.Log("Following");
+
+                if (attackController.targetToAttack.CompareTag("Enemy")
+                    && !animator.transform.CompareTag("Unit Monk Doctor")
                     && attackController.isPlayer) // Следование и атака для обычных юнитов
                 {
 
@@ -94,7 +98,7 @@ public class UnitFollowState : StateMachineBehaviour
                     }
                 }
                 else if (attackController.targetToAttack.CompareTag("Friendly") // Следование и хил для доктора
-                    && animator.transform.CompareTag("Unit Monk Doctor") 
+                    && animator.transform.CompareTag("Unit Monk Doctor")
                     && attackController.isPlayer)
                 {
 
@@ -102,20 +106,23 @@ public class UnitFollowState : StateMachineBehaviour
 
                     if (distanceFromTarget <= attackingDistance)
                     {
-                        Debug.Log("Enemy is Attacking!");
+                        Debug.Log("Doctor is Healing!");
                         agent.SetDestination(animator.transform.position);
                         animator.SetBool("isHealing", true);
                     }
                 }
 
             }
-            else if (unitMovement != null && 
+
+            else if (unitMovement != null &&
                 unitMovement.isCommandedToMove == true)//Если получил команду на перемещение, убираем таргет
             {
+                Debug.Log($"unitMovement: {unitMovement}, unitMovement.isCommandedToMove: {unitMovement.isCommandedToMove}");
+                Debug.Log("УШЛИ ОТ ВРАГА");
                 attackController.targetToAttack = null;
                 animator.SetBool("isAttacking", false);
             }
         }
-
+        
     }
 }

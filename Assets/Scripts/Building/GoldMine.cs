@@ -19,8 +19,10 @@ public class GoldMine : BuildingBase
 
     private void Reset() { maxHealth = 100; } // базовое здоровье шахты
     
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake(); // Вызываем Awake базового класса
+        
         if (!range)
             range = GetComponentInChildren<RangeVisualizer>(true);
 

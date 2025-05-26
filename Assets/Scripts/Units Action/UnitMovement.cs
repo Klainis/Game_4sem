@@ -7,7 +7,6 @@ public class UnitMovement : MonoBehaviour
     Camera cam;
     NavMeshAgent agent;
     Unit unit;
-
     Animator animator;
 
     public LayerMask ground;
@@ -25,16 +24,36 @@ public class UnitMovement : MonoBehaviour
         unit = GetComponent<Unit>();
         animator = GetComponent<Animator>();
 
-        agent.speed = unit.moveSpeed;
-
-        //animator.enabled = false;
+        if (agent != null)
+        {
+            agent.speed = unit.moveSpeed;
+            
+            // Убедимся что агент на поверхности NavMesh
+            if (!agent.isOnNavMesh)
+            {
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(transform.position, out hit, 5.0f, NavMesh.AllAreas))
+                {
+                    agent.Warp(hit.position);
+                }
+                else
+                {
+                    Debug.LogWarning($"Не удалось разместить {gameObject.name} на NavMesh!");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError($"На объекте {gameObject.name} отсутствует компонент NavMeshAgent!");
+        }
     }
 
     private void Update()
     {
+        if (!agent || !agent.isOnNavMesh) return;
+
         if (Input.GetMouseButtonDown(1))
         {
-            //RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hitGround, hitAttackable;
@@ -50,26 +69,27 @@ public class UnitMovement : MonoBehaviour
                 isFollowingTarget = false;
 
                 animator.SetBool("isMoving", true);
-
-                Debug.Log("���������" + isCommandedToMove);
-
                 lastMoveCommandTime = Time.time;
-                agent.transform.LookAt(hitGround.point);
+
+                // Поворачиваем юнита в сторону движения
+                Vector3 direction = (hitGround.point - transform.position).normalized;
+                if (direction != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(direction);
+                }
+
                 agent.SetDestination(hitGround.point);
             }
         }
 
-        //if (isFollowingTarget || (agent.hasPath == false || agent.remainingDistance <= agent.stoppingDistance))
-        if (agent.remainingDistance <= agent.stoppingDistance &&
-                     (Time.time - lastMoveCommandTime > 0.1f))
+        // Проверяем, достиг ли агент цели
+        if (agent.pathStatus != NavMeshPathStatus.PathInvalid && 
+            !agent.pathPending && 
+            agent.remainingDistance <= agent.stoppingDistance &&
+            Time.time - lastMoveCommandTime > 0.1f)
         {
             isCommandedToMove = false;
             animator.SetBool("isMoving", false);
-            Debug.Log(animator.GetBool("isMoving"));
-        }
-        else
-        {
-            //animator.SetBool("isMoving", true);
         }
     }
 }

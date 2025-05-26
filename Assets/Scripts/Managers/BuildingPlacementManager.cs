@@ -67,6 +67,7 @@ public class BuildingPlacementManager : MonoBehaviour
         currentCost   = cost;
 
         ghostInstance = Instantiate(currentPrefab);
+        ghostInstance.transform.rotation = currentPrefab.transform.rotation;
 
         var allRV = ghostInstance.GetComponentsInChildren<RangeVisualizer>(true);
         foreach (var rv in allRV)

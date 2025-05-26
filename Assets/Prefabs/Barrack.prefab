@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1350145493899132179}
   - component: {fileID: 4420949844514984901}
   - component: {fileID: 7623153382164753188}
-  - component: {fileID: 5760428457085563883}
+  - component: {fileID: 6106502400658129998}
   m_Layer: 11
   m_Name: Barrack
   m_TagString: Building
@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 4606148455642486991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.984894, y: 0.053, z: 48.9442}
+  m_LocalPosition: {x: 6.984894, y: 0.49, z: 48.9442}
   m_LocalScale: {x: 2.7039235, y: 1.265939, z: 5.74388}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -176,7 +176,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &5760428457085563883
+--- !u!114 &6106502400658129998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,26 +188,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08937d574fa02942b50e809a0218b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 150
   units:
   - name: "\u041C\u0435\u0447\u043D\u0438\u043A"
     prefab: {fileID: 4106416089721365992, guid: 83b7f7ef39747ac48a456efb3be31a22, type: 3}
     cost: 25
   - name: "\u041A\u043E\u043F\u0435\u0439\u0449\u0438\u043A"
-    prefab: {fileID: 0}
-    cost: 25
+    prefab: {fileID: 4106416089721365992, guid: 0cd61897cb285e04abcab91d39c89117, type: 3}
+    cost: 30
   - name: "\u041B\u0443\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 0}
-    cost: 25
+    prefab: {fileID: 4106416089721365992, guid: 61fa864b2076c0543a8cd11df7c5d22b, type: 3}
+    cost: 50
   - name: "\u041B\u0435\u0433\u043A\u0430\u044F \u043A\u0430\u0432\u0430\u043B\u0435\u0440\u0438\u044F"
-    prefab: {fileID: 0}
-    cost: 25
-  - name: "\u0420\u044B\u0446\u0430\u0440\u044C \u0427\u0438\u0441\u0442\u043E\u0442\u044B"
-    prefab: {fileID: 0}
-    cost: 25
+    prefab: {fileID: 4106416089721365992, guid: 81006b68fe8c28241b5ec78203f142c5, type: 3}
+    cost: 75
+  - name: "\u0420\u044B\u0446\u0430\u0440\u044C \u0447\u0438\u0441\u0442\u043E\u0442\u044B"
+    prefab: {fileID: 4106416089721365992, guid: 037426262df68fb4da89fe0f360aada1, type: 3}
+    cost: 100
   - name: "\u0418\u043D\u043A\u0432\u0438\u0437\u0438\u0442\u043E\u0440"
-    prefab: {fileID: 0}
-    cost: 25
+    prefab: {fileID: 4106416089721365992, guid: 4a172c945a33dfc4cb1f29ec9b013697, type: 3}
+    cost: 150
   - name: "\u041C\u043E\u043D\u0430\u0445-\u043B\u0435\u043A\u0430\u0440\u044C"
-    prefab: {fileID: 0}
-    cost: 25
+    prefab: {fileID: 4106416089721365992, guid: bffc43d459386854aa49df92bd4ff65d, type: 3}
+    cost: 90
   spawnPoint: {fileID: 2935207107381897400}
+  spawnOffset: 2

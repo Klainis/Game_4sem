@@ -20,6 +20,26 @@ public class UnitProductionPanel : MonoBehaviour
     {
         Instance = this;
         panelRoot.SetActive(false);
+
+        // Настраиваем позицию панели справа
+        var rectTransform = panelRoot.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(1, 0.5f); // Правый край
+        rectTransform.anchorMax = new Vector2(1, 0.5f);
+        rectTransform.pivot = new Vector2(1, 0.5f);
+        rectTransform.anchoredPosition = new Vector2(-10, 0); // Отступ от правого края
+        rectTransform.sizeDelta = new Vector2(180, 365); // Уменьшенная ширина панели
+
+        // Добавляем и настраиваем GridLayoutGroup если его нет
+        if (!panelRoot.GetComponent<GridLayoutGroup>())
+        {
+            var layout = panelRoot.AddComponent<GridLayoutGroup>();
+            layout.cellSize = new Vector2(160, 45); // Уменьшенный размер кнопок
+            layout.spacing = new Vector2(5, 5);   // Расстояние между кнопками
+            layout.padding = new RectOffset(10, 10, 10, 10);
+            layout.childAlignment = TextAnchor.UpperCenter;
+            layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            layout.constraintCount = 1; // Одна кнопка в ряду
+        }
     }
 
     /// <summary>
@@ -68,6 +88,7 @@ public class UnitProductionPanel : MonoBehaviour
             {
                 // явное добавление в пул
                 btn = Instantiate(buttonPrefab, panelRoot.transform);
+                btn.gameObject.AddComponent<UnitButton>();  // Добавляем компонент для контроля размера
                 pooled.Add(btn);
             }
 

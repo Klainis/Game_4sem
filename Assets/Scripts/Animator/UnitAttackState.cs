@@ -39,7 +39,7 @@ public class UnitAttackState : StateMachineBehaviour
         {
             LookAtTarget();
 
-            if (agent != null)
+            if (attackController.targetToAttack != null)
             {
                 agent.SetDestination(animator.transform.position);
             }

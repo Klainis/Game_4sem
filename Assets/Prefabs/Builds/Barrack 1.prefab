@@ -53,31 +53,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.2
+      value: 67.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 191.4
+      value: 136.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.28569186
+      value: 0.42261827
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000007909885
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9583216
+      value: 0.9063079
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000019472171
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 146.8
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -203,27 +203,18 @@ MonoBehaviour:
   maxHealth: 100
   units:
   - name: "\u041C\u0435\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 4106416089721365992, guid: 83b7f7ef39747ac48a456efb3be31a22, type: 3}
-    cost: 25
-  - name: "\u041A\u043E\u043F\u0435\u0439\u0449\u0438\u043A"
     prefab: {fileID: 0}
     cost: 25
   - name: "\u041B\u0443\u0447\u043D\u0438\u043A"
     prefab: {fileID: 0}
     cost: 25
-  - name: "\u041B\u0435\u0433\u043A\u0430\u044F \u043A\u0430\u0432\u0430\u043B\u0435\u0440\u0438\u044F"
-    prefab: {fileID: 0}
-    cost: 25
   - name: "\u0420\u044B\u0446\u0430\u0440\u044C \u0427\u0438\u0441\u0442\u043E\u0442\u044B"
     prefab: {fileID: 0}
     cost: 25
-  - name: "\u0418\u043D\u043A\u0432\u0438\u0437\u0438\u0442\u043E\u0440"
-    prefab: {fileID: 0}
+  - name: "\u041C\u043E\u043D\u0430\u0440\u0445-\u043B\u0435\u043A\u0430\u0440\u044C"
+    prefab: {fileID: 6247748236107972691, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
     cost: 25
-  - name: "\u041C\u043E\u043D\u0430\u0445-\u043B\u0435\u043A\u0430\u0440"
-    prefab: {fileID: 0}
-    cost: 25
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 8212399262633465746}
   spawnOffset: 2
 --- !u!208 &5770444709976257576
 NavMeshObstacle:

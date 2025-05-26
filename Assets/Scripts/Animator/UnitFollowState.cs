@@ -64,6 +64,7 @@ public class UnitFollowState : StateMachineBehaviour
                 animator.SetBool("isMoving", true);
                 if (attackController.targetToAttack != null)
                 {
+                    Debug.Log("»дем ко врагу");
                     agent.SetDestination(attackController.targetToAttack.position);
 
                 }

@@ -179,7 +179,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.6
+      value: -4.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_LocalPosition.y
@@ -187,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 165.8
+      value: -10.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_LocalRotation.w
@@ -219,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_Name
-      value: Barbarian
+      value: Knight Of Bleach
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7961a522f12989347aa78164f4158635, type: 3}
       propertyPath: m_Layer
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3677571352934990623}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03aeab9e80107d34a88353ead2f2d3a4, type: 3}
   m_Name: 

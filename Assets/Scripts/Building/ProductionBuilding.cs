@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Базовый класс для зданий, производящих юнитов.
 /// </summary>
-public abstract class ProductionBuilding : BuildingBase
+public class ProductionBuilding : BuildingBase
 {
     [System.Serializable]
     public struct UnitOption
@@ -20,7 +20,7 @@ public abstract class ProductionBuilding : BuildingBase
     public Transform spawnPoint;
 
     /*–––– защита от раннего клика после установки ––––*/
-    bool interactive = false;
+    bool interactive = true;
 
     public void EnableInteraction() => interactive = true;  // вызовет менеджер построек
 

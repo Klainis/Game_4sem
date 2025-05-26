@@ -17,6 +17,10 @@ public class BuildingPlacementManager : MonoBehaviour
     [SerializeField] float gridSize = 1f;
     [SerializeField] bool  snapToGrid = true;
 
+    [Header("Prefab`s parent'")]
+    [SerializeField] Transform unitParent;
+    [SerializeField] Transform buildingParent;
+
     [Header("Rotation")]
     [SerializeField] int rotationStep = 90;
 
@@ -66,8 +70,7 @@ public class BuildingPlacementManager : MonoBehaviour
         currentPrefab = prefab;
         currentCost   = cost;
 
-        ghostInstance = Instantiate(currentPrefab);
-        ghostInstance.transform.rotation = currentPrefab.transform.rotation;
+        ghostInstance = Instantiate(currentPrefab, currentPrefab.transform.position, currentPrefab.transform.rotation);
 
         var allRV = ghostInstance.GetComponentsInChildren<RangeVisualizer>(true);
         foreach (var rv in allRV)
@@ -105,6 +108,15 @@ public class BuildingPlacementManager : MonoBehaviour
             var go = Instantiate(currentPrefab,
                         ghostInstance.transform.position,
                         ghostInstance.transform.rotation);
+            //Добавление в родителя для отображения на карте
+            if (go.CompareTag("Friendly"))
+            {
+                go.transform.SetParent(unitParent);
+            }
+            else if (go.CompareTag("Building"))
+            {
+                go.transform.SetParent(buildingParent);
+            }
 
             // Активируем интерактивность для производственных зданий
             go.GetComponent<ProductionBuilding>()?.EnableInteraction();

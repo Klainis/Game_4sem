@@ -22,31 +22,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 51.6
+      value: 69.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7
+      value: 6.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 176.7
+      value: 114.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8678956
+      value: 0.42261827
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000007069907
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49674678
+      value: 0.9063079
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000040465164
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9dc7bdc7afdcf5468ec0db80bdfbdd6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -116,8 +116,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 4, z: 1.5}
-  m_Center: {x: 0, y: 1.99, z: 0}
+  m_Size: {x: 1.5, y: 1.93, z: 1.5}
+  m_Center: {x: 0, y: 1.07, z: 0}
 --- !u!114 &3412590930667274979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,9 +177,9 @@ NavMeshObstacle:
   m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.9, y: 2.005, z: 0.8}
+  m_Extents: {x: 0.9, y: 0.965, z: 0.8}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.9900001, z: 0}
+  m_Center: {x: 0, y: 1.07, z: 0}
   m_TimeToStationary: 0.5

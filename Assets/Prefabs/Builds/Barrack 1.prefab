@@ -53,31 +53,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 72
+      value: 70.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -2.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 181.1
+      value: 191.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.28569186
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.00000008146034
+      value: 0.00000007909885
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9583216
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.000000019472171
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 146.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -224,6 +224,7 @@ MonoBehaviour:
     prefab: {fileID: 0}
     cost: 25
   spawnPoint: {fileID: 0}
+  spawnOffset: 2
 --- !u!208 &5770444709976257576
 NavMeshObstacle:
   m_ObjectHideFlags: 0

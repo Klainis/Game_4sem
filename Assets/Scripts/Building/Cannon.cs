@@ -131,7 +131,7 @@ public class Cannon : BuildingBase
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (!isGhost && isActive && IsEnemy(other) && target == null)
         {

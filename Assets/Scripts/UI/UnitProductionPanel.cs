@@ -98,53 +98,6 @@ public class UnitProductionPanel : MonoBehaviour
         current = null;
     }
 
-    //void RefreshButtons()
-    //{
-    //    int count = current.units.Length;
-
-    //    // 1) создаём/настраиваем нужное число кнопок
-    //    for (int i = 0; i < count; i++)
-    //    {
-    //        Button btn;
-    //        if (i < pooled.Count)
-    //        {
-    //            btn = pooled[i];
-    //            btn.gameObject.SetActive(true);
-    //        }
-    //        else
-    //        {
-    //            // явное добавление в пул
-    //            btn = Instantiate(buttonPrefab, panelRoot.transform);
-    //            btn.gameObject.AddComponent<UnitButton>();  // Добавляем компонент для контроля размера
-    //            pooled.Add(btn);
-    //        }
-
-    //        if (!btn.interactable)
-    //            btn.interactable = true;
-
-    //        idx = i;  // для лямбды
-    //        var opt = current.units[i];
-
-    //        // Получаем TMP_Text внутри кнопки
-    //        var label = btn.GetComponentInChildren<TMP_Text>();
-    //        if (label == null)
-    //            Debug.LogError("UnitProductionPanel: в buttonPrefab нет TMP_Text!");
-    //        else
-    //            label.text = $"{opt.name} ({opt.cost})";
-
-    //        btn.onClick.RemoveAllListeners();
-    //        //btn.onClick.AddListener(() => current.Produce(idx));
-    //        btn.onClick.AddListener(OnButtonClick);
-
-    //    }
-
-    //    // 2) прячем лишние кнопки
-    //    for (int i = count; i < pooled.Count; i++)
-    //    {
-    //        pooled[i].gameObject.SetActive(false);
-    //    }
-    //}
-
     void RefreshButtons()
     {
         if (current == null) return;

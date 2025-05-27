@@ -203,13 +203,13 @@ MonoBehaviour:
   maxHealth: 100
   units:
   - name: "\u041C\u0435\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 0}
+    prefab: {fileID: 3883671264907305785, guid: d99a132ca7bbb9347a833f5910f96cce, type: 3}
     cost: 25
   - name: "\u041B\u0443\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 0}
+    prefab: {fileID: 2952364582483783158, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
     cost: 25
   - name: "\u0420\u044B\u0446\u0430\u0440\u044C \u0427\u0438\u0441\u0442\u043E\u0442\u044B"
-    prefab: {fileID: 0}
+    prefab: {fileID: 3677571352934990623, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
     cost: 25
   - name: "\u041C\u043E\u043D\u0430\u0440\u0445-\u043B\u0435\u043A\u0430\u0440\u044C"
     prefab: {fileID: 6247748236107972691, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}

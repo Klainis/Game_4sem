@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Слушает ResourceManager и обновляет надпись при изменении золота.
@@ -8,12 +9,19 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class GoldHUD : MonoBehaviour
 {
-    TMP_Text label;
+    [SerializeField] private Image goldIcon; // Иконка золота
+    private TMP_Text label;
 
     void Awake()
     {
         // Кэшируем ссылку на текст
         label = GetComponent<TMP_Text>();
+        
+        // Настраиваем отступ текста, чтобы он не перекрывался с иконкой
+        if (goldIcon != null)
+        {
+            label.margin = new Vector4(goldIcon.rectTransform.rect.width + 5, 0, 0, 0);
+        }
     }
 
     void Start()
@@ -40,6 +48,6 @@ public class GoldHUD : MonoBehaviour
 
     void UpdateLabel(int newGold)
     {
-        label.text = $"Gold: {newGold}";
+        label.text = newGold.ToString();
     }
 }

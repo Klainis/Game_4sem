@@ -3,13 +3,16 @@ using UnityEngine.UI;
 
 public class MinimapController : MonoBehaviour
 {
-
     [SerializeField] private RawImage minimapRawImage;
     [SerializeField] private Camera minimapCamera;
     [SerializeField] private Transform playerUnitsParent;
     [SerializeField] private Transform enemyUnitsParent;
     [SerializeField] private Transform enemyBuildingParent;
     [SerializeField] private Transform unitBuildingParent;
+
+    [Header("Background")]
+    [SerializeField] private Image backgroundImage; // Р¤РѕРЅРѕРІРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ
+    [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 1f); // Р¦РІРµС‚ С„РѕРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 
     [Header("Visual Settings")]
     [SerializeField] private Color playerUnitColor = Color.green;
@@ -28,13 +31,24 @@ public class MinimapController : MonoBehaviour
     private void Awake()
     {
         CreateTextures();
+        SetupBackground();
+    }
+
+    private void SetupBackground()
+    {
+        if (backgroundImage != null)
+        {
+            backgroundImage.color = backgroundColor;
+            // РЈР±РµРґРёРјСЃСЏ, С‡С‚Рѕ С„РѕРЅ РЅР°С…РѕРґРёС‚СЃСЏ РїРѕР·Р°РґРё RawImage
+            backgroundImage.transform.SetSiblingIndex(0);
+        }
     }
 
     private Rect GetMinimapScreenRect()
     {
         RectTransform rt = minimapRawImage.rectTransform;
-        Vector2 min = rt.TransformPoint(rt.rect.min); // Левый нижний угол в экранных координатах
-        Vector2 max = rt.TransformPoint(rt.rect.max); // Правый верхний угол
+        Vector2 min = rt.TransformPoint(rt.rect.min);
+        Vector2 max = rt.TransformPoint(rt.rect.max);
         return new Rect(min.x, Screen.height - max.y, max.x - min.x, max.y - min.y);
     }
 
@@ -66,20 +80,24 @@ public class MinimapController : MonoBehaviour
 
     private void DrawUnits(Transform parent, Texture2D texture)
     {
+        if (parent == null) return;
+        
         Rect minimapRect = GetMinimapScreenRect();
         float minimapWidth = minimapRect.width;
         float minimapHeight = minimapRect.height;
 
         foreach (Transform unit in parent)
         {
+            if (unit == null) continue;
+            
             Vector3 worldPos = unit.position;
             Vector2 viewportPos = minimapCamera.WorldToViewportPoint(worldPos);
 
-            // Проверяем, виден ли объект на мини-карте
+            // РџСЂРѕРІРµСЂСЏРµРј, РІРёРґРµРЅ Р»Рё РѕР±СЉРµРєС‚ РЅР° РјРёРЅРё-РєР°СЂС‚Рµ
             if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1)
                 continue;
 
-            // Пересчет в экранные координаты относительно мини-карты
+            // Р РёСЃСѓРµРј РІ СЌРєСЂР°РЅРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С… РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РјРёРЅРё-РєР°СЂС‚С‹
             Rect iconRect = new Rect(
                 minimapRect.x + viewportPos.x * minimapWidth - unitIconSize.x / 2,
                 minimapRect.y + (1 - viewportPos.y) * minimapHeight - unitIconSize.y / 2,
@@ -93,20 +111,24 @@ public class MinimapController : MonoBehaviour
 
     private void DrawBuildings(Vector2 buildingSize, Transform buildingsParent, Texture2D texture)
     {
+        if (buildingsParent == null) return;
+        
         Rect minimapRect = GetMinimapScreenRect();
         float minimapWidth = minimapRect.width;
         float minimapHeight = minimapRect.height;
 
         foreach (Transform build in buildingsParent)
         {
+            if (build == null) continue;
+            
             Vector3 worldPos = build.position;
             Vector2 viewportPos = minimapCamera.WorldToViewportPoint(worldPos);
 
-            // Проверяем, виден ли объект на мини-карте
+            // РџСЂРѕРІРµСЂСЏРµРј, РІРёРґРµРЅ Р»Рё РѕР±СЉРµРєС‚ РЅР° РјРёРЅРё-РєР°СЂС‚Рµ
             if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1)
                 continue;
 
-            // Пересчет в экранные координаты относительно мини-карты
+            // Р РёСЃСѓРµРј РІ СЌРєСЂР°РЅРЅС‹С… РєРѕРѕСЂРґРёРЅР°С‚Р°С… РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РјРёРЅРё-РєР°СЂС‚С‹
             Rect iconRect = new Rect(
                 minimapRect.x + viewportPos.x * minimapWidth - buildingSize.x / 2,
                 minimapRect.y + (1 - viewportPos.y) * minimapHeight - buildingSize.y / 2,

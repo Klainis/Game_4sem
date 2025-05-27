@@ -16,8 +16,8 @@ public class UnitProductionPanel : MonoBehaviour
     [Header("Panel Settings")]
     [SerializeField] private Image backgroundImage; // Фоновое изображение
     [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f); // Цвет фона
-    [SerializeField] private Vector2 panelSize = new Vector2(250, 450); // Размер панели
-    [SerializeField] private Vector2 buttonSize = new Vector2(220, 50); // Размер кнопок
+    [SerializeField] private Vector2 panelSize = new Vector2(260, 265); // Размер панели
+    [SerializeField] private Vector2 buttonSize = new Vector2(210, 50); // Размер кнопок
     [SerializeField] private Vector2 spacing = new Vector2(0, 10); // Расстояние между кнопками
     [SerializeField] private int paddingLeft = 15;
     [SerializeField] private int paddingRight = 15;

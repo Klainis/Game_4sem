@@ -1976,26 +1976,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4749077098091556935, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749077098091556935, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749077098091556935, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8680010825262630594, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8680010825262630594, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3389,10 +3369,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cannon 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6018394060631107471, guid: 2619508f58605314f88a6b6aeeec539a, type: 3}
-      propertyPath: range
-      value: 
-      objectReference: {fileID: 1588009773}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4361,14 +4337,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 170667840}
     m_Modifications:
-    - target: {fileID: 4696796562769800772, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4696796562769800772, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6247748236107972691, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
       propertyPath: m_Name
       value: Monk Doctor
@@ -4439,17 +4407,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6773314091801533161, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
   m_PrefabInstance: {fileID: 1571114733}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1588009773 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 506052140922402316, guid: 2619508f58605314f88a6b6aeeec539a, type: 3}
-  m_PrefabInstance: {fileID: 1057395447}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98b7673b31b83ab469464c080f210540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1622619152 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8621456365723971446, guid: 4a152b79c50fef64a861983a802d3bc3, type: 3}
@@ -4795,30 +4752,6 @@ PrefabInstance:
     - target: {fileID: 2952364582483783158, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
       propertyPath: m_Name
       value: Archer
-      objectReference: {fileID: 0}
-    - target: {fileID: 2952364582483783158, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5927067283206271754, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5927067283206271754, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7772271656167982479, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7772271656167982479, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7772271656167982479, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

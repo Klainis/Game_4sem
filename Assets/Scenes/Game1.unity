@@ -4941,6 +4941,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gold Deposite 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7178872023708424201, guid: 4a152b79c50fef64a861983a802d3bc3, type: 3}
+      propertyPath: totalAmount
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8621456365723971446, guid: 4a152b79c50fef64a861983a802d3bc3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -179.7

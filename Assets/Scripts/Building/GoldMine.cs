@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -75,6 +76,7 @@ public class GoldMine : BuildingBase
     {
         node.OnDepleted -= HandleNodeDepleted;
         nodes.Remove(node);
+        Destroy(node.transform.gameObject);
     }
 
     /* UI: показать / скрыть радиус */

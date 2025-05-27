@@ -32,7 +32,7 @@ public class AttackController : MonoBehaviour
     //    }
     //}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         animator = GetComponentInParent<Animator>();
         unit = GetComponentInParent<Unit>();

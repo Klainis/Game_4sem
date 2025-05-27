@@ -34,6 +34,12 @@ public class Cannon : BuildingBase
         if (!muzzle && turret)
             muzzle = turret.Find("Muzzle");
 
+        // Проверяем наличие префаба снаряда
+        if (!projectilePrefab)
+        {
+            Debug.LogError("[Cannon] Projectile prefab is not assigned!");
+        }
+
         // Настройка коллайдера обнаружения
         detection = GetComponent<SphereCollider>();
         detection.isTrigger = true;
@@ -45,7 +51,7 @@ public class Cannon : BuildingBase
         isActive = false;
         isGhost = true;
 
-        //Debug.Log($"[Cannon] Awake: radius={attackRange}, damage={damage}");
+        Debug.Log($"[Cannon] Awake: radius={attackRange}, damage={damage}, projectilePrefab={projectilePrefab != null}");
     }
 
     void Start()
@@ -54,7 +60,7 @@ public class Cannon : BuildingBase
         var placementManager = FindObjectOfType<BuildingPlacementManager>();
         if (placementManager && placementManager.CurrentGhost == gameObject)
         {
-            //Debug.Log("[Cannon] Start: This is a ghost");
+            Debug.Log("[Cannon] Start: This is a ghost");
             return;
         }
 
@@ -62,7 +68,7 @@ public class Cannon : BuildingBase
         isGhost = false;
         detection.enabled = true;
         Invoke(nameof(Activate), 0.5f);
-        //Debug.Log("[Cannon] Start: Real cannon initialized");
+        Debug.Log("[Cannon] Start: Real cannon initialized");
     }
 
     void Activate()
@@ -85,8 +91,7 @@ public class Cannon : BuildingBase
             if (IsEnemy(col) && target == null)
             {
                 target = col.transform;
-                Debug.Log($"[Cannon] Found enemy: {col.name}");
-                Debug.Log($"ВРАГ: {col}");
+                Debug.Log($"[Cannon] Found enemy: {col.name} at position {col.transform.position}");
                 break;
             }
         }
@@ -131,7 +136,7 @@ public class Cannon : BuildingBase
         if (!isGhost && isActive && IsEnemy(other) && target == null)
         {
             target = other.transform;
-            //Debug.Log($"[Cannon] Enemy entered range: {other.name}");
+            Debug.Log($"[Cannon] Enemy entered range: {other.name} at position {other.transform.position}");
         }
     }
 
@@ -149,7 +154,7 @@ public class Cannon : BuildingBase
         bool isEnemy = col.CompareTag("Enemy");
         if (isEnemy)
         {
-            Debug.Log($"[Cannon] Detected enemy: {col.name}");
+            Debug.Log($"[Cannon] Detected enemy: {col.name} at position {col.transform.position}");
         }
         return isEnemy;
     }
@@ -162,19 +167,27 @@ public class Cannon : BuildingBase
             return;
         }
 
-        Debug.Log($"[Cannon] Shooting at {target.name}");
-
-        // Мгновенный урон
         if (!projectilePrefab)
         {
-            target.GetComponent<Unit>()?.TakeDamage(damage);
+            Debug.LogError("[Cannon] Can't shoot: projectilePrefab is missing!");
             return;
         }
+
+        Debug.Log($"[Cannon] Shooting at {target.name} from position {(muzzle ? muzzle.position : transform.position)}");
 
         // Снаряд
         Vector3 spawnPos = muzzle ? muzzle.position : transform.position + Vector3.up * 1.5f;
         var proj = Instantiate(projectilePrefab, spawnPos, muzzle ? muzzle.rotation : Quaternion.identity);
-        proj.GetComponent<Projectile>().Init(target, damage);
+        
+        if (proj.TryGetComponent<Projectile>(out var projectile))
+        {
+            projectile.Init(target, damage);
+            Debug.Log($"[Cannon] Projectile initialized with target {target.name} and damage {damage}");
+        }
+        else
+        {
+            Debug.LogError("[Cannon] Projectile component not found on instantiated prefab!");
+        }
     }
 
     // Показать/скрыть радиус при клике

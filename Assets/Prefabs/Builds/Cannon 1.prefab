@@ -424,11 +424,11 @@ MonoBehaviour:
   range: {fileID: 506052140922402316}
   turret: {fileID: 1984693244770563591}
   muzzle: {fileID: 1736372103314494128}
-  damage: 9
+  damage: 20
   shootInterval: 2
   attackRange: 10
   rotationSpeed: 5
-  projectilePrefab: {fileID: 2687131397831846139, guid: 20d04287893e2be46a73b841326738ab, type: 3}
+  projectilePrefab: {fileID: 1539109816139104832, guid: f09fc26f7a4b3fd408badeea1fcc36ff, type: 3}
   target: {fileID: 0}
 --- !u!120 &1886821112847882606
 LineRenderer:

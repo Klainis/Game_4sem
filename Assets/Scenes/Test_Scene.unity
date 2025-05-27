@@ -3181,7 +3181,7 @@ MonoBehaviour:
   enemyBuildingParent: {fileID: 252505151}
   unitBuildingParent: {fileID: 1717734583}
   backgroundImage: {fileID: 394625410}
-  backgroundColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   playerUnitColor: {r: 0, g: 0.7610062, b: 0.024237579, a: 1}
   enemyUnitColor: {r: 1, g: 0, b: 0, a: 1}
   enemyBuildingColor: {r: 1, g: 0, b: 0, a: 1}

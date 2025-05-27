@@ -13,33 +13,59 @@ public class UnitProductionPanel : MonoBehaviour
     [SerializeField] GameObject panelRoot;   // контейнер панели
     [SerializeField] Button     buttonPrefab; // должен иметь внутри TMP_Text
 
+    [Header("Panel Settings")]
+    [SerializeField] private Image backgroundImage; // Фоновое изображение
+    [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f); // Цвет фона
+    [SerializeField] private Vector2 panelSize = new Vector2(250, 450); // Размер панели
+    [SerializeField] private Vector2 buttonSize = new Vector2(220, 50); // Размер кнопок
+    [SerializeField] private Vector2 spacing = new Vector2(0, 10); // Расстояние между кнопками
+    [SerializeField] private int paddingLeft = 15;
+    [SerializeField] private int paddingRight = 15;
+    [SerializeField] private int paddingTop = 15;
+    [SerializeField] private int paddingBottom = 15;
+
     readonly List<Button> pooled = new();
     ProductionBuilding    current;
+    private GridLayoutGroup layoutGroup;
 
     void Awake()
     {
         Instance = this;
+        SetupPanel();
+    }
+
+    private void SetupPanel()
+    {
         panelRoot.SetActive(false);
+
+        // Настраиваем фон
+        if (backgroundImage != null)
+        {
+            backgroundImage.color = backgroundColor;
+            backgroundImage.transform.SetSiblingIndex(0);
+        }
 
         // Настраиваем позицию панели справа
         var rectTransform = panelRoot.GetComponent<RectTransform>();
-        rectTransform.anchorMin = new Vector2(1, 0.5f); // Правый край
+        rectTransform.anchorMin = new Vector2(1, 0.5f);
         rectTransform.anchorMax = new Vector2(1, 0.5f);
         rectTransform.pivot = new Vector2(1, 0.5f);
-        rectTransform.anchoredPosition = new Vector2(-10, 0); // Отступ от правого края
-        rectTransform.sizeDelta = new Vector2(180, 365); // Уменьшенная ширина панели
+        rectTransform.anchoredPosition = new Vector2(-20, 0); // Немного больший отступ от края
+        rectTransform.sizeDelta = panelSize;
 
-        // Добавляем и настраиваем GridLayoutGroup если его нет
-        if (!panelRoot.GetComponent<GridLayoutGroup>())
+        // Настраиваем layout для кнопок
+        layoutGroup = panelRoot.GetComponent<GridLayoutGroup>();
+        if (!layoutGroup)
         {
-            var layout = panelRoot.AddComponent<GridLayoutGroup>();
-            layout.cellSize = new Vector2(160, 45); // Уменьшенный размер кнопок
-            layout.spacing = new Vector2(5, 5);   // Расстояние между кнопками
-            layout.padding = new RectOffset(10, 10, 10, 10);
-            layout.childAlignment = TextAnchor.UpperCenter;
-            layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            layout.constraintCount = 1; // Одна кнопка в ряду
+            layoutGroup = panelRoot.AddComponent<GridLayoutGroup>();
         }
+        
+        layoutGroup.cellSize = buttonSize;
+        layoutGroup.spacing = spacing;
+        layoutGroup.padding = new RectOffset(paddingLeft, paddingRight, paddingTop, paddingBottom);
+        layoutGroup.childAlignment = TextAnchor.UpperCenter;
+        layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        layoutGroup.constraintCount = 1;
     }
 
     /// <summary>
@@ -73,6 +99,8 @@ public class UnitProductionPanel : MonoBehaviour
 
     void RefreshButtons()
     {
+        if (current == null) return;
+        
         int count = current.units.Length;
 
         // 1) создаём/настраиваем нужное число кнопок

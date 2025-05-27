@@ -235,15 +235,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1353c79017fe3e645ad42026b8854b12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 63.2
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1353c79017fe3e645ad42026b8854b12, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1353c79017fe3e645ad42026b8854b12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 159.6
+      value: 145.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1353c79017fe3e645ad42026b8854b12, type: 3}
       propertyPath: m_LocalRotation.w
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  range: {fileID: 0}
+  range: {fileID: 506052140922402316}
   turret: {fileID: 1984693244770563591}
   muzzle: {fileID: 1736372103314494128}
   damage: 9

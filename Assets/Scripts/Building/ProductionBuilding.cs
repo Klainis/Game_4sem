@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Базовый класс для зданий, производящих юнитов.
 /// </summary>
-public class ProductionBuilding : BuildingBase
+public abstract class ProductionBuilding : BuildingBase
 {
     [System.Serializable]
     public struct UnitOption
@@ -35,6 +35,7 @@ public class ProductionBuilding : BuildingBase
         Vector3 pos = (spawnPoint ? spawnPoint.position
                                   : transform.position + transform.forward * 2);
         Instantiate(option.prefab, pos, Quaternion.identity);
+        Debug.Log("ЮНИТ СОЗДАН");
     }
 
     /*–––– обработка клика ––––*/

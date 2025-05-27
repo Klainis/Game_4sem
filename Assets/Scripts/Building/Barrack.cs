@@ -21,22 +21,23 @@ public class Barrack : ProductionBuilding
     }
 
     // Переопределяем метод производства для добавления специфичной логики барака
-    public new void Produce(int index)
-    {
-        if (index < 0 || index >= units.Length) return;
-        var option = units[index];
+    //public new void Produce(int index)
+    //{
+    //    if (index < 0 || index >= units.Length) return;
+    //    var option = units[index];
 
-        if (!ResourceManager.Instance.SpendGold(option.cost)) 
-        {
-            // Можно добавить визуальное или звуковое оповещение о нехватке золота
-            Debug.Log("Недостаточно золота для найма юнита!");
-            return;
-        }
+    //    if (!ResourceManager.Instance.SpendGold(option.cost)) 
+    //    {
+    //        // Можно добавить визуальное или звуковое оповещение о нехватке золота
+    //        Debug.Log("Недостаточно золота для найма юнита!");
+    //        return;
+    //    }
 
-        Vector3 pos = (spawnPoint ? spawnPoint.position : transform.position + transform.forward * spawnOffset);
-        GameObject unit = Instantiate(option.prefab, pos, Quaternion.identity);
+    //    Vector3 pos = (spawnPoint ? spawnPoint.position : transform.position + transform.forward * spawnOffset);
+    //    GameObject unit = Instantiate(option.prefab, pos, Quaternion.identity);
+    //    Debug.Log("ЮНИТ СОЗДАН");
         
-        // Здесь можно добавить дополнительную инициализацию юнита
-        // Например, установить команду, добавить эффекты появления и т.д.
-    }
+    //    // Здесь можно добавить дополнительную инициализацию юнита
+    //    // Например, установить команду, добавить эффекты появления и т.д.
+    //}
 }

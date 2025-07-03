@@ -136,7 +136,7 @@ public class Cannon : BuildingBase
         if (!isGhost && isActive && IsEnemy(other) && target == null)
         {
             target = other.transform;
-            Debug.Log($"[Cannon] Enemy entered range: {other.name} at position {other.transform.position}");
+            //Debug.Log($"[Cannon] Enemy entered range: {other.name} at position {other.transform.position}");
         }
     }
 
@@ -154,7 +154,7 @@ public class Cannon : BuildingBase
         bool isEnemy = col.CompareTag("Enemy");
         if (isEnemy)
         {
-            Debug.Log($"[Cannon] Detected enemy: {col.name} at position {col.transform.position}");
+            //Debug.Log($"[Cannon] Detected enemy: {col.name} at position {col.transform.position}");
         }
         return isEnemy;
     }
@@ -173,7 +173,7 @@ public class Cannon : BuildingBase
             return;
         }
 
-        Debug.Log($"[Cannon] Shooting at {target.name} from position {(muzzle ? muzzle.position : transform.position)}");
+        //Debug.Log($"[Cannon] Shooting at {target.name} from position {(muzzle ? muzzle.position : transform.position)}");
 
         // Снаряд
         Vector3 spawnPos = muzzle ? muzzle.position : transform.position + Vector3.up * 1.5f;
@@ -182,7 +182,7 @@ public class Cannon : BuildingBase
         if (proj.TryGetComponent<Projectile>(out var projectile))
         {
             projectile.Init(target, damage);
-            Debug.Log($"[Cannon] Projectile initialized with target {target.name} and damage {damage}");
+            //Debug.Log($"[Cannon] Projectile initialized with target {target.name} and damage {damage}");
         }
         else
         {

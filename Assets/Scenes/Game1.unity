@@ -2210,7 +2210,7 @@ Projector:
   m_Enabled: 1
   serializedVersion: 2
   m_NearClipPlane: 0.1
-  m_FarClipPlane: 242.5
+  m_FarClipPlane: 150.1
   m_FieldOfView: 85.9
   m_AspectRatio: 1
   m_Orthographic: 1
@@ -2364,7 +2364,7 @@ Projector:
   m_Enabled: 1
   serializedVersion: 2
   m_NearClipPlane: 0.1
-  m_FarClipPlane: 223.4
+  m_FarClipPlane: 142.7
   m_FieldOfView: 102.4
   m_AspectRatio: 1
   m_Orthographic: 1
@@ -3987,7 +3987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: 0
   terrains:
-  - {fileID: 0}
+  - {fileID: 1426922534}
   visibleTerrainsOnly: 0
   treeTypes:
   - enabled: 1
@@ -4118,7 +4118,7 @@ MonoBehaviour:
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  terrainMinMaxHeight: {x: 17.682198, y: 91.713394}
+  terrainMinMaxHeight: {x: 27, y: 125.06281}
   detailResolution: 512
   detailResolutionIndex: 2
   grassPatchSize: 128
@@ -4134,12 +4134,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343232107}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -38, y: 0, z: -369}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1530228161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1351256331
 PrefabInstance:
@@ -4412,7 +4412,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: ab751e45e9f421c4ca68e7bf7c3fef75, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!1 &1443497820
 GameObject:
@@ -4578,6 +4578,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1426922532}
+  - {fileID: 1343232109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1549220100
@@ -5645,7 +5646,6 @@ SceneRoots:
   - {fileID: 1301267254}
   - {fileID: 487343042}
   - {fileID: 1530228161}
-  - {fileID: 1343232109}
   - {fileID: 116083183}
   - {fileID: 224753654}
   - {fileID: 170667840}

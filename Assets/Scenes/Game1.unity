@@ -3793,7 +3793,7 @@ MonoBehaviour:
   moveWithEdgeScrolling: 1
   moveWithMouseDrag: 1
   minZoomHeight: 10
-  maxZoomHeight: 50
+  maxZoomHeight: 30
   zoomSensitivity: 15
   currentZoomHeight: 20
   damping: 5

@@ -179,15 +179,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.9
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -301.6
+      value: -1.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -266,6 +266,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2720087122279598792}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6052481224803316690}
   m_SourcePrefab: {fileID: 100100000, guid: 63e51ebb83663bc4ca973da75d737a5b, type: 3}
 --- !u!4 &7013134209247943381 stripped
 Transform:
@@ -480,3 +483,20 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6052481224803316690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7644993182394826863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c9667a728b0914dbd78f89e343b3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visibilityTexture: {fileID: 8400000, guid: 1ddd909d0555cb943ba817a62e76ae98, type: 2}
+  fogCamera: {fileID: 0}
+  fogLayer:
+    serializedVersion: 2
+    m_Bits: 4096

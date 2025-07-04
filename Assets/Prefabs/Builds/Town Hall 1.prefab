@@ -177,7 +177,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608150666937550866}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.9, y: 0.965, z: 0.8}
@@ -221,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604444898977396117, guid: 161bd49d1c373ef4dac58e415a8373d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.4
+      value: 4.05
       objectReference: {fileID: 0}
     - target: {fileID: 8604444898977396117, guid: 161bd49d1c373ef4dac58e415a8373d9, type: 3}
       propertyPath: m_LocalPosition.z

@@ -99,8 +99,8 @@ public class MinimapController : MonoBehaviour
 
             // Рисуем в экранных координатах относительно мини-карты
             Rect iconRect = new Rect(
-                minimapRect.x + viewportPos.x * minimapWidth - unitIconSize.x / 2,
-                minimapRect.y + (1 - viewportPos.y) * minimapHeight - unitIconSize.y / 2,
+                minimapRect.x + viewportPos.y * minimapWidth - unitIconSize.x / 2,  // X → Y
+                minimapRect.y + (1 - viewportPos.x) * minimapHeight - unitIconSize.y / 2,  // Y → 1-X
                 unitIconSize.x,
                 unitIconSize.y
             );
@@ -130,8 +130,8 @@ public class MinimapController : MonoBehaviour
 
             // Рисуем в экранных координатах относительно мини-карты
             Rect iconRect = new Rect(
-                minimapRect.x + viewportPos.x * minimapWidth - buildingSize.x / 2,
-                minimapRect.y + (1 - viewportPos.y) * minimapHeight - buildingSize.y / 2,
+                minimapRect.x + viewportPos.y * minimapWidth - buildingSize.x / 2,
+                minimapRect.y + (1 - viewportPos.x) * minimapHeight - buildingSize.y / 2,
                 buildingSize.x,
                 buildingSize.y
             );

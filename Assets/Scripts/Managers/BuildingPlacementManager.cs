@@ -123,6 +123,7 @@ public class BuildingPlacementManager : MonoBehaviour
 
             // Вызываем OnPlaced для пушек и других зданий
             go.GetComponent<Cannon>()?.OnPlaced();
+            go.GetComponent<TempleOfPurity>()?.OnPlaced();
 
             // Начинаем размещение следующего здания
             BeginPlacement(currentPrefab, currentCost);
@@ -187,6 +188,14 @@ public class BuildingPlacementManager : MonoBehaviour
             foreach (var tag in blockingTags)
                 if (h.CompareTag(tag)) return false;
         }
+
+        // Проверка на скверну (запрет строительства на заражённых клетках)
+        if (CorruptionGridManager.Instance != null)
+        {
+            if (!CorruptionGridManager.Instance.CanBuildAt(pos))
+                return false;
+        }
+
         return true;
     }
 }

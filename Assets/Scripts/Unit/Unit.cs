@@ -25,6 +25,7 @@ public class Unit : MonoBehaviour
         unitHealth = unitMaxHealth;
         UpdateHealthUI();
 
+        
     }
 
     private void OnDestroy()
@@ -38,7 +39,7 @@ public class Unit : MonoBehaviour
 
         if (unitHealth <=0)
         { 
-            // Добавить анимацию и звуковые эффекты
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             Destroy(gameObject);
         }
     }
@@ -49,5 +50,23 @@ public class Unit : MonoBehaviour
         Debug.Log(damageAttackAfterArmor);
         unitHealth -= damageAttackAfterArmor;
         UpdateHealthUI();
+    }
+
+    void Update()
+    {
+        // РџСЂРѕРІРµСЂРєР° РЅР° СЃРєРІРµСЂРЅСѓ
+        if (CorruptionGridManager.Instance != null)
+        {
+            bool isCorrupted = CorruptionGridManager.Instance.IsCorruptedCell(transform.position);
+            var debuff = GetComponent<CorruptionDebuff>();
+            if (isCorrupted && debuff == null)
+            {
+                gameObject.AddComponent<CorruptionDebuff>();
+            }
+            else if (!isCorrupted && debuff != null)
+            {
+                Destroy(debuff);
+            }
+        }
     }
 }

@@ -165,9 +165,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -6545801570897300931, guid: b3145b0c2bc32ef41be5cf227c75d022, type: 3}
+    - target: {fileID: -5754084199372789682, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3205409653519114667, guid: b3145b0c2bc32ef41be5cf227c75d022, type: 3}
     - target: {fileID: 919132149155446097, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_Name
-      value: Barrack 1
+      value: TempleOfPurity
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       propertyPath: m_Layer
@@ -198,10 +206,10 @@ PrefabInstance:
       addedObject: {fileID: 8733426825617103563}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5862659303683348446}
+      addedObject: {fileID: 5770444709976257576}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5770444709976257576}
+      addedObject: {fileID: 4064885531131107727}
   m_SourcePrefab: {fileID: 100100000, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}
 --- !u!1 &4740200712235710518 stripped
 GameObject:
@@ -265,34 +273,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &5862659303683348446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740200712235710518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e08937d574fa02942b50e809a0218b86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  units:
-  - name: "\u041C\u0435\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 3883671264907305785, guid: d99a132ca7bbb9347a833f5910f96cce, type: 3}
-    cost: 25
-  - name: "\u041B\u0443\u0447\u043D\u0438\u043A"
-    prefab: {fileID: 2952364582483783158, guid: c827c324e83cfbf4cb6b521c4e7d8569, type: 3}
-    cost: 25
-  - name: "\u0420\u044B\u0446\u0430\u0440\u044C \u0427\u0438\u0441\u0442\u043E\u0442\u044B"
-    prefab: {fileID: 3677571352934990623, guid: 6362e2b482d0cd144b88fb3a983de6a5, type: 3}
-    cost: 25
-  - name: "\u041C\u043E\u043D\u0430\u0440\u0445-\u043B\u0435\u043A\u0430\u0440\u044C"
-    prefab: {fileID: 6247748236107972691, guid: c57be197f0370c640b9dc9a0a2646bd7, type: 3}
-    cost: 25
-  spawnPoint: {fileID: 8212399262633465746}
-  spawnOffset: 2
 --- !u!208 &5770444709976257576
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -309,6 +289,22 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.8, z: 0.06}
   m_TimeToStationary: 0.5
+--- !u!114 &4064885531131107727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4740200712235710518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55aaca88d5bcaad44b788c613eb067e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  cleansingRadius: 5
+  cleansingInterval: 3
+  cleansingStrength: 2
 --- !u!4 &5369209683312419468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1c8b7ab55bed3d34bb81480cf3a6e463, type: 3}

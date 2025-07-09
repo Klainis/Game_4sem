@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
@@ -9,6 +8,7 @@ public class UnitSelectionManager : MonoBehaviour
 {
     // Start is called before he first frame update
     public static UnitSelectionManager Instance { get; set; }
+    UICharactersIconManager uICharactersIconManager;
 
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitSelected = new List<GameObject>();

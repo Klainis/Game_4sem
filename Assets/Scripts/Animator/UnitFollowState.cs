@@ -23,14 +23,14 @@ public class UnitFollowState : StateMachineBehaviour
         unitMovement = animator.transform.GetComponent<UnitMovement>();
 
         attackingDistance = unit.attackRange;
-        //Debug.Log(attackingDistance);
+        // attackingDistance);
 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Debug.Log($"State: {animator.GetCurrentAnimatorStateInfo(0).fullPathHash} | " +
+        // $"State: {animator.GetCurrentAnimatorStateInfo(0).fullPathHash} | " +
         //      $"Moving: {animator.GetBool("isMoving")} | " +
         //      $"Velocity: {agent.velocity.magnitude}");
 
@@ -38,7 +38,7 @@ public class UnitFollowState : StateMachineBehaviour
         if (attackController.targetToAttack == null)
         {
             animator.SetBool("isFollowing", false);
-            //Debug.Log(unitMovement.isCommandedToMove);
+            // unitMovement.isCommandedToMove);
         }
         else
         {
@@ -54,7 +54,7 @@ public class UnitFollowState : StateMachineBehaviour
                 //    //animator.applyRootMotion = false;
                 //    //animator.SetBool("isMoving", true);
                 //    agent.SetDestination(hit.position);
-                //    Debug.Log("ƒ¬»√¿≈“—ﬂ  Œ ¬–¿√”");
+                //     "ƒ¬»√¿≈“—ﬂ  Œ ¬–¿√”");
                 //    //agent.SetDestination(new Vector3(5, 0, 5));
                 //}
                 //else

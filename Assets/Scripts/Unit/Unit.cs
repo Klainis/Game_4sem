@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    public Sprite unitIconSprite;
+    public SlotIcon slot;
+    InterfaceScript interfaceScript;
     public float unitHealth { get; private set; }
 
     public float unitMaxHealth;
@@ -19,7 +22,7 @@ public class Unit : MonoBehaviour
     void Start()
     {
         UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
-
+        interfaceScript = FindObjectOfType<InterfaceScript>();
         attackController = GetComponent<AttackController>();
 
         unitHealth = unitMaxHealth;

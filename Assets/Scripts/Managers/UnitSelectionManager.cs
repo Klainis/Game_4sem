@@ -8,7 +8,8 @@ public class UnitSelectionManager : MonoBehaviour
 {
     // Start is called before he first frame update
     public static UnitSelectionManager Instance { get; set; }
-    UICharactersIconManager uICharactersIconManager;
+
+    InterfaceScript interfaceScript;
 
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitSelected = new List<GameObject>();
@@ -47,6 +48,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         cam = Camera.main;
         //enemOutline = GameObject.FindObjectOfType<EnemOutline>();
+        interfaceScript = FindObjectOfType<InterfaceScript>();
     }
 
     private void Update()
@@ -180,6 +182,8 @@ public class UnitSelectionManager : MonoBehaviour
         {
             unitSelected.Add(unit);
             SelectUnit(unit, true);
+            Unit unitIc = unit.GetComponent<Unit>();
+            interfaceScript.GetIconUnitToList(unitIc, unitSelected.IndexOf(unit));
         }
         else
         {
@@ -202,9 +206,7 @@ public class UnitSelectionManager : MonoBehaviour
     private void SelectByClicking(GameObject unit)
     {
         DeselectAll();
-
         unitSelected.Add(unit);
-
         SelectUnit(unit, true);
     }
 

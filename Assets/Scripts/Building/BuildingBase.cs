@@ -9,7 +9,11 @@ public abstract class BuildingBase : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] protected int maxHealth = 100;
+    public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
+
+    public event System.Action<int,int> OnDamaged;   // current, max
+    public event System.Action OnDestroyed;
 
     protected virtual void Awake()
     {
@@ -22,8 +26,10 @@ public abstract class BuildingBase : MonoBehaviour
     public virtual void TakeDamage(int amount)
     {
         CurrentHealth -= amount;
+        OnDamaged?.Invoke(CurrentHealth, maxHealth);
         if (CurrentHealth <= 0)
         {
+            OnDestroyed?.Invoke();
             Destroy(gameObject);
         }
     }

@@ -50,6 +50,10 @@ public class Projectile : MonoBehaviour
         {
             unit.TakeDamage(damage);
         }
+        else if (target.TryGetComponent(out BuildingBase building))
+        {
+            building.TakeDamage(damage);
+        }
 
         if (hitEffect)
         {

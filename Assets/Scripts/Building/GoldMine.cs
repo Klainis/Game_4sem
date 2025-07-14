@@ -10,6 +10,7 @@ public class GoldMine : BuildingBase
 {
     [Header("References")]
     [SerializeField] RangeVisualizer range;          // кольцо для игрока
+    [SerializeField] ProgressBarUI progressBar;
 
     [Header("Mining")]
     [SerializeField] float tickSeconds = 2f;         // период добычи
@@ -23,11 +24,13 @@ public class GoldMine : BuildingBase
     protected override void Awake()
     {
         base.Awake(); // Вызываем Awake базового класса
+        if(progressBar == null) progressBar = GetComponentInChildren<ProgressBarUI>();
         
         if (!range)
             range = GetComponentInChildren<RangeVisualizer>(true);
 
         range?.Hide();                               // шахта стартует без видимого кольца
+        progressBar?.Hide();
 
         float radius = range ? range.RadiusWorld : 3f;
         FindNodes(radius);
@@ -53,7 +56,15 @@ public class GoldMine : BuildingBase
     {
         while (nodes.Count > 0)
         {
-            yield return new WaitForSeconds(tickSeconds);
+            float timer = 0;
+            while(timer < tickSeconds)
+            {
+                timer += Time.deltaTime;
+                progressBar?.UpdateProgress(timer / tickSeconds, $"Добыча...");
+                // Убеждаемся, что ProgressBar ориентирован правильно
+                progressBar?.ForceCorrectOrientation();
+                yield return null;
+            }
 
             int totalTaken = 0;
             // идём по копии, потому что в цикле список может измениться
@@ -69,6 +80,7 @@ public class GoldMine : BuildingBase
                 ResourceManager.Instance.AddGold(totalTaken);
         }
 
+        progressBar?.Hide();
         Debug.Log($"{name}: все жилы исчерпаны, добыча остановлена");
     }
 

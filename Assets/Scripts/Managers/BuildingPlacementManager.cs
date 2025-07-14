@@ -3,13 +3,13 @@ using UnityEngine;
 /// <summary>
 /// Отвечает только за визуальный «призрак», проверку валидности
 /// и фактическое создание здания.  Ввод получает через
-/// PlacementInputHandler.
+/// PlacementInputHandler. Поддерживает отдельные ghost-префабы.
 /// </summary>
 public class BuildingPlacementManager : MonoBehaviour
 {
     /*–––– ссылки ––––*/
     [SerializeField] PlacementInputHandler input;        // drag & drop в инспекторе
-    [SerializeField] Material ghostMaterial;
+    [SerializeField] Material ghostMaterial;             // Fallback материал для старых зданий
     [SerializeField] LayerMask groundLayer;
 
     /*–––– настройки ––––*/
@@ -29,8 +29,10 @@ public class BuildingPlacementManager : MonoBehaviour
 
     /*–––– runtime ––––*/
     GameObject  ghostInstance;
-    Renderer[]  ghostRenderers;
-    GameObject  currentPrefab;
+    BuildingGhost buildingGhost;         // Компонент ghost-объекта
+    Renderer[]  ghostRenderers;         // Fallback для старых зданий
+    GameObject  currentPrefab;          // Оригинальный префаб здания
+    GameObject  currentGhostPrefab;     // Ghost-префаб (если есть)
     int         currentCost;
     bool        isPlacing;
 
@@ -59,41 +61,82 @@ public class BuildingPlacementManager : MonoBehaviour
         if (!isPlacing) return;
 
         UpdateGhostPosition();
-        SetGhostColor(IsPlacementValid(ghostInstance.transform.position));
+        bool isValid = IsPlacementValid(ghostInstance.transform.position);
+        SetGhostColor(isValid);
     }
 
     /*–––– public API ––––*/
     public void BeginPlacement(GameObject prefab, int cost)
     {
+        BeginPlacement(prefab, null, cost);
+    }
+
+    public void BeginPlacement(GameObject prefab, GameObject ghostPrefab, int cost)
+    {
         CancelPlacement();                     // сбрасываем предыдущую попытку
 
         currentPrefab = prefab;
-        currentCost   = cost;
+        currentGhostPrefab = ghostPrefab;
+        currentCost = cost;
 
-        ghostInstance = Instantiate(currentPrefab, currentPrefab.transform.position, currentPrefab.transform.rotation);
+        // Используем ghost-префаб если он есть, иначе создаем ghost из обычного префаба
+        GameObject prefabToInstantiate = currentGhostPrefab != null ? currentGhostPrefab : currentPrefab;
+        ghostInstance = Instantiate(prefabToInstantiate, prefabToInstantiate.transform.position, prefabToInstantiate.transform.rotation);
 
+        // Проверяем, есть ли компонент BuildingGhost
+        buildingGhost = ghostInstance.GetComponent<BuildingGhost>();
+
+        if (buildingGhost != null)
+        {
+            // Используем новую систему ghost-объектов
+            Debug.Log($"[BuildingPlacementManager] Using new ghost system for {prefab.name}");
+        }
+        else
+        {
+            // Fallback: используем старую систему
+            Debug.Log($"[BuildingPlacementManager] Using legacy ghost system for {prefab.name}");
+            CreateLegacyGhost();
+        }
+
+        isPlacing = true;
+    }
+
+    /// <summary>
+    /// Создает ghost в старом стиле для совместимости
+    /// </summary>
+    private void CreateLegacyGhost()
+    {
         var allRV = ghostInstance.GetComponentsInChildren<RangeVisualizer>(true);
         foreach (var rv in allRV)
             rv.Show();
 
         SetGhostAppearance(ghostInstance);
         ghostRenderers = ghostInstance.GetComponentsInChildren<Renderer>();
-
-        isPlacing = true;
     }
 
     public void CancelPlacement()
     {
         if (ghostInstance) Destroy(ghostInstance);
-        isPlacing     = false;
+        isPlacing = false;
         currentPrefab = null;
+        currentGhostPrefab = null;
+        buildingGhost = null;
+        ghostRenderers = null;
     }
 
     /*–––– event-handlers ––––*/
     void OnRotate()
     {
-        if (isPlacing && ghostInstance)
+        if (!isPlacing || !ghostInstance) return;
+
+        if (buildingGhost != null)
+        {
+            buildingGhost.Rotate(rotationStep);
+        }
+        else
+        {
             ghostInstance.transform.Rotate(Vector3.up, rotationStep, Space.World);
+        }
     }
 
     void TryPlaceBuilding(Vector3 clickPoint)
@@ -126,7 +169,7 @@ public class BuildingPlacementManager : MonoBehaviour
             go.GetComponent<TempleOfPurity>()?.OnPlaced();
 
             // Начинаем размещение следующего здания
-            BeginPlacement(currentPrefab, currentCost);
+            BeginPlacement(currentPrefab, currentGhostPrefab, currentCost);
         }
         else
         {
@@ -147,7 +190,15 @@ public class BuildingPlacementManager : MonoBehaviour
                 pos.x = Mathf.Round(pos.x / gridSize) * gridSize;
                 pos.z = Mathf.Round(pos.z / gridSize) * gridSize;
             }
-            ghostInstance.transform.position = pos;
+
+            if (buildingGhost != null)
+            {
+                buildingGhost.SetPosition(pos);
+            }
+            else
+            {
+                ghostInstance.transform.position = pos;
+            }
         }
     }
 
@@ -163,15 +214,33 @@ public class BuildingPlacementManager : MonoBehaviour
 
     void SetGhostColor(bool isValid)
     {
-        if (ghostRenderers == null) return;
-        var c = (isValid ? Color.green : Color.red);  c.a = .5f;
-        foreach (var r in ghostRenderers) r.material.color = c;
+        if (buildingGhost != null)
+        {
+            buildingGhost.SetValidationColor(isValid);
+        }
+        else if (ghostRenderers != null)
+        {
+            // Fallback для старой системы
+            var c = (isValid ? Color.green : Color.red);  
+            c.a = .5f;
+            foreach (var r in ghostRenderers) 
+            {
+                if (r != null && r.material != null)
+                    r.material.color = c;
+            }
+        }
     }
 
     Vector3 GetGhostColliderSize()
     {
-        if (ghostInstance.TryGetComponent(out BoxCollider col))
+        if (buildingGhost != null)
+        {
+            return buildingGhost.GetColliderSize();
+        }
+        else if (ghostInstance.TryGetComponent(out BoxCollider col))
+        {
             return Vector3.Scale(col.size, ghostInstance.transform.localScale);
+        }
 
         return new Vector3(1.1f, 1.5f, 1.1f); // fallback
     }

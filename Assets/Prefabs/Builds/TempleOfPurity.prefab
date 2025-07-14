@@ -600,7 +600,7 @@ MonoBehaviour:
   maxHealth: 100
   cleansingRadius: 5
   cleansingInterval: 3
-  cleansingStrength: 2
+  cleansingStrength: 5
 --- !u!114 &8367045116425740965
 MonoBehaviour:
   m_ObjectHideFlags: 0

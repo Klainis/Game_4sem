@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class FogOfWarVisibility : MonoBehaviour
 {
-    public RenderTexture visibilityTexture; // Текстура тумана войны
-    public Camera fogCamera; // Камера, рендерящая туман
-    public LayerMask fogLayer; // Слой тумана
+    public RenderTexture visibilityTexture; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    public Camera fogCamera; // пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    public LayerMask fogLayer; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     private Texture2D readableTexture;
     private bool isVisible = true;
 
     void Start()
     {
-        // Создаем текстуру для чтения
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         readableTexture = new Texture2D(
             visibilityTexture.width,
             visibilityTexture.height,
@@ -27,17 +27,24 @@ public class FogOfWarVisibility : MonoBehaviour
 
     void CheckVisibility()
     {
-        // Конвертируем мировые координаты в UV текстуры
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ fogCamera РЅР°Р·РЅР°С‡РµРЅР°
+        if (fogCamera == null)
+        {
+            isVisible = true;
+            return;
+        }
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ UV пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Vector3 viewPos = fogCamera.WorldToViewportPoint(transform.position);
 
-        // Если объект вне камеры тумана
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (viewPos.x < 0 || viewPos.x > 1 || viewPos.y < 0 || viewPos.y > 1)
         {
             isVisible = false;
             return;
         }
 
-        // Читаем пиксель из текстуры
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         RenderTexture.active = visibilityTexture;
         readableTexture.ReadPixels(new Rect(
             viewPos.x * visibilityTexture.width,
@@ -47,18 +54,18 @@ public class FogOfWarVisibility : MonoBehaviour
         RenderTexture.active = null;
 
         Color pixel = readableTexture.GetPixel(0, 0);
-        isVisible = pixel.grayscale > 0.1f; // Пороговое значение
+        isVisible = pixel.grayscale > 0.1f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     void UpdateVisibility()
     {
-        // Здесь реализуйте скрытие/показ объекта
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         foreach (var renderer in GetComponentsInChildren<Renderer>())
         {
             renderer.enabled = isVisible;
         }
 
-        // Альтернатива для Canvas элементов
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Canvas пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         // GetComponent<CanvasGroup>().alpha = isVisible ? 1 : 0;
     }
 }

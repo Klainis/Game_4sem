@@ -4,145 +4,204 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UnitProductionPanel : MonoBehaviour
+/// <summary>
+/// Панель производства юнитов. Теперь использует заранее настроенные кнопки вместо динамического создания.
+/// </summary>
+public class UnitProductionPanel : BaseUIPanel
 {
-    public static UnitProductionPanel Instance  { get; private set; }
+    public static UnitProductionPanel Instance { get; private set; }
     public static event Action ProductionPanelOpened;
 
-    [Header("UI ссылки")]
-    [SerializeField] GameObject panelRoot;   // контейнер панели
-    [SerializeField] Button     buttonPrefab; // должен иметь внутри TMP_Text
+    [Header("UI Components")]
+    [SerializeField] private UIButton[] unitButtons; // Заранее настроенные кнопки
 
-    [Header("Panel Settings")]
-    [SerializeField] private Image backgroundImage; // Фоновое изображение
-    [SerializeField] private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.9f); // Цвет фона
-    [SerializeField] private Vector2 panelSize = new Vector2(260, 265); // Размер панели
-    [SerializeField] private Vector2 buttonSize = new Vector2(210, 50); // Размер кнопок
-    [SerializeField] private Vector2 spacing = new Vector2(0, 10); // Расстояние между кнопками
-    [SerializeField] private int paddingLeft = 15;
-    [SerializeField] private int paddingRight = 15;
-    [SerializeField] private int paddingTop = 15;
-    [SerializeField] private int paddingBottom = 15;
+    [Header("Layout Settings")]  
+    [SerializeField] private Vector2 panelSize = new Vector2(250, 450);
+    [SerializeField] private GridLayoutGroup layoutGroup;
 
-    readonly List<Button> pooled = new();
-    ProductionBuilding    current;
-    private GridLayoutGroup layoutGroup;
+    private ProductionBuilding currentBuilding;
 
-    private int idx;
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Instance = this;
-        SetupPanel();
-    }
-
-    private void SetupPanel()
-    {
-        panelRoot.SetActive(false);
-
-        // Настраиваем фон
-        if (backgroundImage != null)
+        
+        // Автоматический поиск кнопок если не заданы
+        if (unitButtons == null || unitButtons.Length == 0)
         {
-            backgroundImage.color = backgroundColor;
-            backgroundImage.transform.SetSiblingIndex(0);
-        }
-
-        // Настраиваем позицию панели справа
-        var rectTransform = panelRoot.GetComponent<RectTransform>();
-        rectTransform.anchorMin = new Vector2(1, 0.5f);
-        rectTransform.anchorMax = new Vector2(1, 0.5f);
-        rectTransform.pivot = new Vector2(1, 0.5f);
-        rectTransform.anchoredPosition = new Vector2(-20, 0); // Немного больший отступ от края
-        rectTransform.sizeDelta = panelSize;
-
-        // Настраиваем layout для кнопок
-        layoutGroup = panelRoot.GetComponent<GridLayoutGroup>();
-        if (!layoutGroup)
-        {
-            layoutGroup = panelRoot.AddComponent<GridLayoutGroup>();
+            unitButtons = GetComponentsInChildren<UIButton>();
         }
         
-        layoutGroup.cellSize = buttonSize;
-        layoutGroup.spacing = spacing;
-        layoutGroup.padding = new RectOffset(paddingLeft, paddingRight, paddingTop, paddingBottom);
-        layoutGroup.childAlignment = TextAnchor.UpperCenter;
-        layoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-        layoutGroup.constraintCount = 1;
+        SetupButtons();
+    }
+
+    protected override void SetupPanel()
+    {
+        base.SetupPanel();
+        
+        // Настраиваем позицию панели справа
+        var rectTransform = panelRoot.GetComponent<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.anchorMin = new Vector2(1, 0.5f);
+            rectTransform.anchorMax = new Vector2(1, 0.5f);
+            rectTransform.pivot = new Vector2(1, 0.5f);
+            rectTransform.anchoredPosition = new Vector2(-20, 0);
+            rectTransform.sizeDelta = panelSize;
+        }
+
+        // Настраиваем layout если есть
+        if (layoutGroup == null)
+            layoutGroup = panelRoot.GetComponent<GridLayoutGroup>();
     }
 
     /// <summary>
-    /// Переключает показ панели для здания b
+    /// Настраивает подписки на кнопки
     /// </summary>
-    public void Toggle(ProductionBuilding b)
+    private void SetupButtons()
     {
-        if (panelRoot.activeSelf && current == b)
+        for (int i = 0; i < unitButtons.Length; i++)
+        {
+            if (unitButtons[i] != null)
+            {
+                unitButtons[i].OnButtonClicked += OnUnitButtonClicked;
+                unitButtons[i].Reset(); // Скрываем все кнопки изначально
+            }
+        }
+    }
+
+    /// <summary>
+    /// Переключает показ панели для здания
+    /// </summary>
+    public void Toggle(ProductionBuilding building)
+    {
+        if (IsOpen && currentBuilding == building)
         {
             Hide();
             return;
         }
-        Open(b);
+        Open(building);
     }
 
-    void Open(ProductionBuilding b)
+    /// <summary>
+    /// Открывает панель для указанного здания
+    /// </summary>
+    void Open(ProductionBuilding building)
     {
-        // Скрываем все остальные панели, если нужно
-        ProductionPanelOpened?.Invoke();
-
-        current = b;
+        if (building == null)
+        {
+            Debug.LogError("[UnitProductionPanel] Trying to open panel with null building!");
+            return;
+        }
+        
+        currentBuilding = building;
+        Debug.Log($"[UnitProductionPanel] Opening panel for building: {building.name}");
         RefreshButtons();
-        panelRoot.SetActive(true);
+        
+        // Используем унифицированный метод показа
+        Show();
+        
+        // Уведомляем о том, что панель производства открылась
+        ProductionPanelOpened?.Invoke();
     }
 
-    public void Hide()
+    protected override void OnShow()
     {
-        panelRoot.SetActive(false);
-        current = null;
+        base.OnShow();
+        RefreshButtons();
     }
 
+    protected override void OnHide()
+    {
+        base.OnHide();
+        currentBuilding = null;
+    }
+
+    /// <summary>
+    /// Обновляет отображение кнопок юнитов
+    /// </summary>
     void RefreshButtons()
     {
-        if (current == null) return;
-        
-        int count = current.units.Length;
-
-        for (int i = 0; i < count; i++)
+        if (currentBuilding == null) 
         {
-            Button btn;
-            if (i < pooled.Count)
+            Debug.LogWarning("[UnitProductionPanel] RefreshButtons called with null currentBuilding");
+            return;
+        }
+        
+        if (unitButtons == null || unitButtons.Length == 0)
+        {
+            Debug.LogWarning("[UnitProductionPanel] unitButtons array is null or empty. Auto-finding buttons...");
+            unitButtons = GetComponentsInChildren<UIButton>();
+        }
+        
+        if (unitButtons == null || unitButtons.Length == 0)
+        {
+            Debug.LogError("[UnitProductionPanel] No UIButton components found in children!");
+            return;
+        }
+        
+        int unitCount = currentBuilding.units.Length;
+        int availableGold = ResourceManager.Instance ? ResourceManager.Instance.Gold : 0;
+
+        // Настраиваем кнопки для доступных юнитов
+        for (int i = 0; i < unitButtons.Length; i++)
+        {
+            if (unitButtons[i] == null) continue;
+
+            if (i < unitCount)
             {
-                btn = pooled[i];
-                btn.gameObject.SetActive(true);
+                var unit = currentBuilding.units[i];
+                unitButtons[i].SetData(unit, i);
+                unitButtons[i].gameObject.SetActive(true);
+                unitButtons[i].UpdateAffordability(availableGold);
             }
             else
             {
-                btn = Instantiate(buttonPrefab, panelRoot.transform);
-                pooled.Add(btn);
+                unitButtons[i].Reset();
             }
-
-            var opt = current.units[i];
-            var label = btn.GetComponentInChildren<TMP_Text>();
-            label.text = $"{opt.name} ({opt.cost})";
-
-            btn.onClick.RemoveAllListeners();
-            int localIndex = i; // Критически важная локальная переменная
-            btn.onClick.AddListener(() => {
-                if (current != null)
-                    current.Produce(localIndex);
-            });
         }
-
-        for (int i = count; i < pooled.Count; i++)
-            pooled[i].gameObject.SetActive(false);
-    }
-    void OnButtonClick()
-    {
-        Debug.Log("ВЫЗВАНО СОЗДАНИЕ ЮНИТА");
-        current.Produce(idx);
     }
 
-    void Update()
+    /// <summary>
+    /// Обработчик клика по кнопке юнита
+    /// </summary>
+    private void OnUnitButtonClicked(int unitIndex)
     {
-        // ПКМ сворачивает панель
-        if (panelRoot.activeSelf && Input.GetMouseButtonDown(1))
+        if (currentBuilding != null)
+        {
+            Debug.Log($"[UnitProductionPanel] Producing unit at index {unitIndex}");
+            currentBuilding.Produce(unitIndex);
+            
+            // Обновляем кнопки после покупки
+            RefreshButtons();
+        }
+    }
+
+    /// <summary>
+    /// Обработчик открытия другой панели - закрываем эту панель
+    /// </summary>
+    protected override void OnOtherPanelOpened(BaseUIPanel otherPanel)
+    {
+        // Если открылась другая панель (кроме этой), закрываем себя
+        if (otherPanel != this)
+        {
             Hide();
+        }
+    }
+
+    /// <summary>
+    /// Отписываемся от событий кнопок при уничтожении
+    /// </summary>
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        for (int i = 0; i < unitButtons.Length; i++)
+        {
+            if (unitButtons[i] != null)
+            {
+                unitButtons[i].OnButtonClicked -= OnUnitButtonClicked;
+            }
+        }
     }
 }

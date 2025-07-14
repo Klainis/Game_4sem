@@ -65,9 +65,9 @@ public class UnitAttackState : StateMachineBehaviour
             {
                 //if (distanceFromTarget > stopAttackingDistance)
                 //{
-                //    Debug.Log("ŞÍÈÒ ÈËÈ ÏĞÎÒÈÂÍÈÊ ÓØÅË");
+                //    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 //}
-                Debug.Log("ÏĞÎÒÈÂÍÈÊ ÓÁÈÒ/// ŞÍÈÒ ÈËÈ ÏĞÎÒÈÂÍÈÊ ÓØÅË");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 agent.SetDestination(animator.transform.position);
                 animator.SetBool("isAttacking", false); // Move to Follow State
             }
@@ -81,13 +81,23 @@ public class UnitAttackState : StateMachineBehaviour
         {
             var damageAttack = unit.unitDamage;
 
-            attackController.targetToAttack.GetComponent<Unit>().TakeDamage(damageAttack);
-            //Debug.Log(attackController.targetToAttack.GetComponent<Unit>().unitHealth);
-
-            if (attackController.targetToAttack.GetComponent<Unit>().unitHealth <= 0)
+            // ĞŸÑ€Ğ¾Ğ²ĞµÑ€ÑĞµĞ¼, ĞµÑÑ‚ÑŒ Ğ»Ğ¸ Ñƒ Ñ†ĞµĞ»Ğ¸ ĞºĞ¾Ğ¼Ğ¿Ğ¾Ğ½ĞµĞ½Ñ‚ Unit
+            if (attackController.targetToAttack.TryGetComponent<Unit>(out var targetUnit))
             {
-                attackController.targetToAttack = null; // ßâíûé ñáğîñ ññûëêè
-                //attackController.targetToAttack.gameObject = null;
+                targetUnit.TakeDamage(damageAttack);
+                if (targetUnit.unitHealth <= 0)
+                {
+                    attackController.targetToAttack = null;
+                }
+            }
+            // Ğ•ÑĞ»Ğ¸ Ğ½ĞµÑ‚, Ğ¿Ñ€Ğ¾Ğ²ĞµÑ€ÑĞµĞ¼, ĞµÑÑ‚ÑŒ Ğ»Ğ¸ ĞºĞ¾Ğ¼Ğ¿Ğ¾Ğ½ĞµĞ½Ñ‚ BuildingBase
+            else if (attackController.targetToAttack.TryGetComponent<BuildingBase>(out var targetBuilding))
+            {
+                targetBuilding.TakeDamage(damageAttack);
+                if (targetBuilding.CurrentHealth <= 0)
+                {
+                    attackController.targetToAttack = null;
+                }
             }
         }
     }
@@ -96,7 +106,7 @@ public class UnitAttackState : StateMachineBehaviour
     //{
     //    if (attackController != null && attackController.targetToAttack == this.transform)
     //    {
-    //        attackController.targetToAttack = null; // ßâíûé ñáğîñ ññûëêè
+    //        attackController.targetToAttack = null; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     //    }
     //}
 

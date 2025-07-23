@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6672016855774652197, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7439310115795047127, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.6
@@ -52,8 +56,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gold Mine 1_Ghost
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    - target: {fileID: 8942994957454840724, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+      propertyPath: progressBar
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8318408685745644181, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 1769411283531734731, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 5359879992542420405, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: -9145119403142623461, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 7842174090296372415, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 3583254371591641933, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 3156577457622586366, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 1240912951401588822, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
+    - {fileID: 8177333906553979191, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7815554660057434221, guid: 15d233346341bc44388b7cf0a89e5c73, type: 3}
@@ -77,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f670bf36c8676d4cb8e860781a5a066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostMaterial: {fileID: 0}
+  ghostMaterial: {fileID: 2100000, guid: 2e35d963c69eb464a9c2b67b06b6034a, type: 2}
   validColor: {r: 0, g: 1, b: 0, a: 1}
   invalidColor: {r: 1, g: 0, b: 0, a: 1}
   ghostAlpha: 0.5

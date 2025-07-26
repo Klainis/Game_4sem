@@ -12,6 +12,7 @@ public class CorruptionGridManager : MonoBehaviour
         Corrupted
     }
 
+    //[SerializeField] private Transform CenterOfStartCorruption;
     [SerializeField] private int gridWidth;
     [SerializeField] private int gridHeight;
     [SerializeField] private float cellSize;
@@ -49,6 +50,7 @@ public class CorruptionGridManager : MonoBehaviour
         corruptedCells = 0;
         // Можно инициализировать стартовые заражённые зоны здесь
         CorruptArea(new Vector2Int(gridWidth / 2, gridHeight / 2), 4);
+        //CorruptArea(new Vector2Int((int)CenterOfStartCorruption.position.x, (int)CenterOfStartCorruption.position.y), 4);
         StartCoroutine(CorruptionSpreadRoutine());
     }
 

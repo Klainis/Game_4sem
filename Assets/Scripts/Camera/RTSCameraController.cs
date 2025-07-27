@@ -10,6 +10,12 @@ public class RTSCameraController : MonoBehaviour
     // public void OnMouseDown(){
     //   CameraController.instance.followTransform = transform;
     // }
+    [Header("Camera Bounds")]
+    public float minX = -50f;
+    public float maxX = 50f;
+    public float minZ = -50f;
+    public float maxZ = 50f;
+
 
     [Header("General")]
     [SerializeField] Transform cameraTransform;
@@ -65,6 +71,16 @@ public class RTSCameraController : MonoBehaviour
         movementSpeed = normalSpeed;
 
         //targetZoomHeight = transform.position.y
+
+        //Terrain terrain = Terrain.activeTerrain;
+
+        //if (terrain != null)
+        //{
+        //    minX = terrain.transform.position.x;
+        //    maxX = minX + terrain.terrainData.size.x;
+        //    minZ = terrain.transform.position.z;
+        //    maxZ = minZ + terrain.terrainData.size.z;
+        //}
     }
 
     private void Update()
@@ -90,14 +106,6 @@ public class RTSCameraController : MonoBehaviour
 
     void HandleCameraZoom()
     {
-        //float zoomInput = Input.GetAxis("Mouse ScrollWheel");
-
-        //currentZoomHeight -= zoomInput * zoomSensitivity;
-
-        //currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
-
-        //cameraTransform.position = Vector3.Lerp(cameraTransform.position, 
-        //    new Vector3(cameraTransform.position.x, currentZoomHeight, cameraTransform.position.z), Time.deltaTime * zoomSpeed);
         Camera camera = transform.GetChild(0).GetComponent<Camera>();
         currentZoomHeight -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
         currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
@@ -190,6 +198,9 @@ public class RTSCameraController : MonoBehaviour
                 }
             }
         }
+
+        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
         transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * movementSensitivity);
 

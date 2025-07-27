@@ -23,8 +23,8 @@ TagManager:
   - BuildsClickable
   - FOV
   - Fog
-  - 
-  - 
+  - FlatGround
+  - MiniMap
   - 
   - 
   - 

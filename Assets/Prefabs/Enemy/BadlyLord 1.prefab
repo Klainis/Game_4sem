@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b5b0970d7241ce41af632640a1a3aa1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9b5b0970d7241ce41af632640a1a3aa1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -110,6 +110,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b5b0970d7241ce41af632640a1a3aa1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 620861866775878835}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b5b0970d7241ce41af632640a1a3aa1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2810461381719892965}
   m_SourcePrefab: {fileID: 100100000, guid: 9b5b0970d7241ce41af632640a1a3aa1, type: 3}
 --- !u!4 &3563299325048392662 stripped
 Transform:
@@ -156,6 +159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e4966eb4690f34abcbbb10648a6944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitIconSprite: {fileID: 0}
+  slot: {fileID: 0}
   unitMaxHealth: 200
   unitDamage: 22
   attackRange: 5
@@ -303,6 +308,23 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-2810461381719892965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4195298181771579756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c9667a728b0914dbd78f89e343b3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visibilityTexture: {fileID: 8400000, guid: 5d9e5edc6d5869d47985404f7fcf785f, type: 2}
+  fogCamera: {fileID: 0}
+  fogLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1001 &8455271601657719407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -315,6 +337,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1546401019560054599, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+    - target: {fileID: 1546401019560054599, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     - target: {fileID: 2268154870278373888, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

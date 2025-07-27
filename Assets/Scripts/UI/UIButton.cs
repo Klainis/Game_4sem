@@ -184,7 +184,7 @@ public class UIButton : MonoBehaviour
     /// <summary>
     /// Обработчик клика по кнопке
     /// </summary>
-    private void HandleClick()
+    public void HandleClick()
     {
         OnButtonClicked?.Invoke(buttonIndex);
         OnButtonSelected?.Invoke(this);

@@ -2934,9 +2934,9 @@ MonoBehaviour:
   currentZoomHeight: 20
   damping: 5
   fastSpeed: 0.05
-  normalSpeed: 0.2
+  normalSpeed: 1
   movementSensitivity: 15
-  edgeSize: 50
+  edgeSize: 25
   cursorArrowUp: {fileID: 2800000, guid: 51cb6ee928f89b64691ef4dfd57c03e9, type: 3}
   cursorArrowDown: {fileID: 2800000, guid: 51cb6ee928f89b64691ef4dfd57c03e9, type: 3}
   cursorArrowLeft: {fileID: 2800000, guid: 51cb6ee928f89b64691ef4dfd57c03e9, type: 3}

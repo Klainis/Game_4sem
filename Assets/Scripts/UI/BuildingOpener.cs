@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Открывает/закрывает панель построек по клику на главное здание.
@@ -16,8 +17,10 @@ public class BuildingOpener : MonoBehaviour
             buildingUI = FindObjectOfType<BuildingUI>();
     }
 
-    void OnMouseDown() => Toggle();
-
+    void OnMouseDown()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject()) Toggle();
+    }
     /// <summary>
     /// Переключает показ панели строительства
     /// </summary>

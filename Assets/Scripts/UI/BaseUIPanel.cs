@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Базовый класс для всех UI-панелей в игре.
@@ -55,7 +56,7 @@ public abstract class BaseUIPanel : MonoBehaviour
     protected virtual void Update()
     {
         // ПКМ закрывает панель если опция включена
-        if (closeOnRightClick && isOpen && Input.GetMouseButtonDown(1))
+        if (closeOnRightClick && isOpen && Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Hide();
         }

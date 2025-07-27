@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class UnitMovement : MonoBehaviour
@@ -52,7 +53,7 @@ public class UnitMovement : MonoBehaviour
     {
         if (!agent || !agent.isOnNavMesh) return;
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 

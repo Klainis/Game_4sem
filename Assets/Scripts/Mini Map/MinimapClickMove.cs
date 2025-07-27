@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.AI; // если используешь NavMesh для перемещения
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class MinimapClickMove : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class MinimapClickMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) // Левая кнопка мыши
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Vector3 mousePos = Input.mousePosition;
 

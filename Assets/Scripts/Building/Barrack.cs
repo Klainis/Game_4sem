@@ -4,7 +4,7 @@ using UnityEngine;
 public class Barrack : ProductionBuilding
 {
     [Header("Barracks Settings")]
-    [SerializeField] private float spawnOffset = 2f; // Расстояние появления юнита от барака
+    [SerializeField] private float spawnOffset = 3f; // Расстояние появления юнита от барака
     
     private void Reset()
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Базовый класс для зданий, производящих юнитов.
@@ -80,8 +81,11 @@ public abstract class ProductionBuilding : BuildingBase
     /*–––– обработка клика ––––*/
     void OnMouseDown()
     {
-        if (!interactive) return;                                  // ← блокируем «только что построенное»
-        UnitProductionPanel.Instance.Toggle(this);                 // ← переключатель
+        if (!EventSystem.current.IsPointerOverGameObject())
+        { 
+            if (!interactive) return;                                  // ← блокируем «только что построенное»
+            UnitProductionPanel.Instance.Toggle(this);                 // ← переключатель
+        }
     }
     
     private void Reset() { maxHealth = 120; } // базовое здоровье бараков

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitSelectionBox : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class UnitSelectionBox : MonoBehaviour
     private void Update()
     {
         // When Clicked
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             startPosition = Input.mousePosition;
 
@@ -32,7 +33,7 @@ public class UnitSelectionBox : MonoBehaviour
         }
 
         // When Dragging
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             if (boxVisual.rect.width > 0 || boxVisual.rect.height > 0)
             {

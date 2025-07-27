@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Color = UnityEngine.Color;
 
@@ -53,7 +54,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -79,7 +80,7 @@ public class UnitSelectionManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1) && unitSelected.Count > 0)
+        if (Input.GetMouseButtonDown(1) && unitSelected.Count > 0 && !EventSystem.current.IsPointerOverGameObject())
         {
             //RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -136,7 +137,7 @@ public class UnitSelectionManager : MonoBehaviour
     {
         attackCursorVisible = true;
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             //Debug.Log("Follow to " + followTarget);
             Transform target = hit.transform;

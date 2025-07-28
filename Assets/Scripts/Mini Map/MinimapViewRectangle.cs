@@ -38,12 +38,23 @@ public class MinimapViewRectangle : MonoBehaviour
     {
         if (mainCamera == null) return;
 
-        Vector3[] corners = new Vector3[4];
-        corners[0] = ScreenToGround(mainCamera, new Vector3(0, 0, 0));                              // Bottom-left
-        corners[1] = ScreenToGround(mainCamera, new Vector3(Screen.width, 0, 0));                   // Bottom-right
-        corners[2] = ScreenToGround(mainCamera, new Vector3(Screen.width, Screen.height, 0));       // Top-right
-        corners[3] = ScreenToGround(mainCamera, new Vector3(0, Screen.height, 0));                  // Top-left
+        // Получаем центр экрана
+        Vector3 center = ScreenToGround(mainCamera, new Vector3(Screen.width / 2f, Screen.height / 2f, 0));
 
+        // Вычисляем углы с компенсацией перспективы и поворотом на 90 градусов
+        Vector3[] corners = new Vector3[4];
+        float aspect = (float)Screen.width / Screen.height;
+        float distance = Vector3.Distance(mainCamera.transform.position, center);
+        float heightScale = distance * Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float widthScale = heightScale * aspect;
+
+        // Поворот на 90 градусов (меняем местами width и height с изменением знака)
+        corners[0] = center + new Vector3(-heightScale, 0, -widthScale);
+        corners[1] = center + new Vector3(-heightScale, 0, widthScale);
+        corners[2] = center + new Vector3(heightScale, 0, widthScale);
+        corners[3] = center + new Vector3(heightScale, 0, -widthScale);
+
+        // Остальной код без изменений
         for (int i = 0; i < 4; i++)
         {
             Vector3 dir = (corners[(i + 1) % 4] - corners[i]).normalized;

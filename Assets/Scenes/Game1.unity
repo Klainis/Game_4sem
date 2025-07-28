@@ -5128,7 +5128,6 @@ GameObject:
   - component: {fileID: 1517504227}
   - component: {fileID: 1517504226}
   - component: {fileID: 1517504230}
-  - component: {fileID: 1517504229}
   m_Layer: 5
   m_Name: MiniMapDisplay
   m_TagString: Untagged
@@ -5217,21 +5216,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517504224}
   m_CullTransparentMesh: 1
---- !u!114 &1517504229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1517504224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5acd2b48258d141bd78920d9edb07a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimapCamera: {fileID: 1367236335}
-  mainCamera: {fileID: 430089609}
-  minimapRectTransform: {fileID: 1517504225}
 --- !u!114 &1517504230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5247,6 +5231,7 @@ MonoBehaviour:
   minimapCamera: {fileID: 1367236335}
   mainCamera: {fileID: 430089609}
   minimapRectTransform: {fileID: 1517504225}
+  cameraController: {fileID: 935530500}
 --- !u!1 &1535285891
 GameObject:
   m_ObjectHideFlags: 0

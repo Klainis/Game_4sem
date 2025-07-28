@@ -1,57 +1,81 @@
-using System;
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using System;
 
 public class MinimapClickHandler : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private Camera minimapCamera; // Камера миникарты
-    [SerializeField] private Camera mainCamera;    // Основная RTS-камера
-    [SerializeField] private RectTransform minimapRectTransform; // RawImage RectTransform
+    [SerializeField] private Camera minimapCamera;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private RectTransform minimapRectTransform;
 
-    NavMeshAgent agent;
-    UnitMovement unitMovement;
+    public RTSCameraController cameraController;
 
-    private void Start()
-    {
-          
-    }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left/* && !EventSystem.current.IsPointerOverGameObject()*/)
-        {
-            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
             minimapRectTransform,
             eventData.position,
             eventData.pressEventCamera,
             out Vector2 localPoint))
-                return;
+            return;
 
-            Vector2 normalized = RectPointToNormalized(localPoint, minimapRectTransform);
-            //Обрабатываем точку на карте
-            Ray ray = minimapCamera.ViewportPointToRay(new Vector3(normalized.x, normalized.y, 0));
-            if (Physics.Raycast(ray, out RaycastHit hit))
+        Vector2 normalized = RectPointToNormalized(localPoint, minimapRectTransform);
+        Ray ray = minimapCamera.ViewportPointToRay(new Vector3(normalized.x, normalized.y, 0));
+
+        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
+
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            MoveCameraToPoint(hit.point, hit);
+        }
+
+        // рџ‘‰ РџСЂР°РІР°СЏ РєРЅРѕРїРєР° РјС‹С€Рё вЂ” РѕС‚РґР°С‚СЊ РїСЂРёРєР°Р· СЋРЅРёС‚Сѓ
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            MoveUnitsToPoint(hit.point);
+        }
+    }
+
+    private void MoveCameraToPoint(Vector3 hitPoint, RaycastHit hit)
+    {
+        Vector3 offset = mainCamera.transform.position - mainCamera.transform.parent.position;
+        Vector3 targetParentPos = hitPoint - offset;
+
+        float distanceToPlane = hit.distance;
+        targetParentPos.x += (float)(distanceToPlane * Math.Sin(mainCamera.transform.rotation.x));
+
+        // РњРѕР¶РЅРѕ СЃРєРѕСЂСЂРµРєС‚РёСЂРѕРІР°С‚СЊ РїРѕ СѓРіР»Сѓ РЅР°РєР»РѕРЅР° РєР°РјРµСЂС‹, РµСЃР»Рё РЅСѓР¶РЅРѕ
+        targetParentPos.x = Mathf.Clamp(targetParentPos.x, cameraController.minX, cameraController.maxX);
+        targetParentPos.z = Mathf.Clamp(targetParentPos.z, cameraController.minZ, cameraController.maxZ);
+
+        Transform camParent = mainCamera.transform.parent;
+        camParent.position = new Vector3(targetParentPos.x, camParent.position.y, targetParentPos.z);
+
+        cameraController.SetNewPosition(camParent.position);
+    }
+
+    private void MoveUnitsToPoint(Vector3 destination)
+    {
+        var selectedUnits = UnitSelectionManager.Instance.unitSelected;
+
+        foreach (GameObject unit in selectedUnits)
+        {
+            if (unit.TryGetComponent(out NavMeshAgent agent) &&
+                unit.TryGetComponent(out UnitMovement movement) &&
+                unit.TryGetComponent(out Animator animator))
             {
-                float distanceToPlane = hit.distance;
-                Vector3 hitPoint = hit.point;
+                movement.isCommandedToMove = true;
+                movement.isFollowingTarget = false;
+                movement.lastMoveCommandTime = Time.time;
 
-                RTSCameraController controller = RTSCameraController.instance;
+                animator.SetBool("isMoving", true);
+                agent.SetDestination(destination);
 
-                Vector3 cameraOffset = mainCamera.transform.position - mainCamera.transform.parent.position;
-
-                Vector3 targetParentPos = hitPoint - cameraOffset;
-
-                targetParentPos.x += (float)(distanceToPlane * Math.Sin(mainCamera.transform.rotation.x));
-
-                targetParentPos.x = Mathf.Clamp(targetParentPos.x, controller.minX, controller.maxX);
-                targetParentPos.z = Mathf.Clamp(targetParentPos.z, controller.minZ, controller.maxZ);
-
-                // Применяем позицию
-                Transform camParent = mainCamera.transform.parent;
-                camParent.position = new Vector3(targetParentPos.x, camParent.position.y, targetParentPos.z);
-
-                controller.SetNewPosition(camParent.position);//Координаты для CameraController
+                Vector3 dir = (destination - unit.transform.position).normalized;
+                if (dir != Vector3.zero)
+                    unit.transform.rotation = Quaternion.LookRotation(dir);
             }
         }
     }

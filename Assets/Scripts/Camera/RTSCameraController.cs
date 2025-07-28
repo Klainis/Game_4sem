@@ -103,6 +103,11 @@ public class RTSCameraController : MonoBehaviour
         }
     }
 
+    public void SetNewPosition(Vector3 position)
+    {
+        newPosition = position;
+    }
+
 
     void HandleCameraZoom()
     {
@@ -111,10 +116,6 @@ public class RTSCameraController : MonoBehaviour
         currentZoomHeight = Mathf.Clamp(currentZoomHeight, minZoomHeight, maxZoomHeight);
         camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, currentZoomHeight, Time.deltaTime * damping);
     }
-
-
-
-
 
     void HandleCameraMovement()
     {

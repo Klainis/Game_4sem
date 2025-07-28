@@ -3247,11 +3247,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 161bd49d1c373ef4dac58e415a8373d9, type: 3}
---- !u!195 &1107016417 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 3415961900572739139, guid: d99a132ca7bbb9347a833f5910f96cce, type: 3}
-  m_PrefabInstance: {fileID: 1451883458}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1164200286 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8024309480878811341, guid: cad8caadd1617314e8ba16e7fb636d3b, type: 3}
@@ -3315,6 +3310,9 @@ MonoBehaviour:
   buildClickable:
     serializedVersion: 2
     m_Bits: 2048
+  ui:
+    serializedVersion: 2
+    m_Bits: 32
   attackCursorVisible: 0
   boolTarget: 0
 --- !u!114 &1168701213 stripped
@@ -5129,6 +5127,7 @@ GameObject:
   - component: {fileID: 1517504228}
   - component: {fileID: 1517504227}
   - component: {fileID: 1517504226}
+  - component: {fileID: 1517504230}
   - component: {fileID: 1517504229}
   m_Layer: 5
   m_Name: MiniMapDisplay
@@ -5227,15 +5226,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1517504224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58d18a8dcbbfcd0458d0e2d460e84b89, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a5acd2b48258d141bd78920d9edb07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minimapCamera: {fileID: 1367236335}
-  player: {fileID: 82763840}
-  agent: {fileID: 1107016417}
-  terrainLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  mainCamera: {fileID: 430089609}
+  minimapRectTransform: {fileID: 1517504225}
+--- !u!114 &1517504230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517504224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412c97d22b086a04cac8346591722291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimapCamera: {fileID: 1367236335}
+  mainCamera: {fileID: 430089609}
+  minimapRectTransform: {fileID: 1517504225}
 --- !u!1 &1535285891
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class UnitSelectionManager : MonoBehaviour
     public LayerMask ground;
     public LayerMask attackable;
     public LayerMask buildClickable;
+    public LayerMask ui;
 
     private Color colorOFCursor = Color.green;
 
@@ -54,7 +55,7 @@ public class UnitSelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -71,7 +72,7 @@ public class UnitSelectionManager : MonoBehaviour
                     SelectByClicking(hit.collider.gameObject);
                 }
             }
-            else //Не кликаем
+            else if (!Physics.Raycast(ray, out hit, Mathf.Infinity, ui))//Не кликаем
             {
                 if (Input.GetKey(KeyCode.LeftControl) == false)
                 {

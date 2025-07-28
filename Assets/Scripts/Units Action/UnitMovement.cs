@@ -16,7 +16,7 @@ public class UnitMovement : MonoBehaviour
 
     public bool isCommandedToMove;
     public bool isFollowingTarget;
-    private float lastMoveCommandTime;
+    public float lastMoveCommandTime;
 
     private void Start()
     {
@@ -53,6 +53,21 @@ public class UnitMovement : MonoBehaviour
     {
         if (!agent || !agent.isOnNavMesh) return;
 
+        MovementHandler();
+
+        // Проверяем, достиг ли агент цели
+        if (agent.pathStatus != NavMeshPathStatus.PathInvalid && 
+            !agent.pathPending && 
+            agent.remainingDistance <= agent.stoppingDistance &&
+            Time.time - lastMoveCommandTime > 0.1f)
+        {
+            isCommandedToMove = false;
+            animator.SetBool("isMoving", false);
+        }
+    }
+
+    public void MovementHandler()
+    {
         if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -65,7 +80,7 @@ public class UnitMovement : MonoBehaviour
             if (isGroundHit && !isAttackableHit && !isFriendlyHit)
             {
                 Debug.DrawRay(ray.origin, ray.direction, Color.green, 1f);
-                
+
                 isCommandedToMove = true;
                 isFollowingTarget = false;
 
@@ -81,16 +96,6 @@ public class UnitMovement : MonoBehaviour
 
                 agent.SetDestination(hitGround.point);
             }
-        }
-
-        // Проверяем, достиг ли агент цели
-        if (agent.pathStatus != NavMeshPathStatus.PathInvalid && 
-            !agent.pathPending && 
-            agent.remainingDistance <= agent.stoppingDistance &&
-            Time.time - lastMoveCommandTime > 0.1f)
-        {
-            isCommandedToMove = false;
-            animator.SetBool("isMoving", false);
         }
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 public class MinimapClickHandler : MonoBehaviour, IPointerDownHandler
 {
@@ -8,9 +10,16 @@ public class MinimapClickHandler : MonoBehaviour, IPointerDownHandler
     [SerializeField] private Camera mainCamera;    // Основная RTS-камера
     [SerializeField] private RectTransform minimapRectTransform; // RawImage RectTransform
 
+    NavMeshAgent agent;
+    UnitMovement unitMovement;
+
+    private void Start()
+    {
+          
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
             minimapRectTransform,

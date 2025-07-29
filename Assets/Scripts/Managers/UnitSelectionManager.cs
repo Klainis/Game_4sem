@@ -10,7 +10,7 @@ public class UnitSelectionManager : MonoBehaviour
     // Start is called before he first frame update
     public static UnitSelectionManager Instance { get; set; }
 
-    InterfaceScript interfaceScript;
+    UnitSelectedPanel unitSelectedPanel;
 
     public List<GameObject> allUnitsList = new List<GameObject>();
     public List<GameObject> unitSelected = new List<GameObject>();
@@ -50,12 +50,12 @@ public class UnitSelectionManager : MonoBehaviour
     {
         cam = Camera.main;
         //enemOutline = GameObject.FindObjectOfType<EnemOutline>();
-        interfaceScript = FindObjectOfType<InterfaceScript>();
+        unitSelectedPanel = FindObjectOfType<UnitSelectedPanel>();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -184,8 +184,9 @@ public class UnitSelectionManager : MonoBehaviour
         {
             unitSelected.Add(unit);
             SelectUnit(unit, true);
-            Unit unitIc = unit.GetComponent<Unit>();
-            interfaceScript.GetIconUnitToList(unitIc, unitSelected.IndexOf(unit));
+            //Unit unitIc = unit.GetComponent<Unit>();
+            unitSelectedPanel.UpdateUnitIcons(unitSelected);
+
         }
         else
         {
@@ -203,6 +204,8 @@ public class UnitSelectionManager : MonoBehaviour
 
         //groundMarker.SetActive(false);
         unitSelected.Clear();
+        unitSelectedPanel.UpdateUnitIcons(unitSelected);
+
     }
 
     private void SelectByClicking(GameObject unit)
@@ -210,6 +213,8 @@ public class UnitSelectionManager : MonoBehaviour
         DeselectAll();
         unitSelected.Add(unit);
         SelectUnit(unit, true);
+        unitSelectedPanel.UpdateUnitIcons(unitSelected);
+
     }
 
     private void SelectUnit(GameObject unit, bool isSelected)
@@ -248,6 +253,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             unitSelected.Add(unit);
             SelectUnit(unit, true);
+            unitSelectedPanel.UpdateUnitIcons(unitSelected);
 
         }
     }

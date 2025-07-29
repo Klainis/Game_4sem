@@ -431,6 +431,7 @@ MonoBehaviour:
     m_Bits: 128
   isCommandedToMove: 0
   isFollowingTarget: 0
+  lastMoveCommandTime: 0
 --- !u!114 &4821796459390920006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e4966eb4690f34abcbbb10648a6944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconID: 2
   unitMaxHealth: 130
   unitDamage: 18
   attackRange: 6

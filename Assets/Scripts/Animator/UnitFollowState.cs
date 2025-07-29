@@ -65,7 +65,10 @@ public class UnitFollowState : StateMachineBehaviour
                 if (attackController.targetToAttack != null)
                 {
                     Debug.Log("»дем ко врагу");
-                    agent.SetDestination(attackController.targetToAttack.position);
+                    if (agent.enabled && agent.isOnNavMesh)
+                    {
+                        agent.SetDestination(attackController.targetToAttack.position);
+                    }
 
                 }
 
@@ -82,7 +85,10 @@ public class UnitFollowState : StateMachineBehaviour
                     if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Unit is Attacking!");
-                        agent.SetDestination(animator.transform.position);
+                        if (agent.enabled && agent.isOnNavMesh)
+                        {
+                            agent.SetDestination(animator.transform.position);
+                        }
                         animator.SetBool("isAttacking", true);
                     }
                 }
@@ -94,7 +100,10 @@ public class UnitFollowState : StateMachineBehaviour
                     if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Enemy is Attacking!");
-                        agent.SetDestination(animator.transform.position);
+                        if (agent.enabled && agent.isOnNavMesh)
+                        {
+                            agent.SetDestination(animator.transform.position);
+                        }
                         animator.SetBool("isAttacking", true);
                     }
                 }
@@ -108,7 +117,10 @@ public class UnitFollowState : StateMachineBehaviour
                     if (distanceFromTarget <= attackingDistance)
                     {
                         Debug.Log("Doctor is Healing!");
-                        agent.SetDestination(animator.transform.position);
+                        if (agent.enabled && agent.isOnNavMesh)
+                        {
+                            agent.SetDestination(animator.transform.position);
+                        }
                         animator.SetBool("isHealing", true);
                     }
                 }

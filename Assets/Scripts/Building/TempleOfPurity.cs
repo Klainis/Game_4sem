@@ -5,7 +5,7 @@ using System.Collections;
 public class TempleOfPurity : BuildingBase
 {
     [Header("Cleansing Settings")]
-    [SerializeField] private float cleansingRadius = 5f;
+    //[SerializeField] private float cleansingRadius = 5f;
     [SerializeField] private float cleansingInterval = 3f;
     [SerializeField] private int cleansingStrength = 1; // радиус очистки в клетках
 

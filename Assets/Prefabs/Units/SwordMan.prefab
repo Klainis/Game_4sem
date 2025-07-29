@@ -15,7 +15,11 @@ PrefabInstance:
     - target: {fileID: 1546401019560054599, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 424f2adc44ea6cc40ba1079469cfceab, type: 2}
+      objectReference: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+    - target: {fileID: 1546401019560054599, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
     - target: {fileID: 2268154870278373888, guid: c0fb8fcb57b244e4eb6dbc7b287d77cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -269,15 +273,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9185a7a5149012b47876b1e564500f65, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.6
+      value: -19.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9185a7a5149012b47876b1e564500f65, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.82
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9185a7a5149012b47876b1e564500f65, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.2
+      value: -3.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9185a7a5149012b47876b1e564500f65, type: 3}
       propertyPath: m_LocalRotation.w
@@ -657,6 +661,7 @@ MonoBehaviour:
     m_Bits: 128
   isCommandedToMove: 0
   isFollowingTarget: 0
+  lastMoveCommandTime: 0
 --- !u!136 &4753297684344158000
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -692,14 +697,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e4966eb4690f34abcbbb10648a6944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitIconSprite: {fileID: 0}
-  slot: {fileID: 0}
+  iconID: 1
   unitMaxHealth: 100
   unitDamage: 12
   attackRange: 5
   attackRate: 2
   armor: 20
-  moveSpeed: 5
+  moveSpeed: 10
   healthTracker: {fileID: 2502430532391245390}
 --- !u!114 &3569912207375272236
 MonoBehaviour:
@@ -713,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 0, g: 1, b: 0.07970548, a: 1}
   outlineWidth: 1.5
   precomputeOutline: 0

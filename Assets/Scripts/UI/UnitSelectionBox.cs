@@ -47,7 +47,7 @@ public class UnitSelectionBox : MonoBehaviour
         }
 
         // When Releasing
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             //boxVisual.SetActive(true);
             SelectUnits();

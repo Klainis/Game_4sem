@@ -43,14 +43,14 @@ public class BuildingUI : BaseUIPanel
         base.SetupPanel();
         
         // Настраиваем layout для кнопок, если он есть
-        if (buttonLayout != null)
-        {
-            buttonLayout.cellSize = new Vector2(160, 45);
-            buttonLayout.spacing = new Vector2(10, 10);
-            buttonLayout.padding = new RectOffset(10, 10, 10, 10);
-            buttonLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            buttonLayout.constraintCount = 3;
-        }
+        //if (buttonLayout != null)
+        //{
+        //    buttonLayout.cellSize = new Vector2(160, 45);
+        //    buttonLayout.spacing = new Vector2(10, 10);
+        //    buttonLayout.padding = new RectOffset(10, 10, 10, 10);
+        //    buttonLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        //    buttonLayout.constraintCount = 3;
+        //}
     }
 
     /// <summary>

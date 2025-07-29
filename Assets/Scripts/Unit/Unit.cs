@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public Sprite unitIconSprite;
-    public SlotIcon slot;
-    InterfaceScript interfaceScript;
+    public int iconID;
+
     public float unitHealth { get; private set; }
 
     public float unitMaxHealth;
@@ -22,7 +21,6 @@ public class Unit : MonoBehaviour
     void Start()
     {
         UnitSelectionManager.Instance.allUnitsList.Add(gameObject);
-        interfaceScript = FindObjectOfType<InterfaceScript>();
         attackController = GetComponent<AttackController>();
 
         unitHealth = unitMaxHealth;
@@ -34,6 +32,12 @@ public class Unit : MonoBehaviour
     private void OnDestroy()
     {
         UnitSelectionManager.Instance.allUnitsList.Remove(gameObject);
+        //UnitSelectionManager.Instance.unitSelected.Remove(gameObject);
+        var panel = FindObjectOfType<UnitSelectedPanel>();
+        if (panel != null)
+        {
+            panel.RemoveUnitIcon(this);
+        }
     }
 
     private void UpdateHealthUI()
@@ -42,7 +46,6 @@ public class Unit : MonoBehaviour
 
         if (unitHealth <=0)
         { 
-            // �������� �������� � �������� �������
             Destroy(gameObject);
         }
     }

@@ -41,7 +41,10 @@ public class UnitAttackState : StateMachineBehaviour
 
             if (attackController.targetToAttack != null)
             {
-                agent.SetDestination(animator.transform.position);
+                if (agent.enabled && agent.isOnNavMesh)
+                {
+                    agent.SetDestination(animator.transform.position);
+                }
             }
 
             if (attackTimer <= 0)
@@ -67,8 +70,10 @@ public class UnitAttackState : StateMachineBehaviour
                 //{
                 //    Debug.Log("���� ��� ��������� ����");
                 //}
-                Debug.Log("��������� ����/// ���� ��� ��������� ����");
-                agent.SetDestination(animator.transform.position);
+                if (agent.enabled && agent.isOnNavMesh)
+                {
+                    agent.SetDestination(animator.transform.position);
+                }
                 animator.SetBool("isAttacking", false); // Move to Follow State
             }
 

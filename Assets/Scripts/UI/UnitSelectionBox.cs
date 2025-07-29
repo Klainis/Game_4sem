@@ -24,7 +24,7 @@ public class UnitSelectionBox : MonoBehaviour
     private void Update()
     {
         // When Clicked
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             startPosition = Input.mousePosition;
 
@@ -33,7 +33,7 @@ public class UnitSelectionBox : MonoBehaviour
         }
 
         // When Dragging
-        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButton(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             if (boxVisual.rect.width > 0 || boxVisual.rect.height > 0)
             {
@@ -47,7 +47,7 @@ public class UnitSelectionBox : MonoBehaviour
         }
 
         // When Releasing
-        if (Input.GetMouseButtonUp(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonUp(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             //boxVisual.SetActive(true);
             SelectUnits();

@@ -450,7 +450,7 @@ MonoBehaviour:
   attackRange: 6
   attackRate: 2
   armor: 30
-  moveSpeed: 6
+  moveSpeed: 13
   healthTracker: {fileID: 933225967207983693}
 --- !u!195 &2903396723620032762
 NavMeshAgent:

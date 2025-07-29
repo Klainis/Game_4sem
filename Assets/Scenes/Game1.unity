@@ -543,8 +543,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 127795732}
   m_HandleRect: {fileID: 127795731}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.3651254
+  m_Value: 1.0000393
+  m_Size: 0.3446544
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3697,8 +3697,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1096.3766, y: 125.534485}
-  m_SizeDelta: {x: 1542.8027, y: 374.2161}
+  m_AnchoredPosition: {x: 1096.3766, y: 92.11182}
+  m_SizeDelta: {x: 1542.8027, y: 307.3708}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1044337320
 MonoBehaviour:
@@ -5321,7 +5321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -376, y: 283.09808}
+  m_AnchoredPosition: {x: -376, y: 283.07883}
   m_SizeDelta: {x: 752, y: 775.3386}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1300226960
@@ -6880,11 +6880,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2956969201310669111, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2956969201310669111, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4647412070458000210, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_Name
@@ -6892,19 +6892,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4647412070458000210, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5419303745260575208, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 333.1432
+      value: 114
       objectReference: {fileID: 0}
     - target: {fileID: 5419303745260575208, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000068310833
+      value: 50.3
       objectReference: {fileID: 0}
     - target: {fileID: 5419303745260575208, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 334.04773
+      value: 326
       objectReference: {fileID: 0}
     - target: {fileID: 5419303745260575208, guid: f46846556f5524f42bb6673a8cf2745c, type: 3}
       propertyPath: m_LocalRotation.w

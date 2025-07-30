@@ -11,12 +11,10 @@ public class MainMenuButton : MonoBehaviour
 
     public void LoadGame()
     {
-        // Реализация загрузки (используйте PlayerPrefs или систему сохранений)
     }
 
     public void OpenSettings()
     {
-        // Активируйте Panel с настройками (см. ниже)
     }
 
     public void QuitGame()

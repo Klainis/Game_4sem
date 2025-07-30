@@ -45,7 +45,6 @@ public class UnitSelectedPanel : MonoBehaviour
             hpBar.value = unitComp.unitHealth;
 
             Image hpFill = hpBar.fillRect.GetComponent<Image>();
-            Debug.Log($"Изначальный цвет иконки:  { hpFill.color} ");
 
             currentIcons.Add(new IconUI
             {

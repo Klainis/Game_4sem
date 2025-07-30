@@ -31,7 +31,6 @@ public class MinimapClickHandler : MonoBehaviour, IPointerDownHandler
             MoveCameraToPoint(hit.point, hit);
         }
 
-        // 👉 Правая кнопка мыши — отдать приказ юниту
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             MoveUnitsToPoint(hit.point);
@@ -46,7 +45,6 @@ public class MinimapClickHandler : MonoBehaviour, IPointerDownHandler
         float distanceToPlane = hit.distance;
         targetParentPos.x += (float)(distanceToPlane * Math.Sin(mainCamera.transform.rotation.x));
 
-        // Можно скорректировать по углу наклона камеры, если нужно
         targetParentPos.x = Mathf.Clamp(targetParentPos.x, cameraController.minX, cameraController.maxX);
         targetParentPos.z = Mathf.Clamp(targetParentPos.z, cameraController.minZ, cameraController.maxZ);
 

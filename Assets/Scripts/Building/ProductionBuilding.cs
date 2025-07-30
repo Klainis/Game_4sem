@@ -24,6 +24,8 @@ public abstract class ProductionBuilding : BuildingBase
     [Header("UI")]
     [SerializeField] ProgressBarUI progressBar;
 
+    [SerializeField] UnitProductionPanel unitProductionPanel;
+
     private bool isProducing = false;
 
     private void Start()
